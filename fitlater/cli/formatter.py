@@ -23,7 +23,7 @@ def _section(title: str) -> str:
     line = "-" * len(title)
     return f"\n{line}\n{title}\n{line}\n"
 
-def info() -> str:
+def _info() -> str:
     lines = []
     start = "\033[1m"
     end = "\033[0m"
@@ -117,3 +117,83 @@ def _format_overview(result: dict) -> str:
         lines.append("⚠ Duplicate percentage exceeds threshold.")
 
     return "\n".join(lines) + "\n"
+
+def _format_correlation(result: dict) -> str:
+
+    if not result:
+        return "\nNo correlation data available.\n"
+
+    lines = []
+    lines.append(_heading("Correlation Analysis"))
+
+    summary = result.get("corr_summary")
+
+    if summary is None:
+        lines.append("No numerical features available for correlation analysis.")
+        return "\n".join(lines) + "\n"
+
+    lines.append(_section("Correlation Summary"))
+    lines.append(f"Numeric Features: {summary.get('n_numeric_features', 0)}")
+    lines.append(f"High Correlation Pairs: {summary.get('n_high_corr_pairs', 0)}")
+    lines.append(f"Maximum Correlation: {summary.get('max_corr', 0)}")
+    lines.append(f"Mean Absolute Correlation: {summary.get('mean_abs_corr', 0)}")
+
+    high_pairs = result.get("high_corr_pairs", [])
+
+    lines.append(_section("Highly Correlated Feature Pairs"))
+
+    if not high_pairs:
+        lines.append("No feature pairs exceed correlation threshold.")
+    else:
+        for pair in high_pairs:
+            f1 = pair.get("feature_1")
+            f2 = pair.get("feature_2")
+            corr = pair.get("correlation")
+            lines.append(f"- {f1} ↔ {f2} (corr = {corr})")
+
+    return "\n".join(lines) + "\n"
+
+def _format_outliers(result: dict) -> str:
+
+    if not result:
+        return "\nNo outlier data available.\n"
+
+    lines = []
+    lines.append(_heading("Outlier Analysis"))
+
+    summary = result.get("outlier_summary")
+
+    if summary is None:
+        lines.append("No numerical features available for outlier detection.")
+        return "\n".join(lines) + "\n"
+
+    lines.append(_section("Outlier Summary"))
+    lines.append(f"Detection Method: {result.get('method', 'Unknown')}")
+    lines.append(f"Numeric Features: {summary.get('n_numeric_features', 0)}")
+    lines.append(f"Features With Outliers: {summary.get('n_features_with_outliers', 0)}")
+    lines.append(f"Max Outlier Percentage: {summary.get('max_outlier_percentage', 0)}%")
+
+    columns = result.get("columns_with_outliers", [])
+    percentages = result.get("outlier_percentage", {})
+
+    lines.append(_section("Columns With Outliers"))
+
+    if not columns:
+        lines.append("No columns exceed outlier threshold.")
+    else:
+        for col in columns:
+            pct = percentages.get(col, 0)
+            lines.append(f"- {col} ({pct}% rows flagged as outliers)")
+
+    return "\n".join(lines) + "\n"
+
+def format_results(overview:dict, correlation:dict, outliers:dict) -> str:
+
+    lines = []
+    
+    lines.append(_info())
+    lines.append(_format_overview(overview))
+    lines.append(_format_correlation(correlation))
+    lines.append(_format_outliers(outliers))
+
+    return '\n'.join(lines) + '\n'

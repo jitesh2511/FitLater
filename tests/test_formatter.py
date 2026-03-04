@@ -2,8 +2,11 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from fitlater.cli.formatter import (_format_overview, info)
+from fitlater.config import (CORRELATION_THRESHOLD, OUTLIER_THRESHOLD)
+from fitlater.cli.formatter import format_results
 from fitlater.core.overview import analyze
+from fitlater.core.correlation import analyze_correlation
+from fitlater.core.outliers import analyze_outliers
 
 import pandas as pd
 import numpy as np
@@ -42,5 +45,9 @@ def _data():
 
     return df
 
-print(info())
-print(_format_overview(analyze(_data())))
+data = _data()
+overview = analyze(data)
+correlation = analyze_correlation(data, CORRELATION_THRESHOLD)
+outliers = analyze_outliers(data, OUTLIER_THRESHOLD)
+
+print(format_results(overview, correlation, outliers))

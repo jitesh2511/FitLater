@@ -23,7 +23,7 @@ def _section(title: str) -> str:
     line = "-" * len(title)
     return f"\n{line}\n{title}\n{line}\n"
 
-def _info() -> str:
+def info() -> str:
     lines = []
     start = "\033[1m"
     end = "\033[0m"
@@ -32,7 +32,7 @@ def _info() -> str:
 
     return '\n'.join(lines) + '\n'
 
-def _format_overview(result: dict) -> str:
+def format_overview(result: dict) -> str:
     if not result:
         return "\nNo data available.\n"
 
@@ -118,7 +118,7 @@ def _format_overview(result: dict) -> str:
 
     return "\n".join(lines) + "\n"
 
-def _format_correlation(result: dict) -> str:
+def format_correlation(result: dict) -> str:
 
     if not result:
         return "\nNo correlation data available.\n"
@@ -153,7 +153,7 @@ def _format_correlation(result: dict) -> str:
 
     return "\n".join(lines) + "\n"
 
-def _format_outliers(result: dict) -> str:
+def format_outliers(result: dict) -> str:
 
     if not result:
         return "\nNo outlier data available.\n"
@@ -191,9 +191,8 @@ def format_results(overview:dict, correlation:dict, outliers:dict) -> str:
 
     lines = []
     
-    lines.append(_info())
-    lines.append(_format_overview(overview))
-    lines.append(_format_correlation(correlation))
-    lines.append(_format_outliers(outliers))
+    lines.append(format_overview(overview))
+    lines.append(format_correlation(correlation))
+    lines.append(format_outliers(outliers))
 
     return '\n'.join(lines) + '\n'

@@ -64,3 +64,7 @@ FitLater follows a simple philosophy:
 ## 📌 Summary
 
 FitLater is designed to act like a **thinking assistant for your data**, helping you slow down, analyze properly, and build better ML models with confidence.
+
+## 📄 License
+
+This project is licensed under the MIT License.

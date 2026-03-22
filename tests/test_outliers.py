@@ -34,19 +34,33 @@ def create_sample_df():
         # Categorical column (should be ignored by outlier module)
         "category": np.random.choice(["A", "B", "C"], 100)
     })
+    return df
 
 def test_outlier_structure():
 
     result = analyze_outliers(create_sample_df(), 0.01)
 
-    expected_keys = {'method', 'outlier_counts', 'outlier_percentage', 'columns_with_outliers','bounds','outlier_summary'}
+    expected_keys = {
+        'method',
+        'outlier_counts',
+        'outlier_percentage',
+        'columns_with_outliers',
+        'bounds',
+        'outlier_summary',
+    }
 
     assert set(result.keys()) == expected_keys
-    assert set(result['bounds'].keys()) == {'lower_bound', 'upper_bound'}
-    assert set(result['outlier_summary']) == {'n_numeric_features', 'n_features_with_outliers', 'max_outlier_percentage'}
+    # bounds is {column_name: {lower_bound, upper_bound}} per numeric feature
+    for col, b in result['bounds'].items():
+        assert set(b.keys()) == {'lower_bound', 'upper_bound'}
+    assert set(result['outlier_summary'].keys()) == {
+        'n_numeric_features',
+        'n_features_with_outliers',
+        'max_outlier_percentage',
+    }
+
 
 def test_outlier_values():
-
     result = analyze_outliers(create_sample_df(), 0.01)
 
     assert result['method'] == 'IQR'
@@ -55,4 +69,3 @@ def test_outlier_values():
     assert 'category' not in result['outlier_counts']
     assert 'with_outliers' in result['columns_with_outliers']
     assert result['outlier_summary']['n_numeric_features'] == 6
-

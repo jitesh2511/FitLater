@@ -11,7 +11,7 @@ def load_dataset(session, args):
     try:
         session.df = pd.read_csv(path)
         session.file_path = path
-        print('Dataset loaded sucessfully\n')
+        print('Dataset loaded successfully\n')
     except Exception as e:
         print(f'Failed to load file : {e}\n')
 

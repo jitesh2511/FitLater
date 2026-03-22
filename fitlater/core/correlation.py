@@ -7,9 +7,9 @@ def analyze_correlation(df:pd.DataFrame, corr_threshold) -> dict:
 
     if numerical.empty:
         return {
-            'corr_matrix':None,
-            'high_correlation_pairs':[],
-            'correlation_summary':None,
+            'corr_matrix': None,
+            'high_corr_pairs': [],
+            'corr_summary': None,
         }
     
     # Correlation Matrix

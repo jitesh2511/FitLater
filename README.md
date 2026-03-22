@@ -1,5 +1,50 @@
 # 📊 FitLater
 
+## Quick start
+
+**Requirements:** Python 3.10 or newer.
+
+```bash
+git clone https://github.com/YOUR_USERNAME/FitLater.git
+cd FitLater
+python -m venv .venv
+```
+
+Activate the virtual environment:
+
+- **Windows:** `.venv\Scripts\activate`
+- **macOS / Linux:** `source .venv/bin/activate`
+
+Install dependencies and run the interactive CLI from the repository root:
+
+```bash
+pip install -r requirements.txt
+python -m fitlater
+```
+
+Install as a package (editable) to get the `fitlater` command and run tests:
+
+```bash
+pip install -e ".[dev]"
+pytest
+fitlater
+```
+
+After the app starts, try the bundled sample dataset (paths are relative to the repo root):
+
+```
+>> load examples/sample.csv
+>> overview
+>> correlation
+>> outlier
+>> result
+>> exit
+```
+
+Type `help` for commands. Use `exit` to quit.
+
+---
+
 ## What is FitLater?
 
 FitLater is a tool used to explore data and provide powerful insights which helps in building better ML models. It helps the user to better understand the data they are working with and helps them make better decisions regarding their model.
@@ -67,4 +112,4 @@ FitLater is designed to act like a **thinking assistant for your data**, helping
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License — see [LICENSE](LICENSE).

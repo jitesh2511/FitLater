@@ -6,12 +6,12 @@ def analyze_outliers(df:pd.DataFrame, outlier_threshold:float) -> dict:
 
     if numeric.empty:
         return {
-            'method':'IQR',
-            'outlier_counts':None,
-            'outlier_percentage':None,
-            'columns_with_outlier':None,
-            'bounds':None,
-            'outlier_summary':None
+            'method': 'IQR',
+            'outlier_counts': None,
+            'outlier_percentage': None,
+            'columns_with_outliers': None,
+            'bounds': None,
+            'outlier_summary': None,
         }
     
     quantiles = {col: {'Q1': np.quantile(df[col], q=0.25),
@@ -23,8 +23,13 @@ def analyze_outliers(df:pd.DataFrame, outlier_threshold:float) -> dict:
                      'upper_bound' : quantiles[col]['Q3'] + (quantiles[col]['IQR'] * 1.5)}
                      for col in numeric}
     
-    outlier_counts = {col : df[df[col]<bounds[col]['lower_bound']].value_counts().sum() + df[df[col]>bounds[col]['upper_bound']].value_counts().sum() 
-                      for col in numeric}
+    outlier_counts = {
+        col: int(
+            (df[col] < bounds[col]['lower_bound']).sum()
+            + (df[col] > bounds[col]['upper_bound']).sum()
+        )
+        for col in numeric
+    }
     
     outlier_percentage = {col : round((outlier_counts[col] / len(df[col])) * 100, 2) for col in numeric}
 

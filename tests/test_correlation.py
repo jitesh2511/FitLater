@@ -1,7 +1,3 @@
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from fitlater.core.correlation import analyze_correlation
 import pandas as pd
 import numpy as np
@@ -31,8 +27,8 @@ def test_no_numerical_features():
     result = analyze_correlation(create_sample_df(choice=2), 0.5)
 
     assert result['corr_matrix'] == None
-    assert result['high_correlation_pairs'] == []
-    assert result['correlation_summary'] == None
+    assert result['high_corr_pairs'] == []
+    assert result['corr_summary'] is None
 
 def test_structure():
 

@@ -3,7 +3,14 @@ import pandas as pd
 def analyze(data: pd.DataFrame) -> dict:
     
     if (data.empty):
-        return {}
+        return {
+            'shape':None,
+            'column_classification':None,
+            'categorical_summary': None,
+            'missing':None,
+            'numerical_summary':None,
+            'duplicates':None
+        }
     
     columns = data.columns
 

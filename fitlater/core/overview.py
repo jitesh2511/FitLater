@@ -28,8 +28,15 @@ def analyze(data: pd.DataFrame) -> dict:
     # Column Classification
     numerical = data.select_dtypes(include='number').columns.tolist()
     boolean = data.select_dtypes(include='bool').columns.tolist()
-    categorical = data.select_dtypes(include=['object','category']).columns.tolist()
-    others = data.select_dtypes(exclude=['number', 'bool', 'object', 'category']).columns.to_list()
+    categorical = [
+        col
+        for col in data.columns
+        if pd.api.types.is_object_dtype(data[col].dtype)
+        or isinstance(data[col].dtype, pd.CategoricalDtype)
+        or pd.api.types.is_string_dtype(data[col].dtype)
+    ]
+    classified = set(numerical) | set(boolean) | set(categorical)
+    others = [col for col in data.columns if col not in classified]
     column_classification = {
         'numerical':numerical,
         'boolean':boolean,

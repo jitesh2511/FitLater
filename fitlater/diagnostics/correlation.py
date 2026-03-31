@@ -2,10 +2,9 @@ from fitlater.diagnostics.base import make_issue
 from fitlater.diagnostics.base import get_max_severity
 from fitlater.config import CORR_SEVERITY_THRESHOLD
 
-def check_correlation(result) -> dict:
-    correlation = result.get('correlation')
+def check_correlation(correlation) -> dict:
 
-    if correlation.get('high_corr_pairs', None) is empty:
+    if not correlation.get('high_corr_pairs', None):
         return make_issue('correlation', None, False, "low")
     
     high_corr_pairs = correlation.get('high_corr_pairs', [])
@@ -13,6 +12,13 @@ def check_correlation(result) -> dict:
     high_corr_summary = {}
 
     for idx, pair in enumerate(high_corr_pairs, 1):
+        feature_1 = pair.get('feature_1')
+        feature_2 = pair.get('feature_2')
+
+        # Skip self-correlations; tests expect feature_1 != feature_2
+        if feature_1 == feature_2:
+            continue
+
         corr_value = pair.get('correlation', 0)
         # Severity assignment
         if abs(corr_value) <= CORR_SEVERITY_THRESHOLD['low']:
@@ -23,8 +29,8 @@ def check_correlation(result) -> dict:
             severity = 'high'
 
         high_corr_summary[f'pair_{idx}'] = {
-            'feature1': pair.get('feature_1'),
-            'feature2': pair.get('feature_2'),
+            'feature_1': feature_1,
+            'feature_2': feature_2,
             'correlation': corr_value,
             'severity': severity,
             'hint': 'Merge both columns'

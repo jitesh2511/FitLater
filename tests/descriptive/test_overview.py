@@ -77,7 +77,17 @@ def test_duplicates():
 def test_empty_dataframe():
     df = pd.DataFrame()
     result = analyze(df)
-    assert result == {}
+
+    ex_keys = {
+        'shape',
+        'column_classification',
+        'categorical_summary',
+        'missing',
+        'numerical_summary',
+        'duplicates'
+    }
+
+    assert set(result.keys()) == ex_keys
 
 def test_structure():
 

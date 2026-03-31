@@ -37,7 +37,12 @@ After the app starts, try the bundled sample dataset (paths are relative to the 
 >> overview
 >> correlation
 >> outlier
->> result
+>> describe
+>> missing_diags
+>> corr_diags
+>> outlier_diags
+>> dist_diags
+>> diagnostics
 >> exit
 ```
 

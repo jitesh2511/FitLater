@@ -5,6 +5,10 @@ def analyze_correlation(df:pd.DataFrame, corr_threshold) -> dict:
 
     numerical = df.select_dtypes(include='number').columns
 
+    # Remove numeric columns that are completely empty (all NaN)
+    nonempty_numerical = [col for col in numerical if not df[col].isnull().all()]
+    numerical = pd.Index(nonempty_numerical)
+
     if numerical.empty:
         return {
             'corr_matrix': None,

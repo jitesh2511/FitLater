@@ -1,6 +1,6 @@
 from fitlater.cli.runner import run_cli
 from fitlater.state.session import Session
-from fitlater.cli.formatter import info
+from fitlater.cli.formatter.base import info
 
 
 def main():

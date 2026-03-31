@@ -1,5 +1,5 @@
 from fitlater.config import CORRELATION_THRESHOLD, OUTLIER_THRESHOLD
-from fitlater.cli.formatter import format_results
+from fitlater.cli.formatter.descriptive import format_results
 from fitlater.core.overview import analyze
 from fitlater.core.correlation import analyze_correlation
 from fitlater.core.outliers import analyze_outliers

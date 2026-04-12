@@ -14,7 +14,7 @@ dependencies = [
     "numpy>=1.24",
 ]
 authors = [
-  { name="Jitesh Krishna", email="jiteshkrishna06@gmail.com" }
+  { name="Jitesh Krishna", email="jiteshkrishna6@gmail.com" }
 ]
 
 

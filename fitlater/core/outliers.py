@@ -4,19 +4,34 @@ import numpy as np
 def analyze_outliers(df:pd.DataFrame, outlier_threshold:float) -> dict:
     numeric = df.select_dtypes(include='number').columns
 
-    # Exclude numeric columns that are fully missing (all NaN values)
-    numeric = [col for col in numeric if not df[col].isna().all()]
+    skipped_columns = {}
+
+    for col in df.columns:
+        if not pd.api.types.is_numeric_dtype(df[col]):
+            skipped_columns[col] = 'non_numeric'
+            continue
+
+        missing_ratio = df[col].isna().mean()
+
+        if missing_ratio > 0.6:
+            skipped_columns[col] = 'too_many_missing'
+            continue
     # Exclude numeric columns with more than 60% missing values
     numeric = [col for col in numeric if df[col].isna().mean() <= 0.6]
 
     if not numeric:
         return {
             'method': 'IQR',
-            'outlier_counts': None,
-            'outlier_percentage': None,
-            'columns_with_outliers': None,
-            'bounds': None,
-            'outlier_summary': None,
+            'outlier_counts': {},
+            'outlier_percentage': {},
+            'columns_with_outliers': [],
+            'bounds': {},
+            'skipped_columns': skipped_columns,
+            'outlier_summary': {
+                'n_numeric_features': 0,
+                'n_features_with_outliers': 0,
+                'max_outlier_percentage': 0
+            }
         }
     
     quantiles = {
@@ -62,5 +77,6 @@ def analyze_outliers(df:pd.DataFrame, outlier_threshold:float) -> dict:
         'outlier_percentage': outlier_percentage,
         'columns_with_outliers': columns_with_outliers,
         'bounds': bounds,
+        'skipped_columns': skipped_columns,
         'outlier_summary': outlier_summary
     }

@@ -27,9 +27,9 @@ def check_missing(result) -> dict:
             ),
             'hint': 'Impute missing values if important, else drop',
         }
-        for col in missing_per
+        for col in valid_missing
     }
  
     # `has_issue` is true if at least one column has non-zero missing.
-    has_issue = any(float(v) > 0 for v in missing_per.values())
+    has_issue = any(float(v) > 0 for v in valid_missing.values())
     return make_issue('missing', missing_summary, has_issue, get_max_severity(missing_summary))

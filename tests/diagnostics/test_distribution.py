@@ -101,3 +101,24 @@ def test_distribution_values():
         # If no issues, data should be None
         assert not result['meta']['has_issue']
         assert result['meta']['max_severity'] == 'low'
+
+
+@pytest.mark.parametrize("bad_input", [None, 123, "string", [], {}])
+def test_invalid_input(bad_input):
+    with pytest.raises(Exception):
+        check_distribution(bad_input)
+    
+def test_empty_dataframe():
+    df = pd.DataFrame()
+    result = check_distribution(df)
+
+    assert result['meta']['has_issue'] is False
+
+def test_no_skew_case():
+    df = pd.DataFrame({
+        'A': np.random.normal(0, 1, 100)
+    })
+
+    result = check_distribution(df)
+
+    assert not result['meta']['has_issue']

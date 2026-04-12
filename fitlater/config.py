@@ -1,6 +1,6 @@
 # Metadata
 NAME = 'FitLater'
-VERSION = '0.2.0'
+VERSION = '0.3.0'
 
 # Correlation 
 CORRELATION_THRESHOLD = 0.6
@@ -33,4 +33,20 @@ CORR_SEVERITY_THRESHOLD = {
 SKEW_SEVERITY_THRESHOLD = {
     'low' : 1.0,
     'medium' : 1.5
+}
+
+
+# Advisory
+
+PRIORITY_LABELS = {
+    1: 'HIGH',
+    2: 'MEDIUM',
+    3: 'LOW'
+}
+
+ISSUE_LABELS = {
+    'missing': 'Missing Values',
+    'outliers': 'Outliers',
+    'distribution': 'Distribution',
+    'correlation': 'Correlation'
 }

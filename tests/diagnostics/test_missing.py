@@ -1,6 +1,8 @@
 from fitlater.diagnostics.missing import check_missing
 from fitlater.core.overview import analyze
 
+
+import pytest
 import pandas as pd
 import numpy as np
 
@@ -75,6 +77,13 @@ def test_missing_values():
     }
 
     for col, (pct, sev) in expected.items():
+
+        no_missing = ['C', 'G', 'K']
+
+        if col in no_missing:
+            assert col not in missing['data']
+            continue
+        
         assert col in missing['data']
         actual_pct = missing['data'][col]['missing_percentage']
         actual_sev = missing['data'][col]['severity']
@@ -82,3 +91,20 @@ def test_missing_values():
         # Allow float equality for missing percentage
         assert abs(actual_pct - pct) < 0.01, f"Column {col}: got {actual_pct}, expected {pct}"
         assert actual_sev == sev, f"Column {col}: got {actual_sev}, expected {sev}"
+
+@pytest.mark.parametrize("bad_input", [None, 123, "string", [], {}])
+def test_invalid_input(bad_input):
+    with pytest.raises(Exception):
+        check_missing(analyze(bad_input))
+
+def test_empty_dataframe():
+    df = pd.DataFrame()
+    result = check_missing(analyze(df))
+
+    assert result['meta']['has_issue'] is False
+
+def test_empty_df_missing():
+    df = pd.DataFrame()
+    result = check_missing(analyze(df))
+
+    assert result['meta']['has_issue'] is False

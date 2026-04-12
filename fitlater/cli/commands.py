@@ -8,7 +8,8 @@ from fitlater.pipeline import (
     get_corr_diag,
     get_outliers_diag,
     get_distribution_diag,
-    get_diagnostics
+    get_diagnostics,
+    get_advisory_report
 )
 
 def load_dataset(session, args):
@@ -17,6 +18,9 @@ def load_dataset(session, args):
         return
     
     path = args[0]
+
+    if not path.endswith('.csv'):
+        path = path + '.csv'
 
     try:
         session.df = pd.read_csv(path)
@@ -87,3 +91,10 @@ def diagnostics_command(session, args):
         return
     
     print(get_diagnostics(session.df),'\n')
+
+def advisory_report_command(session, args):
+    if session.df is None:
+        print('No dataset loaded\n')
+        return
+    
+    print(get_advisory_report(session.df), '\n')

@@ -1,9 +1,11 @@
+from fitlater.core.outliers import analyze_outliers
 from fitlater.diagnostics.correlation import check_correlation
 from fitlater.core.correlation import analyze_correlation
 from fitlater.config import CORRELATION_THRESHOLD
 
 import pandas as pd
 import numpy as np
+import pytest
 
 def create_corr_edge_df():
     """
@@ -117,3 +119,26 @@ def test_corr_values():
         assert corr['data'] is None or corr['data'] == {}
         assert corr['meta']['max_severity'] == 'low'
         assert not corr['meta']['has_issue']
+
+
+@pytest.mark.parametrize("bad_input", [None, 123, "string", [], {}])
+def test_invalid_input(bad_input):
+    with pytest.raises(Exception):
+        check_correlation(analyze_correlation(bad_input, CORRELATION_THRESHOLD))
+    
+def test_empty_dataframe():
+    df = pd.DataFrame()
+    result = check_correlation(analyze_correlation(df, CORRELATION_THRESHOLD))
+
+    assert result['meta']['has_issue'] is False
+
+def test_no_correlation_case():
+    df = pd.DataFrame({
+        'A': np.random.rand(50),
+        'B': np.random.rand(50)
+    })
+
+    result = check_correlation(analyze_correlation(df, CORRELATION_THRESHOLD))
+
+    assert not result['meta']['has_issue']
+    assert result['meta']['max_severity'] == 'low'

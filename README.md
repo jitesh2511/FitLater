@@ -1,11 +1,91 @@
 # 📊 FitLater
 
+## 🚀 Version 0.3.0
+
+- ✅ Complete multi-layer pipeline:
+  - Descriptive → Diagnostics → Advisory → Profile
+- ✅ 100+ unit and integration tests
+- ✅ Robust handling of edge cases (NaN, boolean, empty datasets)
+- ✅ Stable CLI interface
+- ✅ Deterministic and consistent outputs
+
+
+## What is FitLater?
+
+FitLater is a CLI-based data analysis tool that helps users understand their dataset before building machine learning models.
+
+It provides structured insights and actionable recommendations through a multi-layer pipeline:
+- Descriptive → Diagnostics → Advisory → Profile
+
+The goal is not just to analyze data, but to guide better decisions during preprocessing and model development.
+
+---
+
+## ✨ Features
+
+- 📊 Comprehensive data overview
+- ⚠️ Automated issue detection (missing, outliers, skew, correlation)
+- 💡 Actionable recommendations for preprocessing
+- 🧠 Intelligent profiling of columns
+- 🧪 100+ tests ensuring stability and correctness
+- 💻 CLI-based interactive workflow
+
+---
+
+## 🏗️ Architecture
+
+FitLater follows a layered design:
+
+### 1. Descriptive Layer
+Provides fundamental dataset insights:
+- Shape, data types, distributions
+- Missing values, duplicates
+
+### 2. Diagnostics Layer
+Identifies potential issues:
+- Missing data severity
+- Outliers
+- Skewed distributions
+- Feature correlations
+
+### 3. Advisory Layer
+Transforms issues into actionable recommendations:
+- Data cleaning strategies
+- Feature transformations
+- Model-impact insights
+
+### 4. Profile Layer
+Builds column-level metadata:
+- Skew, missing %, outliers
+- Data type understanding
+
+> This layered approach ensures clarity, consistency, and scalability.
+
+---
+
+## 🧪 Testing
+
+FitLater includes 100+ unit and integration tests covering:
+
+- Edge cases (NaN, boolean, empty data)
+- Layer-wise validation
+- Full pipeline consistency
+- Deterministic outputs
+
+Run tests:
+
+```bash
+pytest
+```
+
+---
+
 ## Quick start
 
 **Requirements:** Python 3.10 or newer.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/FitLater.git
+git clone https://github.com/jitesh2511/FitLater
 cd FitLater
 python -m venv .venv
 ```
@@ -30,33 +110,19 @@ pytest
 fitlater
 ```
 
-After the app starts, try the bundled sample dataset (paths are relative to the repo root):
+After loading a dataset:
 
-```
->> load examples/sample.csv
->> overview
->> correlation
->> outlier
->> describe
->> missing_diags
->> corr_diags
->> outlier_diags
->> dist_diags
->> diagnostics
->> exit
-```
+- `overview` → Dataset summary  
+- `correlation` → Correlation analysis  
+- `outlier` → Outlier detection  
+- `missing_diags` → Missing value diagnostics  
+- `corr_diags` → Correlation diagnostics  
+- `outlier_diags` → Outlier diagnostics  
+- `dist_diags` → Distribution diagnostics  
+- `diagnostics` → Full diagnostics report  
+- `advisory_report` → Full advisory report [new in version 0.3.0]
 
 Type `help` for commands. Use `exit` to quit.
-
----
-
-## What is FitLater?
-
-FitLater is a tool used to explore data and provide powerful insights which helps in building better ML models. It helps the user to better understand the data they are working with and helps them make better decisions regarding their model.
-
-The primary purpose of the tool is to provide clarity to the user regarding their data. After using the tool, users should have clarity of how their data is behaving.
-
-It protects the user from leaving out any useful insights while rushing in building their models and provides complete information on how to mold their data for training.
 
 ---
 
@@ -100,14 +166,16 @@ FitLater follows a simple philosophy:
 
 > **“Understand first, model later.”**
 
+
 ---
 
 ## 🔮 Future Scope
 
-- Advanced insight generation  
-- Data cleaning suggestions  
-- Feature engineering recommendations  
-- Model guidance (without becoming AutoML)  
+- Web-based UI (Streamlit / React)
+- Exportable reports (PDF/HTML)
+- Integration with ML pipelines
+- Advanced feature engineering suggestions
+
 
 ---
 

@@ -4,6 +4,7 @@ from fitlater.config import OUTLIER_THRESHOLD
 
 import pandas as pd
 import numpy as np
+import pytest
 
 def create_outlier_df():
     np.random.seed(42)
@@ -111,3 +112,23 @@ def test_outlier_values():
     if 'feature_unique' in outlier_keys:
         unique_stats = outliers['data']['feature_unique']
         assert unique_stats['outlier_percentage'] == 0.0
+
+@pytest.mark.parametrize("bad_input", [None, 123, "string", [], {}])
+def test_invalid_input(bad_input):
+    with pytest.raises(Exception):
+        check_outliers(analyze_outliers(bad_input))
+
+def test_empty_dataframe():
+    df = pd.DataFrame()
+    result = check_outliers(analyze_outliers(df, OUTLIER_THRESHOLD))
+
+    assert result['meta']['has_issue'] is False
+
+def test_no_outliers_case():
+    df = pd.DataFrame({
+        'A': np.linspace(1, 100, 100)
+    })
+
+    result = check_outliers(analyze_outliers(df, OUTLIER_THRESHOLD))
+
+    assert not result['meta']['has_issue']

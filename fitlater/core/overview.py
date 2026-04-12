@@ -4,12 +4,26 @@ def analyze(data: pd.DataFrame) -> dict:
     
     if (data.empty):
         return {
-            'shape':None,
-            'column_classification':None,
-            'categorical_summary': None,
-            'missing':None,
-            'numerical_summary':None,
-            'duplicates':None
+            'shape': {
+                'n_rows': data.shape[0],
+                'n_cols': data.shape[1]
+            },
+            'column_classification': {
+                'numerical': [],
+                'categorical': [],
+                'boolean': [],
+                'others': []
+            },
+            'categorical_summary': {},
+            'missing': {
+                'total_missing': 0,
+                'missing_per_column': {},
+                'missing_percentage': {}
+            },
+            'numerical_summary': {},
+            'duplicates': {
+                'n_dup': 0
+            }
         }
     
     columns = data.columns

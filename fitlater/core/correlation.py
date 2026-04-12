@@ -24,17 +24,25 @@ def analyze_correlation(df:pd.DataFrame, corr_threshold) -> dict:
     # High Correlation Pairs
     high_corr = upper_tri[abs(upper_tri) > corr_threshold].stack()
     high_corr_list = [{'feature_1': idx[0], 'feature_2': idx[1], 'correlation': round(value,4)} for idx, value in high_corr.items()]
+    final_list = []
+    for pair in high_corr_list:
+        if pair['feature_1'] == pair['feature_2']:
+            continue
+        if np.isnan(pair['correlation']):
+            continue
+        final_list.append(pair)
+
 
     # Correlation Summary
     corr_sum = {
         'n_numeric_features':len(numerical),
-        'n_high_corr_pairs':len(high_corr_list),
+        'n_high_corr_pairs':len(final_list),
         'max_corr': round(upper_tri.stack().max(), 4),
         'mean_abs_corr': round(upper_tri.abs().stack().mean(), 4)
     }
 
     return {
         'corr_matrix': corr,
-        'high_corr_pairs': high_corr_list,
+        'high_corr_pairs': final_list,
         'corr_summary': corr_sum
     }

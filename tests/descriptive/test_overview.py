@@ -104,3 +104,71 @@ def test_structure():
     }
 
     assert set(result.keys()) == ex_keys
+
+
+@pytest.mark.parametrize("bad_input", [None, 123, "string", [], {}])
+def test_invalid_input(bad_input):
+    with pytest.raises(Exception):
+        analyze(bad_input)
+
+def test_empty_df_with_columns():
+    df = pd.DataFrame(columns=['A', 'B'])
+    result = analyze(df)
+
+    assert result['shape']['n_rows'] == 0
+    assert result['shape']['n_cols'] == 2
+
+def test_all_missing_column():
+    df = pd.DataFrame({
+        'A': [np.nan, np.nan, np.nan]
+    })
+
+    result = analyze(df)
+
+    assert result['missing']['total_missing'] == 3
+    assert result['missing']['missing_per_column']['A'] == 3
+
+def test_no_missing_values():
+    df = pd.DataFrame({
+        'A': [1,2,3]
+    })
+
+    result = analyze(df)
+
+    assert result['missing']['total_missing'] == 0
+
+def test_all_duplicates():
+    df = pd.DataFrame({
+        'A': [1,1,1],
+        'B': [2,2,2]
+    })
+
+    result = analyze(df)
+
+    assert result['duplicates']['n_dup'] == 2
+
+def test_no_duplicates():
+    df = pd.DataFrame({
+        'A': [1,2,3]
+    })
+
+    result = analyze(df)
+
+    assert result['duplicates']['n_dup'] == 0
+
+def test_mixed_missing_types():
+    df = pd.DataFrame({
+        'A': [1, None, np.nan]
+    })
+
+    result = analyze(df)
+
+    assert result['missing']['total_missing'] == 2
+
+def test_deterministic_output():
+    df = create_sample_df()
+
+    r1 = analyze(df)
+    r2 = analyze(df)
+
+    assert r1 == r2

@@ -1,3 +1,4 @@
+import math
 from fitlater.diagnostics.base import make_issue
 from fitlater.diagnostics.base import get_max_severity
 from fitlater.config import CORR_SEVERITY_THRESHOLD
@@ -20,6 +21,10 @@ def check_correlation(correlation) -> dict:
             continue
 
         corr_value = pair.get('correlation', 0)
+
+        if corr_value is None or (isinstance(corr_value, float) and math.isnan(corr_value)):
+            continue
+
         # Severity assignment
         if abs(corr_value) <= CORR_SEVERITY_THRESHOLD['low']:
             severity = 'low'

@@ -7,7 +7,8 @@ from fitlater.cli.commands import (load_dataset,
                                    corr_diag_command,
                                    outlier_diag_command,
                                    distribution_diag_command,
-                                   diagnostics_command)
+                                   diagnostics_command,
+                                   advisory_report_command)
 
 COMMANDS = {
     'load':load_dataset,
@@ -19,5 +20,6 @@ COMMANDS = {
     'corr_diags':corr_diag_command,
     'outlier_diags':outlier_diag_command,
     'dist_diags':distribution_diag_command,
-    'diagnostics':diagnostics_command
+    'diagnostics':diagnostics_command,
+    'advisory_report':advisory_report_command
 }

@@ -1,0 +1,50 @@
+.panel-card{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--panel-color);
+    border-radius: 20px;
+    flex:1;
+    min-height: 400px;
+    color:white;
+    border: 1px solid var(--border);
+}
+
+.panel-card .panel-head{
+    margin-left:5%;
+    margin-top:5%;
+}
+
+.panel-card .panel-sub{
+    font-weight:300;
+    opacity: 0.5;
+    font-size: 14px;
+    margin-top:6px;
+    margin-left:5%;
+}
+
+.card{
+    background-color: var(--subpanel-color);
+    border: 1px solid var(--border);
+    min-height: 200px;
+    flex:1;
+    border-radius: 20px;
+}
+.card .card-title{
+    font-size:18px;
+    font-weight:500;
+    letter-spacing: 1px;
+    color:var(--grey-font-color);
+    margin-left:8%;
+    margin-top:8%;
+}
+
+.card .card-value{
+    margin-top:70px;
+    margin-left:24px;
+    font-size:24px;
+}
+.card .card-sub{
+    margin-top:8px;
+    margin-left:24px;
+    font-size:16px;
+}

@@ -60,15 +60,23 @@ def get_outliers_diag(data):
 def get_distribution_diag(data):
     return format_distribution_diag(check_distribution(data), True)
 
-def get_diagnostics(data):
+def get_diagnostics(data, dictionary=False):
     missing = check_missing(over_analyze(data))
     corr = check_correlation(corr_analyze(data, CORRELATION_THRESHOLD))
     outliers = check_outliers(out_analyze(data, OUTLIER_THRESHOLD))
     distribution = check_distribution(data)
 
+    if dictionary:
+        return {
+            'missing':missing,
+            'distribution':distribution,
+            'outliers': outliers,
+            'correlation':corr
+        }
+
     return format_diagnostics(missing, corr, outliers, distribution)
 
-def get_advisory_report(data):
+def get_advisory_report(data, dictionary=False):
 
     profile = get_profile(data)
     diagnostics = [
@@ -79,5 +87,8 @@ def get_advisory_report(data):
     ]
 
     advisory_report = get_advice(profile, diagnostics)
+
+    if dictionary:
+        return advisory_report
 
     return format_advice(advisory_report)

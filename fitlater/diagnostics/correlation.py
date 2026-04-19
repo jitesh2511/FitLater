@@ -6,7 +6,7 @@ from fitlater.config import CORR_SEVERITY_THRESHOLD
 def check_correlation(correlation) -> dict:
 
     if not correlation.get('high_corr_pairs', None):
-        return make_issue('correlation', None, False, "low")
+        return make_issue('correlation', {}, False, "low")
     
     high_corr_pairs = correlation.get('high_corr_pairs', [])
 

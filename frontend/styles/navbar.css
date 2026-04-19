@@ -1,0 +1,84 @@
+.navbar{
+    position: fixed;
+    top: 0;
+    left:0;
+    z-index: 1000;
+    width:100%;
+
+
+    display: flex;
+    flex-shrink: 0;
+    gap: 20px;
+    background-color: var(--navbar-color);
+    height: 64px;
+    padding: 8px 24px;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-img {
+    height: 48px; width: 48px;
+}
+
+.logo-text {
+    font-family: var(--title-font);
+    font-size: 32px;
+    font-weight: 800;
+    color: white;
+}
+
+.navbar-links{
+    position: relative;
+    display: flex;
+    gap:12px;
+    color: var(--grey-font-color);
+    font-size:16px;
+    align-items: center;
+}
+
+.nav-slider {
+    position: absolute;
+    height: 100%;
+    background-color: var(--hover-color);
+    border-radius: 99px;
+    transition: all 0.3s ease;
+
+    z-index: 0;
+}
+
+.navbar-links .nav-item{
+    display:flex;
+    align-items: center;
+    padding: 8px 12px;
+    box-sizing: border-box;
+}
+
+.navbar-links .nav-item.active{
+    background-color: var(--hover-color);
+    color: black;
+    font-weight: 550;
+    border-radius: 99px;
+}
+
+.navbar-links .nav-item:hover{
+    cursor: pointer;
+    background-color: var(--hover-color);
+    border-radius: 99px;
+    color: black;
+}
+
+.nav-item {
+    transition: 0.2s ease;
+    position: relative;
+    z-index: 1;
+}

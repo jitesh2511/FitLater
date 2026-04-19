@@ -23,3 +23,6 @@ venv/
 
 # Test Data
 data/
+
+# Design photos
+frontend/assets/design/

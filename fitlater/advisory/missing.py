@@ -31,5 +31,5 @@ def handle_missing(column, data, profile):
             recommendation = 'Fill with mean'
             reason = 'Mean is suitable for approximately normally distributed data'
 
-    reason = f'{reason}. Missing percentage is {missing_per}%'
+    reason = f'{reason}. Missing percentage is {round(missing_per, 2)}%'
     return build_advice(column, 'missing', recommendation, reason, priority)

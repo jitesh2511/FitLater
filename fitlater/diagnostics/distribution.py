@@ -12,12 +12,12 @@ def check_distribution(data:pd.DataFrame) -> dict:
     numeric_features = [col for col in numeric_features if data[col].isna().mean() < 0.6]
 
     if not numeric_features:
-        return make_issue('distribution', None, False, 'low')
+        return make_issue('distribution', {}, False, 'low')
 
     high_skew = [col for col in numeric_features if abs(data[col].skew()) > SKEW_THRESHOLD]
 
     if not high_skew:
-        return make_issue('distribution', None, False, 'low')
+        return make_issue('distribution', {}, False, 'low')
 
     skew_values = {col : data[col].skew() for col in high_skew}
 

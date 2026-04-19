@@ -6,14 +6,14 @@ def check_missing(result) -> dict:
     missing = result.get('missing')
 
     if missing is None:
-        return make_issue('missing', None, False, "low")
+        return make_issue('missing', {}, False, "low")
 
     missing_per = missing.get('missing_percentage', {})
 
     valid_missing = {col: missing_per[col] for col in missing_per if abs(missing_per[col]) > 1e-12}
 
     if not valid_missing:
-        return make_issue('missing', None, False, 'low')
+        return make_issue('missing', {}, False, 'low')
 
     missing_summary = {
         col: {

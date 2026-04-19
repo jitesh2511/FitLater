@@ -69,7 +69,12 @@ def analyze(data: pd.DataFrame) -> dict:
     }
 
     # Numerical Summary
-    numerical_summary = data[numerical].agg(['mean','median','std','min','max','skew']).to_dict()
+    if len(numerical) == 0:
+        numerical_summary = {}
+    else:
+        numerical_summary = data[numerical].agg(
+            ['mean','median','std','min','max','skew']
+        ).to_dict()
     
     # Categorical Summary
     categorical_summary = {}

@@ -1,0 +1,133 @@
+/* Container */
+.about-page {
+    color: white;
+    padding: 20px;
+    max-width: 1100px;
+    margin: 0;
+}
+  
+/* Intro Section */
+.about-intro {
+    margin-top: 20px;
+}
+  
+.about-intro h2 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+  
+.about-intro p {
+    color: var(--grey-font-color);
+    font-size: 16px;
+}
+  
+/* Sections */
+.about-section {
+    margin-top: 48px;
+}
+  
+.about-section h3 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+  
+/* Skills (Tags / Pills) */
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+  
+.skills span {
+    padding: 6px 12px;
+    background: var(--subpanel-color);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 14px;
+    color: var(--grey-font-color);
+    transition: all 0.2s ease;
+}
+  
+.skills span:hover {
+    color: white;
+    border-color: var(--sidebar-active-svg);
+    cursor: default;
+}
+  
+/* Projects Grid */
+.projects {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+  
+/* Project Cards */
+.project-card {
+    padding: 16px;
+    background: var(--overview-panel-color);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    transition: all 0.25s ease;
+}
+  
+.project-card h4 {
+    margin: 0;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+  
+.project-card p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--grey-font-color);
+}
+  
+/* Hover Effect */
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 8px white;
+    cursor: default;
+}
+
+.project-links {
+    margin-top: 12px;
+    display: flex;
+    gap: 10px;
+  }
+  
+/* Base button */
+.btn {
+    display: flex;
+    align-items: center;
+    gap:6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 6px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    color: var(--grey-font-color);
+    transition: all 0.2s ease;
+}
+  
+/* GitHub button */
+.btn.github:hover {
+    color: white;
+    border-color: white;
+}
+  
+/* Live button */
+.btn.live {
+    border-color: var(--sidebar-active-svg);
+    color: var(--sidebar-active-svg);
+}
+  
+.btn.live:hover {
+    background-color: var(--sidebar-active-svg);
+    color: black;
+}
+
+.btn svg{
+    display: block;
+}

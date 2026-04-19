@@ -34,19 +34,34 @@ def create_sample_df():
         # Categorical column (should be ignored by outlier module)
         "category": np.random.choice(["A", "B", "C"], 100)
     })
+    return df
 
 def test_outlier_structure():
 
     result = analyze_outliers(create_sample_df(), 0.01)
 
-    expected_keys = {'method', 'outlier_counts', 'outlier_percentage', 'columns_with_outliers','bounds','outlier_summary'}
+    expected_keys = {
+        'method',
+        'outlier_counts',
+        'outlier_percentage',
+        'columns_with_outliers',
+        'bounds',
+        'outlier_summary',
+        'skipped_columns'
+    }
 
     assert set(result.keys()) == expected_keys
-    assert set(result['bounds'].keys()) == {'lower_bound', 'upper_bound'}
-    assert set(result['outlier_summary']) == {'n_numeric_features', 'n_features_with_outliers', 'max_outlier_percentage'}
+    # bounds is {column_name: {lower_bound, upper_bound}} per numeric feature
+    for col, b in result['bounds'].items():
+        assert set(b.keys()) == {'lower_bound', 'upper_bound'}
+    assert set(result['outlier_summary'].keys()) == {
+        'n_numeric_features',
+        'n_features_with_outliers',
+        'max_outlier_percentage',
+    }
+
 
 def test_outlier_values():
-
     result = analyze_outliers(create_sample_df(), 0.01)
 
     assert result['method'] == 'IQR'
@@ -56,3 +71,41 @@ def test_outlier_values():
     assert 'with_outliers' in result['columns_with_outliers']
     assert result['outlier_summary']['n_numeric_features'] == 6
 
+def test_small_dataset():
+    df = pd.DataFrame({'A': [1,2,3]})
+    result = analyze_outliers(df, 0.01)
+
+    assert isinstance(result, dict)
+
+def test_constant_column_only():
+    df = pd.DataFrame({'A': [10]*100})
+    result = analyze_outliers(df, 0.01)
+
+    assert result['outlier_counts']['A'] == 0
+
+def test_all_nan_column():
+    df = pd.DataFrame({'A': [np.nan]*50})
+    result = analyze_outliers(df, 0.01)
+
+    assert 'A' in result['skipped_columns'].keys()
+
+def test_no_numeric_columns():
+    df = pd.DataFrame({'A': ['x','y','z']})
+    result = analyze_outliers(df, 0.01)
+
+    assert result['outlier_counts'] == {}
+    assert result['columns_with_outliers'] == []
+ 
+def test_only_negative_values():
+    df = pd.DataFrame({'A': [-10, -20, -30, -1000]})
+    result = analyze_outliers(df, 0.01)
+
+    assert 'A' in result['outlier_counts']
+
+def test_outliers_deterministic():
+    df = create_sample_df()
+
+    r1 = analyze_outliers(df, 0.01)
+    r2 = analyze_outliers(df, 0.01)
+
+    assert r1 == r2

@@ -1,0 +1,199 @@
+.overview{
+    color:white;
+    padding: 20px;
+    background-color: var(--bg-color);
+    max-width: 1100px;
+    margin:0;
+}
+
+.overview p{
+    color:var(--grey-font-color);
+}
+
+.overview .section{
+    margin-top : 40px;
+    background-color: var(--panel-color);
+    border:1px solid var(--border);
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.overview .head{
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.overview .overview-head h2{
+    margin-top: 30px;
+    font-size:40px;
+    letter-spacing: 2px;
+}
+
+.wif .subhead{
+    padding: 15px 10px;
+}
+.overview .points{
+    color:var(--grey-font-color);
+    padding: 0px 20px;
+}
+
+.not-grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+  
+.not-card {
+    padding: 16px;
+    border-left: 4px solid #ff1d21; /* red accent */
+    background: var(--subpanel-color); /* match your theme */
+    border-radius: 5px;
+}
+
+.not-card:hover{
+    cursor: default;
+    box-shadow: 0 0 8px #ff1d21;
+    transition: box-shadow 0.3s ease;
+}
+  
+.not-card .icon {
+    display: block;
+    margin-bottom: 2px;
+}
+
+.not-item{
+    display:flex;
+    align-items: center;
+    gap:10px;
+}
+.not-item p{
+    margin:0px;
+}
+
+.arch-flow{
+    display: flex;
+    padding:20px;
+    align-items: center;
+    gap:10px;
+}
+.arch-card{
+    min-height: 100px;
+    position: relative;
+    border: 1px solid var(--border);
+    padding:10px;
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--subpanel-color);
+    border-radius: 10px;
+    gap:4px;
+    transition: all 0.25s ease;
+}
+
+.arch-card .desc {
+    opacity: 0;
+    transform: translateY(10px);
+    text-align: center;
+    max-height: 0;
+    overflow:hidden;
+    transition: all 0.6s ease;
+    font-size: 14px;
+    margin-top: 5px;
+}
+.arch-card:hover{
+    box-shadow: 0 0 8px white;
+    cursor: default;
+}
+.arch-card:hover .desc{
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 80px;
+}
+
+.architecture .arrow {
+    margin-right: 4px;
+    font-size: 20px;
+    opacity: 0.5;
+    animation: flow 1.5s infinite;
+}
+.architecture .a1 { animation-delay: 0s; }
+.architecture .a2 { animation-delay: 0.5s; }
+  
+  @keyframes flow {
+    0% {
+      transform: translateX(0);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translateX(6px);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 0.3;
+    }
+  }
+
+.features-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+ 
+.feature-card {
+    padding: 16px;
+    background: var(--overview-panel-color);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: 0.3s ease;
+}
+
+.feature-card p{
+    margin-top:4px;
+}
+  
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 8px white;
+    cursor: default;
+}
+
+.steps {
+    margin-top:24px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+  
+.step {
+    text-align: center;
+    max-width: 200px;
+}
+
+.step p{
+    margin-top:4px;
+}
+  
+.circle {
+    width: 40px;
+    height: 40px;
+    font-weight: 600;
+    border-radius: 50%;
+    background: #13ba95;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+}
+
+.arch-card:hover,
+.feature-card:hover,
+.not-card:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+}

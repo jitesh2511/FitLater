@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitLater</title>
+    <link rel="icon" type="image/x-icon" href="assets/logo.png">
+    
+    <!-- Scripts -->
+    <script src="js/sidebar.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/navbar.js" defer></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/navbar.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/contact.css">
+    <link rel="stylesheet" href="styles/overview.css">
+    <link rel="stylesheet" href="styles/about.css">
+
+</head>
+
+<body>
+    
+
+    <div class="app">
+
+        <div class="navbar">
+
+            <!-- Left Section -->
+            <div class="navbar-left">
+                <div class="logo">
+                    <img class='logo-img' src='assets/logo.png' alt='logo.png'>
+                    <span class="logo-text">FitLater</span>
+                </div>
+        
+                <div class="navbar-links">
+                    <div class="nav-slider"></div>
+                    <span class="nav-item active" data-page="dashboard">Dashboard</span>
+                    <span class="nav-item" data-page="overview">Overview</span>
+                    <span class="nav-item" data-page="about">About</span>
+                    <span class="nav-item" data-page="contact">Contact</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+
+            <!-- Navigation -->
+            <div class="sidebar-links">
+                <button class= "toggle-btn" id="toggleSidebar">
+                    <span class="arrow">
+                        <svg width="20px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                </button>
+                <div class="sidebar-item active">
+                    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></div>
+                    <span class="text">Dashboard</span>
+                </div>
+                <div class="sidebar-item">
+                    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg></div>
+                    <span class="text">Analytics</span>
+                </div>
+                <div class="sidebar-item">
+                    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-plus-icon lucide-clipboard-plus"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 14h6"/><path d="M12 17v-6"/></svg></div>
+                    <span class="text">Reports</span>
+                </div>
+                <div class="sidebar-item">
+                    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg></div>
+                    <span class="text">Settings</span>
+                </div>
+            </div>
+        </div>
+        <div class="main">
+            
+            
+            <div class="page" id="dashboard-page">
+                <div class="heading">
+                    <h2 class="main">Dashboard</h2>
+                    <h5 class="sub">Upload a data file to analyze and generate insights</h5>
+                </div>
+
+                <div class="panel">
+
+                    <div class="main-panel">
+                        
+                        <div class="panel-card upload">
+                            <h3 class="panel-head">Upload Data File</h3>
+                            <p class="panel-sub">Drag and drop a CSV file to begin analysis</p>
+                            <div class="upload-box">
+
+                                <!-- EMPTY STATE -->
+                                <div class="state state-empty">
+
+                                    <!-- Hidden Input -->
+                                    <input type="file" id="fileInput" accept=".csv" hidden />
+
+                                    <!-- Button -->
+                                    <button class="upload-btn" id="uploadTrigger">
+                                        <img src="assets/plus.png" height="16px" width="16px" alt="Add file">
+                                    </button>
+                                    
+                                    <p class="upload-box-head">Drag & drop your CSV file</p>
+                                    <p class="upload-box-sub">or click to browse</p>
+                                </div>
+                                
+                                <!-- LOADING STATE -->
+                                <div class="state state-loading hidden">
+                                    Uploading file...
+                                </div>
+
+                                <!-- RESULT STATE -->
+                                <div class="state state-result hidden">
+                                    <div class="file-list">
+
+                                        <div class="file-card">
+                                            <div class="file-info">
+                                                <span class="file-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-chart-column-increasing-icon lucide-file-chart-column-increasing"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M8 18v-2"/><path d="M12 18v-4"/><path d="M16 18v-6"/></svg>
+                                                </span>
+                                                <div class="file-meta">
+                                                    <span class="file-name"></span>
+                                                    <span class="file-size"></span>
+                                                </div>
+                                            </div>
+                                            <button class="remove-file">✖</button>
+                                        </div>
+                                    </div>
+                                    <button class="upload-more-btn" id="uploadMoreBtn">
+                                        + Add another file
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="panel-card advisory">
+                            <h3 class="panel-head">Advisory Panel</h3>
+                            <p class="panel-sub">Data-driven recommendations and alerts</p>
+                            <div class="advise-box">
+
+                                <!-- EMPTY STATE -->
+                                <div class="state state-empty">
+                                    No dataset uploaded
+                                </div>
+
+                                <!-- LOADING STATE -->
+                                <div class="state state-loading hidden">
+
+                                </div>
+
+                                <!-- RESULT STATE -->
+                                <div class="state state-result hidden">
+
+                                    <div class="advise-container">
+                                        <div class="advise high">
+                                            <p class="head">High Priority</p>
+                                            <div class="list"></div>
+                                        </div>
+                                        <div class="advise medium">
+                                            <p class="head">Medium Priority</p>
+                                            <div class="list"></div>
+                                        </div>
+                                        <div class="advise low">
+                                            <p class="head">Low Priority</p>
+                                            <div class="list"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="subpanel">
+
+                        <div class="card missing">
+
+                            <!-- EMPTY -->
+                            <div class="state state-empty">
+                                <h3 class="card-title">Missing Values</h3>
+                                <p class="card-sub">No data</p>
+                            </div>
+                            
+                            <!-- LOADING -->
+                             <div class="state state-loading hidden">
+                                
+                             </div>
+
+                            <!-- RESULT -->
+                            <div class="state state-result hidden">
+                                <h3 class="card-title">Missing Values</h3>
+                                <p class="card-value"></p>
+                                <p class="card-sub"></p>
+                            </div>
+
+                        </div>
+                        <div class="card distribution">
+
+                            <!-- EMPTY -->
+                            <div class="state state-empty">
+                                <h3 class="card-title">Skew</h3>
+                                <p class="card-sub">No data</p>
+                            </div>
+                            
+                            <!-- LOADING -->
+                            <div class="state state-loading hidden">
+                                
+                            </div>
+
+                            <!-- RESULT -->
+                            <div class="state state-result hidden">
+                                <h3 class="card-title">Skew</h3>
+                                <p class="card-value"></p>
+                                <p class="card-sub">Max Skew</p>
+                            </div>
+                        </div>
+                        <div class="card outliers">
+
+                            <!-- EMPTY -->
+                            <div class="state state-empty">
+                                <h3 class="card-title">Outliers</h3>
+                                <p class="card-sub">No data</p>
+                            </div>
+                            
+                            <!-- LOADING -->
+                            <div class="state state-loading hidden">
+                                
+                            </div>
+
+                            <!-- RESULT -->
+                            <div class="state state-result hidden">    
+                                <h3 class="card-title">Outliers</h3>
+                                <p class="card-value"></p>
+                                <p class="card-sub"></p>
+                            </div>
+                        </div>
+                        <div class="card corr">
+                            <!-- EMPTY -->
+                            <div class="state state-empty">
+                                <h3 class="card-title">Correlation</h3>
+                                <p class="card-sub">No data</p>
+                            </div>
+                            
+                            <!-- LOADING -->
+                            <div class="state state-loading hidden">
+                                
+                            </div>
+
+                            <!-- RESULT -->
+                            <div class="state state-result hidden">
+                                <h3 class="card-title">Correlation</h3>
+                                <p class="card-value"></p>
+                                <p class="card-sub">Max Correlation</p>
+                            </div>
+                        </div>
+    
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- OVERVIEW PAGE -->
+            <div class="page overview hidden" id="overview-page">
+                <div class="overview-head">
+                    <h2>FitLater</h2>
+                    <p>Understand first. Fit later.</p>
+                </div>
+                <div class="section wif">
+                    <h2 class="head">What is FitLater?</h2>
+                    <p class="subhead">FitLater is an EDA tool which helps the user understand their data and make better decisions for their ML Model preprocessing.</p>
+                    <ul class="points">
+                        <li>Follows a structured EDA pipeline instead of scattered analysis</li>
+                        <li>Goes beyond statistics to identify problems in your dataset</li>
+                        <li>Provides clear, reasoned advice on what to fix and why</li>
+                        <li>Built to bridge the gap between data understanding and preprocessing</li>
+                    </ul>
+                </div>
+                <div class="section wfin">
+                    <h2 class="head">What FitLater is NOT</h2>
+                    <div class="not-grid">
+                        <div class="not-card">
+                            <div class="not-item">
+                                <span class="icon">❌</span>
+                                <p>Not limited to generating charts and summary statistics</p>
+                            </div>
+                        </div>
+                    
+                        <div class="not-card">
+                            <div class="not-item">
+                                <span class="icon">❌</span>
+                                <p>Not a no-code dashboarding or BI solution</p>
+                            </div>
+                        </div>
+                    
+                        <div class="not-card">
+                            <div class="not-item">
+                                <span class="icon">❌</span>
+                                <p>Not focused on model training or predictions</p>
+                            </div>
+                        </div>
+                    
+                        <div class="not-card">
+                            <div class="not-item">
+                                <span class="icon">❌</span>
+                                <p>Not designed to replace human intuition, but to support it</p>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="section architecture">
+                    <h2 class="head">Architecture</h2>
+
+                    <div class="arch-flow">
+
+                        <div class="arch-card">
+                            <h4>Descriptive</h4>
+                            <p class="desc">Generates foundational statistics and summaries to provide an initial understanding of the dataset structure and distributions</p>
+                        </div>
+                        <div class="arrow a1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-right-dash-icon lucide-arrow-big-right-dash"><path d="M11 9a1 1 0 0 0 1-1V4.707a.707.707 0 0 1 1.207-.5l6.94 6.94a1.207 1.207 0 0 1 0 1.707l-6.94 6.94a.707.707 0 0 1-1.207-.5V16a1 1 0 0 0-1-1H9a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z"/><path d="M4 9v6"/></svg>
+                        </div>
+
+                        <div class="arch-card">
+                            <h4>Diagnostics</h4>
+                            <p class="desc">Analyzes the dataset to identify data quality and statistical issues such as missing values, outliers, and weak relationships</p>
+                        </div>
+                        <div class="arrow a2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-big-right-dash-icon lucide-arrow-big-right-dash"><path d="M11 9a1 1 0 0 0 1-1V4.707a.707.707 0 0 1 1.207-.5l6.94 6.94a1.207 1.207 0 0 1 0 1.707l-6.94 6.94a.707.707 0 0 1-1.207-.5V16a1 1 0 0 0-1-1H9a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z"/><path d="M4 9v6"/></svg>
+                        </div>
+
+                        <div class="arch-card">
+                            <h4>Advisory</h4>
+                            <p class="desc">Translates detected issues into prioritized recommendations, helping guide preprocessing decisions with clear reasoning</p>
+                        </div>
+                        
+
+                    </div>
+                </div>
+
+                <div class="section features">
+                    <h2 class="head">Features</h2>
+
+                    <div class="features-grid">
+                        <div class="feature-card">
+                          <h4>Missing Value Detection</h4>
+                          <p>Identifies and summarizes missing data across columns</p>
+                        </div>
+                    
+                        <div class="feature-card">
+                          <h4>Outlier Detection</h4>
+                          <p>Detects extreme values using statistical methods</p>
+                        </div>
+                    
+                        <div class="feature-card">
+                          <h4>Correlation Analysis</h4>
+                          <p>Finds relationships between numerical features</p>
+                        </div>
+                    
+                        <div class="feature-card">
+                          <h4>Distribution Analysis</h4>
+                          <p>Understands data spread and feature behavior</p>
+                        </div>
+                    
+                        <div class="feature-card">
+                          <h4>Priority-based Advisory</h4>
+                          <p>Categorizes issues into high, medium, and low priority</p>
+                        </div>
+                    
+                        <div class="feature-card">
+                          <h4>CLI + Frontend Support</h4>
+                          <p>Accessible via command line and interactive UI</p>
+                        </div>
+                      </div>
+
+                </div>
+
+                <div class="section hiw">
+                    <h2 class="head">How It Works</h2>
+                  
+                    <div class="steps">
+                        <div class="step">
+                            <div class="circle">1</div>
+                            <h4>Upload Dataset</h4>
+                            <p>Provide your CSV file to begin analysis</p>
+                        </div>
+                  
+                        <div class="step">
+                            <div class="circle">2</div>
+                            <h4>Run Analysis</h4>
+                            <p>FitLater processes the dataset through its pipeline</p>
+                        </div>
+                  
+                        <div class="step">
+                            <div class="circle">3</div>
+                            <h4>View Diagnostics</h4>
+                            <p>Identify issues like missing values, outliers, and correlations</p>
+                        </div>
+                  
+                        <div class="step">
+                            <div class="circle">4</div>
+                            <h4>Get Recommendations</h4>
+                            <p>Receive prioritized advice for preprocessing decisions</p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- ABOUT PAGE -->
+            <div class="page about hidden" id="about-page">
+
+                <div class="about-page">
+
+                    <!-- Intro -->
+                    <div class="about-intro">
+                        <h2>Jitesh Krishna</h2>
+                        <p>Building practical machine learning systems and data tools</p>
+                    </div>
+                  
+                    <!-- Skills -->
+                    <div class="about-section">
+                        <h3>What I Do</h3>
+                        <div class="skills">
+                            <span>Machine Learning</span>
+                            <span>FastAPI</span>
+                            <span>Pandas</span>
+                            <span>Data Preprocessing</span>
+                            <span>Model Evaluation</span>
+                        </div>
+                    </div>
+                  
+                    <!-- Projects -->
+                    <div class="about-section">
+                        <h3>Projects</h3>
+                        <div class="projects">
+                            <div class="project-card">
+                                <h4>FitLater</h4>
+                                <p>EDA tool which helps the user understand their data and make better decisions for their ML Model preprocessing</p>
+                                <div class="project-links">
+                                    <a href="https://github.com/jitesh2511/FitLater" target="_blank" class="btn github">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 .5C5.73.5.75 5.48.75 11.75c0 5.06 3.28 9.34 7.82 10.86.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.18.69-3.85-1.53-3.85-1.53-.52-1.32-1.28-1.67-1.28-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.25 3.33.96.1-.74.4-1.25.72-1.53-2.54-.29-5.22-1.27-5.22-5.65 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.17a10.9 10.9 0 0 1 5.73 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.59.23 2.77.11 3.06.73.8 1.18 1.82 1.18 3.07 0 4.39-2.69 5.36-5.25 5.64.41.35.77 1.04.77 2.1 0 1.52-.01 2.75-.01 3.13 0 .3.21.66.79.55A11.26 11.26 0 0 0 23.25 11.75C23.25 5.48 18.27.5 12 .5z"/>
+                                          </svg>
+                                        GitHub
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <h4>Churn Prediction System</h4>
+                                <p>End-to-end machine learning system that predicts customer churn, featuring a FastAPI backend, deployed API, and interactive frontend for real-time inference</p>
+
+                                <div class="project-links">
+                                    <a href="https://github.com/jitesh2511/Churn-Prediction" target="_blank" class="btn github">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 .5C5.73.5.75 5.48.75 11.75c0 5.06 3.28 9.34 7.82 10.86.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.18.69-3.85-1.53-3.85-1.53-.52-1.32-1.28-1.67-1.28-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.25 3.33.96.1-.74.4-1.25.72-1.53-2.54-.29-5.22-1.27-5.22-5.65 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.17a10.9 10.9 0 0 1 5.73 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.59.23 2.77.11 3.06.73.8 1.18 1.82 1.18 3.07 0 4.39-2.69 5.36-5.25 5.64.41.35.77 1.04.77 2.1 0 1.52-.01 2.75-.01 3.13 0 .3.21.66.79.55A11.26 11.26 0 0 0 23.25 11.75C23.25 5.48 18.27.5 12 .5z"/>
+                                          </svg>
+                                        GitHub
+                                    </a>
+                                    <a href="https://churn-prediction-jitesh2511.streamlit.app/" target="_blank" class="btn live">Live</a>
+                                </div>
+                            </div>
+                            <div class="project-card">
+                                <h4>Spam Classifier</h4>
+                                <p>From-scratch implementation of Logistic Regression trained using Gradient Descent to classify text messages as spam or ham</p>
+                                <div class="project-links">
+                                    <a href="https://github.com/jitesh2511/sms-spam-detection" target="_blank" class="btn github">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 .5C5.73.5.75 5.48.75 11.75c0 5.06 3.28 9.34 7.82 10.86.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.18.69-3.85-1.53-3.85-1.53-.52-1.32-1.28-1.67-1.28-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.25 3.33.96.1-.74.4-1.25.72-1.53-2.54-.29-5.22-1.27-5.22-5.65 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.17a10.9 10.9 0 0 1 5.73 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.59.23 2.77.11 3.06.73.8 1.18 1.82 1.18 3.07 0 4.39-2.69 5.36-5.25 5.64.41.35.77 1.04.77 2.1 0 1.52-.01 2.75-.01 3.13 0 .3.21.66.79.55A11.26 11.26 0 0 0 23.25 11.75C23.25 5.48 18.27.5 12 .5z"/>
+                                          </svg>
+                                        GitHub
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page hidden" id="contact-page">
+                <div class="contact-page">
+              
+                    <div class="contact-head">
+                        <h2>Contact</h2>
+                        <p>Feel free to reach out</p>
+                    </div>
+              
+                    <div class="contact-grid">
+              
+                        <!-- Email -->
+                        <div class="contact-card no-link">
+                            <div class="contact-icon email">
+                                <svg class="icon-closed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+
+                                <svg class="icon-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-open-icon lucide-mail-open"><path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z"/><path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10"/></svg>
+                            </div>
+                            <div class="contact-info">
+                                <h4>Email</h4>
+                                <p>jiteshkrishna6@gmail.com</p>
+                            </div>
+                        </div>
+              
+                        <!-- GitHub -->
+                        <div class="contact-card">
+                            <a href="https://github.com/jitesh2511" target="_blank" class="card-link"></a>
+                            <div class="contact-icon github">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                        <!-- Background circle -->
+                                        <circle class="bg" cx="12" cy="12" r="10.5"></circle>
+                                      
+                                        <!-- Group the cat -->
+                                        <g class="fg" transform="translate(2,2) scale(0.83)">
+                                          <path d="M12 .5C5.73.5.75 5.48.75 11.75c0 5.06 3.28 9.34 7.82 10.86.57.1.78-.25.78-.55 0-.27-.01-1.17-.02-2.12-3.18.69-3.85-1.53-3.85-1.53-.52-1.32-1.28-1.67-1.28-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.25 3.33.96.1-.74.4-1.25.72-1.53-2.54-.29-5.22-1.27-5.22-5.65 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.17a10.9 10.9 0 0 1 5.73 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.59.23 2.77.11 3.06.73.8 1.18 1.82 1.18 3.07 0 4.39-2.69 5.36-5.25 5.64.41.35.77 1.04.77 2.1 0 1.52-.01 2.75-.01 3.13 0 .3.21.66.79.55A11.26 11.26 0 0 0 23.25 11.75C23.25 5.48 18.27.5 12 .5z"></path>
+                                        </g>
+                                </svg>
+                            </div>
+                                <div class="contact-info">
+                                    <h4>GitHub</h4>
+                                    <a href="https://github.com/jitesh2511" target="_blank">
+                                    github.com/jitesh2511
+                                    </a>
+                                </div>
+                        </div>
+              
+                        <!-- LinkedIn -->
+                        <div class="contact-card">
+                            <a href="https://www.linkedin.com/in/jitesh-krishna-1b4167339" target="_blank" class="card-link"></a>
+                            <div class="contact-icon linkedin">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                                    <path class="bg" d="M42,37c0,2.762-2.238,5-5,5H11c-2.761,0-5-2.238-5-5V11c0-2.762,2.239-5,5-5h26c2.762,0,5,2.238,5,5V37z"></path><path class="fg" d="M12 19H17V36H12zM14.485 17h-.028C12.965 17 12 15.888 12 14.499 12 13.08 12.995 12 14.514 12c1.521 0 2.458 1.08 2.486 2.499C17 15.887 16.035 17 14.485 17zM36 36h-5v-9.099c0-2.198-1.225-3.698-3.192-3.698-1.501 0-2.313 1.012-2.707 1.99C24.957 25.543 25 26.511 25 27v9h-5V19h5v2.616C25.721 20.5 26.85 19 29.738 19c3.578 0 6.261 2.25 6.261 7.274L36 36 36 36z"></path>
+                                </svg>
+                            </div>
+                            <div class="contact-info">
+                                <h4>LinkedIn</h4>
+                                <a href="https://www.linkedin.com/in/jitesh-krishna-1b4167339" target="_blank">
+                                linkedin.com/in/jitesh-krishna-1b4167339
+                                </a>
+                            </div>
+                        </div>
+              
+                  </div>
+              
+                </div>
+              </div>
+
+        </div>
+
+
+    </div>
+</body>
+</html>

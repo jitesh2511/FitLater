@@ -1,0 +1,171 @@
+/* Container */
+.contact-page {
+    color: white;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+  
+/* Heading */
+.contact-head {
+    margin-top: 20px;
+}
+  
+.contact-head h2 {
+    font-size: 36px;
+    margin-bottom: 6px;
+}
+  
+.contact-head p {
+    color: var(--grey-font-color);
+}
+  
+/* Grid */
+.contact-grid {
+    margin-top: 40px;
+    display: grid;
+    gap: 20px;
+}
+  
+/* Cards */
+.contact-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    cursor: pointer;
+    padding: 16px;
+    background: var(--overview-panel-color);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  
+    transition: all 0.25s ease;
+}
+  
+/* Hover */
+.contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 8px white;
+    cursor: pointer;
+}
+
+.contact-card.no-link:hover{
+    cursor: default;
+}
+
+.contact-card:hover .contact-info a{
+    color: #13ba95;
+    text-shadow: 0 0 6px rgba(19, 186, 149, 0.6);
+}
+  
+/* Icon */
+.contact-icon {
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    background: var(--subpanel-color);
+    border-radius: 8px;
+}
+
+.contact-icon.email{
+    position: relative;
+}
+
+.contact-icon.email svg{
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    transition: opacity 0.3s ease;
+}
+
+.contact-icon.email .icon-open{
+    opacity: 0;
+}
+
+.contact-icon.email .icon-closed{
+    opacity: 1;
+}
+
+.contact-card:hover .email .icon-closed{
+    opacity: 0;
+}
+
+.contact-card:hover .email .icon-open{
+    opacity: 1;
+}
+
+/* Size fix */
+.contact-icon.github svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+}
+  
+/* Default */
+.contact-icon.github .bg {
+    fill: white;
+}
+  
+.contact-icon.github .fg {
+    fill:black;
+}
+  
+/* Hover invert */
+.contact-card:hover .contact-icon.github .bg {
+    fill: black;
+}
+  
+.contact-card:hover .contact-icon.github .fg {
+    fill: white;
+}
+
+.contact-icon.linkedin .bg {
+    fill: transparent; /* remove box */
+}
+  
+.contact-icon.linkedin .fg {
+    fill: currentColor;
+}
+
+.contact-card:hover .contact-icon.linkedin {
+    color: #0288D1;
+  }
+
+/* Info */
+.contact-info h4 {
+    margin: 0;
+    font-size: 16px;
+}
+  
+.contact-info p {
+    margin: 0;
+    margin-top:4px;
+    font-size: 14px;
+    color: var(--grey-font-color);
+}
+  
+/* Links */
+.contact-info a{
+    margin-top:4px;
+    font-size: 14px;
+    color: var(--grey-font-color);
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+  
+.contact-info a {
+    position: relative;
+    z-index: 2;
+}
+  
+
+.card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}

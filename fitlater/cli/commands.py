@@ -1,5 +1,16 @@
 import pandas as pd
-from fitlater.pipeline import (get_overview, get_outliers, get_correlation, get_results)
+from fitlater.pipeline import (
+    get_overview, 
+    get_outliers, 
+    get_correlation, 
+    get_description,
+    get_missing_diag,
+    get_corr_diag,
+    get_outliers_diag,
+    get_distribution_diag,
+    get_diagnostics,
+    get_advisory_report
+)
 
 def load_dataset(session, args):
     if not args:
@@ -8,10 +19,13 @@ def load_dataset(session, args):
     
     path = args[0]
 
+    if not path.endswith('.csv'):
+        path = path + '.csv'
+
     try:
         session.df = pd.read_csv(path)
         session.file_path = path
-        print('Dataset loaded sucessfully\n')
+        print('Dataset loaded successfully\n')
     except Exception as e:
         print(f'Failed to load file : {e}\n')
 
@@ -36,11 +50,51 @@ def outlier_command(session, args):
     
     print(get_outliers(session.df),'\n')
 
-def result_command(session, args):
+def describe_command(session, args):
     if session.df is None:
         print('No dataset loaded\n')
         return
     
-    print(get_results(session.df),'\n')
+    print(get_description(session.df),'\n')
     
+def missing_diag_command(session, args):
+    if session.df is None:
+        print('No dataset loaded\n')
+        return
     
+    print(get_missing_diag(session.df),'\n')
+
+def corr_diag_command(session, args):
+    if session.df is None:
+        print('No dataset loaded\n')
+        return
+    
+    print(get_corr_diag(session.df),'\n')
+
+def outlier_diag_command(session, args):
+    if session.df is None:
+        print('No dataset loaded\n')
+        return
+    
+    print(get_outliers_diag(session.df),'\n')
+
+def distribution_diag_command(session, args):
+    if session.df is None:
+        print('No dataset loaded\n')
+        return
+    
+    print(get_distribution_diag(session.df),'\n')
+
+def diagnostics_command(session, args):
+    if session.df is None:
+        print('No dataset loaded\n')
+        return
+    
+    print(get_diagnostics(session.df),'\n')
+
+def advisory_report_command(session, args):
+    if session.df is None:
+        print('No dataset loaded\n')
+        return
+    
+    print(get_advisory_report(session.df), '\n')

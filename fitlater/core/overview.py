@@ -3,7 +3,28 @@ import pandas as pd
 def analyze(data: pd.DataFrame) -> dict:
     
     if (data.empty):
-        return {}
+        return {
+            'shape': {
+                'n_rows': data.shape[0],
+                'n_cols': data.shape[1]
+            },
+            'column_classification': {
+                'numerical': [],
+                'categorical': [],
+                'boolean': [],
+                'others': []
+            },
+            'categorical_summary': {},
+            'missing': {
+                'total_missing': 0,
+                'missing_per_column': {},
+                'missing_percentage': {}
+            },
+            'numerical_summary': {},
+            'duplicates': {
+                'n_dup': 0
+            }
+        }
     
     columns = data.columns
 
@@ -21,8 +42,15 @@ def analyze(data: pd.DataFrame) -> dict:
     # Column Classification
     numerical = data.select_dtypes(include='number').columns.tolist()
     boolean = data.select_dtypes(include='bool').columns.tolist()
-    categorical = data.select_dtypes(include=['object','category']).columns.tolist()
-    others = data.select_dtypes(exclude=['number', 'bool', 'object', 'category']).columns.to_list()
+    categorical = [
+        col
+        for col in data.columns
+        if pd.api.types.is_object_dtype(data[col].dtype)
+        or isinstance(data[col].dtype, pd.CategoricalDtype)
+        or pd.api.types.is_string_dtype(data[col].dtype)
+    ]
+    classified = set(numerical) | set(boolean) | set(categorical)
+    others = [col for col in data.columns if col not in classified]
     column_classification = {
         'numerical':numerical,
         'boolean':boolean,
@@ -41,7 +69,12 @@ def analyze(data: pd.DataFrame) -> dict:
     }
 
     # Numerical Summary
-    numerical_summary = data[numerical].agg(['mean','median','std','min','max','skew']).to_dict()
+    if len(numerical) == 0:
+        numerical_summary = {}
+    else:
+        numerical_summary = data[numerical].agg(
+            ['mean','median','std','min','max','skew']
+        ).to_dict()
     
     # Categorical Summary
     categorical_summary = {}

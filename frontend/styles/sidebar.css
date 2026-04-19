@@ -1,0 +1,145 @@
+.sidebar {
+    position: fixed;
+    top:80px;
+    left:0;
+    height: calc(100vh - 80px);
+    width: 200px;
+    transition: width 0.3s ease;
+    overflow:visible;
+    background-color:var(--bg-color);
+    border-right:1px solid var(--border);
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
+    color:white;
+}
+
+.sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.toggle-btn{
+    position:absolute;
+    height:22px;
+    width:22px;
+    top:58px;
+    right: -11px;
+    border-radius: 999px;
+    color:white;
+    border:1px solid var(--border);
+    background-color: #000000;
+    font-size:15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline:none;
+    box-shadow: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggle-btn svg{
+    display: block;
+    margin-right:1px;
+}
+
+.toggle-btn .arrow{
+    transition: transform 0.3s ease;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    font-size:15px;
+    font-weight: 400;
+    color:var(--grey-font-color);
+    gap: 10px;
+    margin: 0px 2px;
+    padding: 8px;
+    transition: all 0.2s ease;
+    border-radius: 10px;
+}
+
+.icon{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.icon::before {
+    content: "";
+    position: absolute;
+    left: -9.5px; /* push outside */
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 4px;
+    height: 80%;
+
+    background-color: var(--sidebar-active-svg);
+    border-radius: 10px;
+
+    opacity: 0;
+    transition: 0.2s ease;
+}
+
+/* Hover */
+.sidebar-item:hover {
+    cursor: pointer;
+    background-color: var(--sidebar-active);
+    color: white;
+}
+
+/* Active item */
+.sidebar-item.active {
+    color:white;
+    font-weight: 600;
+    background-color: var(--sidebar-active);
+}
+.sidebar-item.active svg{
+    color:var(--sidebar-active-svg);
+}
+.sidebar-item.active .icon::before{
+    opacity: 1;
+}
+
+
+
+
+/* Collapsed Sidebar */
+.sidebar.collapsed {
+    width: 44px;    
+}
+
+.sidebar.collapsed ~ .main{
+    margin-left: 44px;
+    width: calc(100% - 44px);
+}
+
+.sidebar.collapsed .text{
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-item{
+    justify-content: left;
+}
+
+.sidebar.collapsed .sidebar-item.active{
+    background-color:  var(--sidebar-active);
+    border:none;
+}
+
+.sidebar.collapsed .arrow{
+    transform: rotate(180deg);
+}
+
+.sidebar.collapsed .sidebar-item:hover{
+    cursor: pointer;
+}

@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fitlater"
+version = "0.4.0"
+description = "EDA system with CLI, API, and UI for data understanding before model building"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "colorama>=0.4.6",
+    "fastapi>=0.110",
+    "uvicorn>=0.27",
+    "python-multipart>=0.0.9"
+]
+
+authors = [
+  { name="Jitesh Krishna", email="jiteshkrishna6@gmail.com" }
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+]
+
+[project.scripts]
+fitlater = "fitlater.main:main"
+
+[project.urls]
+Homepage = "https://github.com/jitesh2511/FitLater"
+Repository = "https://github.com/jitesh2511/FitLater"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["fitlater*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

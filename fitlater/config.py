@@ -2,6 +2,9 @@
 NAME = 'FitLater'
 VERSION = '0.4.0'
 
+# Descriptive
+IDENTIFIER_THRESHOLD = 0.95
+
 # Correlation 
 CORRELATION_THRESHOLD = 0.6
 

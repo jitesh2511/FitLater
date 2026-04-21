@@ -1,35 +1,24 @@
-from fitlater.diagnostics.base import make_issue
-from fitlater.diagnostics.base import get_max_severity
+'''
+This module check for missing value diagnostics
+per column and returns the issue if detected or 
+returns None on no issue being detected
+'''
+
+from fitlater.diagnostics.base import make_issue, get_severity
 from fitlater.config import MISSING_SEVERITY_THRESHOLD
 
-def check_missing(result) -> dict:
-    missing = result.get('missing')
+def check_missing(column:str, profile:dict):
 
-    if missing is None:
-        return make_issue('missing', {}, False, "low")
-
-    missing_per = missing.get('missing_percentage', {})
-
-    valid_missing = {col: missing_per[col] for col in missing_per if abs(missing_per[col]) > 1e-12}
-
-    if not valid_missing:
-        return make_issue('missing', {}, False, 'low')
+    missing_count = profile.get('missing_count', 0)
+    missing_pct = profile.get('missing_pct', 0.0)
+    
+    # No issue is missing count is 0
+    if missing_count == 0:
+        return None
 
     missing_summary = {
-        col: {
-            'missing_percentage': missing_per[col],
-            'severity': (
-                'low'
-                if missing_per[col] <= MISSING_SEVERITY_THRESHOLD['low']
-                else 'medium'
-                if missing_per[col] <= MISSING_SEVERITY_THRESHOLD['medium']
-                else 'high'
-            ),
-            'hint': 'Impute missing values if important, else drop',
-        }
-        for col in valid_missing
+        'missing_count': missing_count,
+        'missing_pct': missing_pct,
     }
- 
-    # `has_issue` is true if at least one column has non-zero missing.
-    has_issue = any(float(v) > 0 for v in valid_missing.values())
-    return make_issue('missing', missing_summary, has_issue, get_max_severity(missing_summary))
+    severity = get_severity(missing_pct, MISSING_SEVERITY_THRESHOLD)
+    return make_issue('missing', column, missing_summary, severity, True)

@@ -1,10 +1,15 @@
-def make_issue(type, data, has_Issue, max_severity):
+'''
+This module provides helper functions for diagnostics layer
+'''
+
+def make_issue(type:str, column:str, data:dict, severity:str, has_issue:bool) -> dict:
     return {
         'type': type,
+        'column': column,
         'data': data,
-        'meta' : {
-            'has_issue': has_Issue,
-            'max_severity': max_severity
+        'meta': {
+            'has_issue': has_issue,
+            'severity': severity
         }
     }
 
@@ -14,12 +19,10 @@ severity_order = {
         'high': 2
     }
 
-def get_max_severity(data):
-    severities = [v["severity"] for v in data.values()]
+def get_severity(value:int or float, thresholds:dict) -> str:
 
-    if severities:
-        max_sev = max(severities, key=lambda x: severity_order[x])
-    else:
-        max_sev = "low"
-    
-    return max_sev
+    if value <= thresholds['low']:
+        return 'low'
+    elif value <= thresholds['medium']:
+        return 'medium'
+    return 'high'

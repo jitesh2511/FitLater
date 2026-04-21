@@ -1,44 +1,73 @@
-import math
-from fitlater.diagnostics.base import make_issue
-from fitlater.diagnostics.base import get_max_severity
-from fitlater.config import CORR_SEVERITY_THRESHOLD
+'''
+This module check for correlation value diagnostics
+for all columns and returns the list of columns with
+problems if detected any else returns an empty list
+'''
 
-def check_correlation(correlation) -> dict:
 
-    if not correlation.get('high_corr_pairs', None):
-        return make_issue('correlation', {}, False, "low")
+import pandas as pd
+from fitlater.diagnostics.base import get_severity, make_issue
+from fitlater.config import CORRELATION_THRESHOLD, CORR_SEVERITY_THRESHOLD
+
+def check_correlation_all(profiles: dict, df: pd.DataFrame) -> list:
+    diagnostics = []
+    numeric_cols = [col for col, p in profiles.items() if p.get('type') == 'numeric']
+
+    for i, col1 in enumerate(numeric_cols):
+        for col2 in numeric_cols[i+1:]:
+            issue = get_correlation_diag(
+                {
+                    'column': col1,
+                    'profile': profiles[col1],
+                    'data': df[col1]
+                },
+                {
+                    'column': col2,
+                    'profile': profiles[col2],
+                    'data': df[col2]
+                }
+            )
+
+            if issue:
+                diagnostics.append(issue)
+
+    return diagnostics  
+
+def get_correlation_diag(column_1_meta:dict, column_2_meta:dict):
+
+    column_1 = column_1_meta.get('column')
+    column_2 = column_2_meta.get('column')
+    columns = {
+        'column_1': column_1,
+        'column_2': column_2
+    }
     
-    high_corr_pairs = correlation.get('high_corr_pairs', [])
-
-    high_corr_summary = {}
-
-    for idx, pair in enumerate(high_corr_pairs, 1):
-        feature_1 = pair.get('feature_1')
-        feature_2 = pair.get('feature_2')
-
-        # Skip self-correlations; tests expect feature_1 != feature_2
-        if feature_1 == feature_2:
-            continue
-
-        corr_value = pair.get('correlation', 0)
-
-        if corr_value is None or (isinstance(corr_value, float) and math.isnan(corr_value)):
-            continue
-
-        # Severity assignment
-        if abs(corr_value) <= CORR_SEVERITY_THRESHOLD['low']:
-            severity = 'low'
-        elif abs(corr_value) <= CORR_SEVERITY_THRESHOLD['medium']:
-            severity = 'medium'
-        else:
-            severity = 'high'
-
-        high_corr_summary[f'pair_{idx}'] = {
-            'feature_1': feature_1,
-            'feature_2': feature_2,
-            'correlation': corr_value,
-            'severity': severity,
-            'hint': 'Merge both columns'
-        }
+    profile_1 = column_1_meta.get('profile')
+    data_1 = column_1_meta.get('data')
+    profile_2 = column_2_meta.get('profile')
+    data_2 = column_2_meta.get('data')
     
-    return make_issue('correlation', high_corr_summary, True, get_max_severity(high_corr_summary))
+    # No issue if both columns are not numeric
+    if not profile_1.get('type') == 'numeric' and not profile_2.get('type') == 'numeric':
+        return None
+    
+    corr = data_1.corr(data_2)
+
+    # In case of constant columns or insufficient data
+    if pd.isna(corr):
+        return None
+
+    high_corr = abs(corr) > CORRELATION_THRESHOLD
+
+    # No issue if correlation is less than the defined threshold
+    if not high_corr:
+        return None
+
+    # Severity assignment
+    severity = get_severity(abs(corr), CORR_SEVERITY_THRESHOLD)
+
+    high_corr_summary = {
+        'correlation': round(corr, 4),
+    }
+    
+    return make_issue('corr', columns, high_corr_summary, severity, True)

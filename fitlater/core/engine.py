@@ -46,6 +46,7 @@ def build_description(df:pd.DataFrame) -> dict:
         col_missing = get_missing(series)
         
         profile[col] = {
+            'type': dtype,
             **stats,
             **col_missing
         }

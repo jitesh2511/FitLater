@@ -19,3 +19,12 @@ def get_boolean_stats(series:pd.Series) -> dict:
         'true_count': value_counts.get(True, 0),
         'false_count': value_counts.get(False, 0)
     }
+
+# Get statistics for Mixed type
+def get_mixed_stats(series:pd.Series) -> dict:
+
+    n_mixed_types = series.dropna().map(type).nunique()
+
+    return {
+        'n_mixed_types': n_mixed_types
+    }

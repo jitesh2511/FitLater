@@ -2,6 +2,8 @@
 This module contains the descriptive contract
 '''
 
+from copy import deepcopy
+
 def build_contract(dataset_meta:dict, profile:dict, column_types:dict, empty=False) -> dict:
 
     if empty:
@@ -13,11 +15,14 @@ def build_contract(dataset_meta:dict, profile:dict, column_types:dict, empty=Fal
             },
             'profile': {
 
+            },
+            'column_types':{
+                
             }
         }
     
     return {
-        'meta': dataset_meta,
-        'profile': profile,
-        'column_dtypes': column_types
+        'meta': deepcopy(dataset_meta),
+        'profile': deepcopy(profile),
+        'column_types': deepcopy(column_types)
     }

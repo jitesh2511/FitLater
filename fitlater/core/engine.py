@@ -11,7 +11,7 @@ from fitlater.core.base import get_metadata, get_missing
 from fitlater.core.schema import infer_column_types
 from fitlater.core.numeric import get_numeric_stats
 from fitlater.core.categorical import get_categorical_stats
-from fitlater.core.others import get_datetime_stats, get_boolean_stats
+from fitlater.core.others import get_datetime_stats, get_boolean_stats, get_mixed_stats
 
 def build_description(df:pd.DataFrame) -> dict:
 
@@ -38,6 +38,8 @@ def build_description(df:pd.DataFrame) -> dict:
             stats = get_categorical_stats(series)
         elif dtype == 'datetime':
             stats = get_datetime_stats(series)
+        elif dtype == 'mixed':
+            stats = get_mixed_stats(series)
         else:   # Only empty case left
             stats = {}
 

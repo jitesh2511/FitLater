@@ -3,11 +3,12 @@ This module check for missing value diagnostics
 per column and returns the issue if detected or 
 returns None on no issue being detected
 '''
+import pandas as pd
 
 from fitlater.diagnostics.base import make_issue, get_severity
 from fitlater.config import MISSING_SEVERITY_THRESHOLD
 
-def check_missing(column:str, profile:dict):
+def check_missing(column:str, profile:dict, data:pd.Series) -> dict | None:
 
     missing_count = profile.get('missing_count', 0)
     missing_pct = profile.get('missing_pct', 0.0)
@@ -17,8 +18,14 @@ def check_missing(column:str, profile:dict):
         return None
 
     missing_summary = {
-        'missing_count': missing_count,
-        'missing_pct': missing_pct,
+        'issue_type': 'missing_values',
+        'expected_type': 'no_missing_values',
+        'current_type': 'missing_values_present',
+        'confidence': round(missing_pct / 100, 2),
+        'details' : {
+            'missing_count': missing_count,
+            'missing_pct': missing_pct
+        }
     }
     severity = get_severity(missing_pct, MISSING_SEVERITY_THRESHOLD)
     return make_issue('missing', column, missing_summary, severity, True)

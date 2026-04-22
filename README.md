@@ -9,7 +9,7 @@ This branch contains a major refactor of FitLater’s internal architecture.
 
 ## Current Status
 - Descriptive Layer: ✅ Stabilized and fully tested
-- Diagnostics Layer: ⏳ Pending refactor
+- Diagnostics Layer: ✅ Stabilized and fully tested
 - Advisory Layer: ⏳ Pending alignment with new architecture
 
 ## Important Notes

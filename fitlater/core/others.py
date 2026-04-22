@@ -23,8 +23,10 @@ def get_boolean_stats(series:pd.Series) -> dict:
 # Get statistics for Mixed type
 def get_mixed_stats(series:pd.Series) -> dict:
 
+    unique_values = series.dropna().apply(lambda x: type(x).__name__).unique().tolist()
     n_mixed_types = series.dropna().map(type).nunique()
 
     return {
-        'n_mixed_types': n_mixed_types
+        'n_mixed_types': n_mixed_types,
+        'unique_values': unique_values
     }

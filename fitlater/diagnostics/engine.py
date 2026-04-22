@@ -8,40 +8,58 @@ from the raw dataset whenever required in order to fulfill it's purpose.
 
 '''
 
-from numpy import diag
 import pandas as pd
 
-from fitlater.diagnostics import distribution
+from fitlater.diagnostics.constant_column import check_constant
+from fitlater.diagnostics.duplicates import check_duplicates
+from fitlater.diagnostics.imbalance import check_imbalance
 from fitlater.diagnostics.missing import check_missing
 from fitlater.diagnostics.outliers import check_outliers
 from fitlater.diagnostics.distribution import check_distribution
 from fitlater.diagnostics.correlation import check_correlation_all
+from fitlater.diagnostics.type_issues import check_type_issues
 
 def build_diagnostics(profile:dict, df:pd.DataFrame) -> list:
 
     diagnostics = []
 
+    COLUMN_CHECKS = [
+        check_missing,
+        check_outliers,
+        check_distribution,
+        check_type_issues,
+        check_constant,
+        check_imbalance
+    ]
+
+    DATASET_CHECKS = [
+        check_correlation_all,
+        check_duplicates
+    ]
+
+    # Column checks
     for col in df.columns:
 
-        # Build missing diagnostics
-        missing = check_missing(col, profile[col])
-        if missing:
-            diagnostics.append(missing)
+        for func in COLUMN_CHECKS:
+            try:   
+                issue = func(col, profile[col], df[col])
+                if issue:
+                    diagnostics.append(issue)
+            except Exception:
+                continue
 
-        # Build outlier diagnostics
-        outliers = check_outliers(col, profile[col], df[col])
-        if outliers:
-            diagnostics.append(outliers)
+    # Dataset checks
+    for func in DATASET_CHECKS:
 
-        # Build distribution diagnostics
-        distribution = check_distribution(col, profile[col])
-        if distribution:
-            diagnostics.append(distribution)
+        try:
+            result = func(profile, df)
 
-    # Build correlation diagnostics
-    corr_diags = check_correlation_all(profile, df)
-    if corr_diags:
-        diagnostics.extend(corr_diags)
+            if isinstance(result, list):
+                diagnostics.extend(result)
+            elif result:
+                diagnostics.append(result)
+        except Exception:
+            continue
 
 
     return diagnostics

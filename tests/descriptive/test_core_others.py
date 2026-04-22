@@ -135,6 +135,7 @@ def test_mixed_basic():
     result = get_mixed_stats(series)
 
     assert result["n_mixed_types"] == 2  # int, str
+    assert set(result["unique_values"]) == {"int", "str"}
 
 
 def test_mixed_with_nan():
@@ -143,6 +144,7 @@ def test_mixed_with_nan():
     result = get_mixed_stats(series)
 
     assert result["n_mixed_types"] == 2
+    assert set(result["unique_values"]) == {"int", "str"}
 
 
 def test_mixed_single_type():
@@ -154,6 +156,7 @@ def test_mixed_single_type():
     result = get_mixed_stats(series)
 
     assert result["n_mixed_types"] == 1
+    assert result['unique_values'] == ['int']
 
 
 def test_mixed_complex_types():
@@ -161,8 +164,8 @@ def test_mixed_complex_types():
 
     result = get_mixed_stats(series)
 
-    # int, str, float, bool → 4 types
     assert result["n_mixed_types"] == 4
+    assert set(result["unique_values"]) == {"int", "str", "float", "bool"}
 
 
 def test_mixed_empty_series():
@@ -171,3 +174,27 @@ def test_mixed_empty_series():
     result = get_mixed_stats(series)
 
     assert result["n_mixed_types"] == 0
+    assert result["unique_values"] == []
+
+def test_mixed_unique_values_order_independent():
+    series = pd.Series(["A", 1, "B", 2])
+
+    result = get_mixed_stats(series)
+
+    assert set(result["unique_values"]) == {"int", "str"}
+
+def test_mixed_bool_and_int():
+    series = pd.Series([True, 1, False, 0])
+
+    result = get_mixed_stats(series)
+
+    # Python treats bool as subclass of int, but type names differ
+    assert set(result["unique_values"]) == {"bool", "int"}
+
+def test_mixed_all_none():
+    series = pd.Series([None, None])
+
+    result = get_mixed_stats(series)
+
+    assert result["n_mixed_types"] == 0
+    assert result["unique_values"] == []

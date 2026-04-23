@@ -1,35 +1,34 @@
 from fitlater.advisory.util import build_advice
 from fitlater.advisory.strategies import get_imputation_strategy
 
-def handle_missing(column, data, profile):
+def handle_missing(profile:dict, diag:dict) -> dict:
 
-    missing_per = data['missing_percentage']
+    column = diag["column"]
+    data = diag["data"]
+    severity = diag.get("meta", {}).get("severity")
 
-    if missing_per > 50:
+    missing_pct = data["details"]["missing_pct"]
+
+    if severity == "high":
+        action = "Drop column"
+        reason = f"Too many missing values ({missing_pct}%)"
         priority = 1
-    elif missing_per > 20:
-        priority = 2
+
     else:
-        priority = 3
+        strategy = get_imputation_strategy(profile[column])
 
+        if strategy == "median":
+            action = "Fill with median"
+            reason = "Robust to skewed data"
 
-    if priority == 1:
-        recommendation = 'Drop column' 
-        reason = 'Too many missing values'
-    else:
-        strategy = get_imputation_strategy(profile)
-
-        if strategy == 'median':
-            recommendation = 'Fill with median'
-            reason = 'Median is robust to skewed data and outliers'
-
-        elif strategy == 'mode':
-            recommendation = 'Fill with mode'
-            reason = 'Mode is appropriate for categorical data'
+        elif strategy == "mode":
+            action = "Fill with mode"
+            reason = "Suitable for categorical data"
 
         else:
-            recommendation = 'Fill with mean'
-            reason = 'Mean is suitable for approximately normally distributed data'
+            action = "Fill with mean"
+            reason = "Suitable for normal distributions"
 
-    reason = f'{reason}. Missing percentage is {round(missing_per, 2)}%'
-    return build_advice(column, 'missing', recommendation, reason, priority)
+        priority = 2
+
+    return build_advice(column, "missing", action, reason, priority)

@@ -1,21 +1,24 @@
 from fitlater.advisory.util import build_advice
 
-def handle_outliers(column, data, profile):
+def handle_outliers(profile:dict, diag:dict) -> dict | None:
 
-    outlier_percentage = data['outlier_percentage']
-    if outlier_percentage > 30:
-        recommendation = 'Investigate data or consider dropping column'
-        reason = f'High percentage of outliers may indicate data issues. Outlier percentage is {outlier_percentage}%'
+    column = diag["column"]
+    data = diag["data"]
+    severity = diag.get("meta", {}).get("severity")
+
+    outlier_pct = data["details"]["outlier_pct"]
+
+    if severity == "high":
+        action = "Investigate data or consider dropping column"
+        reason = f"High percentage of outliers ({outlier_pct}%) may indicate data issues"
         priority = 1
 
-    elif outlier_percentage:
-        recommendation = 'Apply capping'
-        reason = f'Moderate outliers can distort model performance. Outlier percentage is {outlier_percentage}%'
+    elif severity == "medium":
+        action = "Apply capping or transformation"
+        reason = f"Moderate outliers may distort model performance ({outlier_pct}%)"
         priority = 2
-        
+
     else:
-        recommendation = 'Consider removing outliers'
-        reason = f'Small number of outliers have limited impact. Outlier percentage is {outlier_percentage}%'
-        priority = 3
-        
-    return build_advice(column, 'outliers', recommendation, reason, priority)
+        return None  # low severity → ignore
+
+    return build_advice(column, "outliers", action, reason, priority)

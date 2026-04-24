@@ -22,6 +22,8 @@ def handle_imbalance(profile:dict, diag:dict) -> dict | None:
         priority = 2
 
     else:
-        return None
+        action = "No action required"
+        reason = f"Class distribution is reasonably balanced ({dominance*100:.1f}% dominance)"
+        priority = 3
 
     return build_advice(column, "imbalance", action, reason, priority)

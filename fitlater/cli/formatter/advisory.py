@@ -1,36 +1,40 @@
 from fitlater.cli.formatter.base import _heading, _section
+from fitlater.config import ISSUE_LABELS
 
-from fitlater.config import PRIORITY_LABELS, ISSUE_LABELS
 
 def _format_single(advice: dict) -> str:
+    return (
+        f"Column: {advice['column']}\n"
+        f"→ Issue: {ISSUE_LABELS.get(advice['issue_type'], advice['issue_type'])}\n"
+        f"→ Recommendation: {advice['action']}\n"
+        f"→ Reason: {advice['reason']}"
+    )
 
-    return f"""
-    Column: {advice['column']}
-    → Issue: {ISSUE_LABELS[advice['issue']]}
-    → Recommendation: {advice['recommendation']}
-    → Reason: {advice['reason']} 
-    """.strip()
 
-def format_advice(advice_list: list) -> str:
+def format_advice(advice_list: list, args) -> str:
 
-    heading = _heading('ADVISORY REPORT')
+    if not advice_list:
+        return "\nNo advisory generated.\n"
+
+    if not '--full' in args:
+        advice_list = [a for a in advice_list if not a['priority'] == 3]
+
+    heading = _heading("ADVISORY REPORT")
 
     def build_section(title, items):
         if not items:
             return ""
-        return _section(title) + '\n'.join(items)
+        return _section(title) + "\n".join(items)
 
-    high = [_format_single(a) for a in advice_list if a['priority'] == 1]
-    medium = [_format_single(a) for a in advice_list if a['priority'] == 2]
-    low = [_format_single(a) for a in advice_list if a['priority'] == 3]
+    high = [_format_single(a) for a in advice_list if a["priority"] == 1]
+    medium = [_format_single(a) for a in advice_list if a["priority"] == 2]
+    low = [_format_single(a) for a in advice_list if a["priority"] == 3]
 
     sections = [
         heading,
-        build_section(f'HIGH PRIORITY (showing {min(len(high), 10)} out of {len(high)})', high[:10]),
-        build_section(f'MEDIUM PRIORITY (showing {min(len(medium), 10)} out of {len(medium)})', medium[:10]),
-        build_section(f'LOW PRIORITY (showing {min(len(low), 10)} out of {len(low)})', low[:10])
+        build_section(f"HIGH PRIORITY ({len(high)})", high[:10]),
+        build_section(f"MEDIUM PRIORITY ({len(medium)})", medium[:10]),
+        build_section(f"LOW PRIORITY ({len(low)})", low[:10]),
     ]
 
-    return '\n\n'.join(filter(None, sections))
-    
-    
+    return "\n\n".join(filter(None, sections))

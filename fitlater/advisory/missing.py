@@ -14,7 +14,7 @@ def handle_missing(profile:dict, diag:dict) -> dict:
         reason = f"Too many missing values ({missing_pct}%)"
         priority = 1
 
-    else:
+    elif severity == 'medium':
         strategy = get_imputation_strategy(profile[column])
 
         if strategy == "median":
@@ -30,5 +30,10 @@ def handle_missing(profile:dict, diag:dict) -> dict:
             reason = "Suitable for normal distributions"
 
         priority = 2
+    
+    else:
+        action = "No immediate action required"
+        reason = f"Missing values are minimal ({missing_pct}%) and unlikely to impact modeling"
+        priority = 3
 
     return build_advice(column, "missing", action, reason, priority)

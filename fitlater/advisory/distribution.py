@@ -19,6 +19,9 @@ def handle_distribution(profile:dict, diag:dict) -> dict | None:
         priority = 2
 
     else:
-        return None  # no advice for low severity
+        action = "No immediate action required"
+        reason = f"Low skew ({skew}) is unlikely to affect most models"
+        priority = 3
+
 
     return build_advice(column, "distribution", action, reason, priority)

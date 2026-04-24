@@ -22,8 +22,10 @@ def handle_corr(profile:dict, diag:dict) -> dict | None:
         priority = 2
 
     else:
-        return None
-
+        action = "No action required"
+        reason = f"Low correlation between features ({corr}) does not indicate redundancy"
+        priority = 3
+        
     column = f"{f1} & {f2}"
 
     return build_advice(column, "correlation", action, reason, priority)

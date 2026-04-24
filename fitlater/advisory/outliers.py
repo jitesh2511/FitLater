@@ -19,6 +19,8 @@ def handle_outliers(profile:dict, diag:dict) -> dict | None:
         priority = 2
 
     else:
-        return None  # low severity → ignore
+        action = "No immediate action required"
+        reason = f"Low percentage of outliers ({outlier_pct}%) is unlikely to impact model performance"
+        priority = 3
 
     return build_advice(column, "outliers", action, reason, priority)

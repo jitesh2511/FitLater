@@ -18,6 +18,8 @@ def handle_duplicates(profile:dict, diag:dict) -> dict | None:
         priority = 2
 
     else:
-        return None
+        action = "No immediate action required"
+        reason = f"Low duplicate percentage ({dup_pct}%) is unlikely to affect results"
+        priority = 3
 
     return build_advice("dataset", "duplicates", action, reason, priority)

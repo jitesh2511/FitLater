@@ -14,7 +14,13 @@ def handle_type_issue(profile:dict, diag:dict) -> dict | None:
     elif severity == "medium":
         priority = 2
     else:
-        return None
+        return build_advice(
+            column,
+            "type_issue",
+            "No immediate action required",
+            "Detected pattern is weak and may not require conversion",
+            3
+        )
 
     if issue_type == "numeric_as_string":
         return build_advice(

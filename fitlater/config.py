@@ -2,6 +2,14 @@
 NAME = 'FitLater'
 VERSION = '0.4.0'
 
+# Configurations
+DEFAULT_CONFIG = {
+    "diagnostics": {
+        "include": None,          
+        "exclude": {"imbalance"}  
+    }
+}
+
 # DESCRIPTIVE
 IDENTIFIER_THRESHOLD = 0.95
 NUMERIC_LIKE_RATIO_THRESHOLD = 0.9

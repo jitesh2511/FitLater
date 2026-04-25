@@ -1,25 +1,10 @@
-from fitlater.cli.commands import (load_dataset, 
-                                   overview_command, 
-                                   correlation_command, 
-                                   outlier_command, 
-                                   describe_command,
-                                   missing_diag_command,
-                                   corr_diag_command,
-                                   outlier_diag_command,
-                                   distribution_diag_command,
+from fitlater.cli.commands import (descriptive_command, load_dataset, 
                                    diagnostics_command,
                                    advisory_report_command)
 
 COMMANDS = {
     'load':load_dataset,
-    'overview':overview_command,
-    'correlation':correlation_command,
-    'outlier':outlier_command,
-    'describe':describe_command,
-    'missing_diags':missing_diag_command,
-    'corr_diags':corr_diag_command,
-    'outlier_diags':outlier_diag_command,
-    'dist_diags':distribution_diag_command,
+    'descriptive':descriptive_command,
     'diagnostics':diagnostics_command,
-    'advisory_report':advisory_report_command
+    'advisory':advisory_report_command
 }

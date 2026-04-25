@@ -1,6 +1,6 @@
 def get_imputation_strategy(data) -> str:
 
-    if not data.get('is_numeric'):
+    if not data.get('type') == 'numeric':
         return 'mode'
 
     skew = data.get('skew')

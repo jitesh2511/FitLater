@@ -1,22 +1,27 @@
 from fitlater.advisory.util import build_advice
-from fitlater.advisory.strategies import get_transformation_strategy
 
-def handle_distribution(column, data, profile):
+def handle_distribution(profile:dict, diag:dict) -> dict | None:
 
-    strategy = get_transformation_strategy(profile)
-    skew = data.get('skew')
+    column = diag["column"]
+    data = diag["data"]
+    severity = diag.get("meta", {}).get("severity")
 
-    if strategy == 'log transformation':
-        recommendation = 'Apply log or Box-Cox transformation'
-        reason = f'Highly skewed data can negatively impact model performance. Skew is {skew}'
+    skew = data["details"]["skew"]
+
+    if severity == "high":
+        action = "Apply log or Box-Cox transformation"
+        reason = f"Highly skewed data can negatively impact model performance (skew={skew})"
         priority = 1
-    elif strategy == 'consider transformation':
-        recommendation = 'Consider transformation if model is sensitive to distribution'
-        reason = f'Moderate skewness may affect some models. Skew is {skew}'
+
+    elif severity == "medium":
+        action = "Consider transformation if model is sensitive"
+        reason = f"Moderate skewness may affect some models (skew={skew})"
         priority = 2
+
     else:
-        recommendation = 'No action needed'
-        reason = f'Data distribution is approximately normal. Skew is {skew}'
-        priority = -1
-    
-    return build_advice(column, 'distribution', recommendation, reason, priority)
+        action = "No immediate action required"
+        reason = f"Low skew ({skew}) is unlikely to affect most models"
+        priority = 3
+
+
+    return build_advice(column, "distribution", action, reason, priority)

@@ -1,8 +1,8 @@
-def build_advice(column, issue, recommendation, reason, priority):
+def build_advice(column, issue, action, reason, priority):
     return {
         'column': column,
-        'issue': issue,
-        'recommendation': recommendation,
+        'issue_type': issue,
+        'action': action,
         'reason': reason,
         'priority': priority
     }

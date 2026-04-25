@@ -1,9 +1,10 @@
-from fitlater.pipeline import get_diagnostics, get_advisory_report
+from fitlater.pipeline import run_pipeline
 import pandas as pd
 
-def get_result(data:pd.DataFrame) -> dict:
 
-    if data.empty:
+def get_result(df: pd.DataFrame) -> dict:
+
+    if df.empty:
         return {
             "diagnostics": {
                 "missing": {"percentage": 0, "columns": 0},
@@ -21,98 +22,88 @@ def get_result(data:pd.DataFrame) -> dict:
                 "columns": 0
             }
         }
-    
-    diagnostics = get_diagnostics(data, True)
-    advisory = get_advisory_report(data, True)
 
-    diagnostics = format_diagnostics(diagnostics)
-    advisory = format_advisory(advisory)
+    result = run_pipeline(df)
 
-    diagnostics = {
-        'missing':diagnostics.get('missing',{}),
-        'distribution':diagnostics.get('distribution',{}),
-        'outliers':diagnostics.get('outliers',{}),
-        'correlation':diagnostics.get('correlation',{})
-    }
+    descriptive = result["descriptive"]
+    diagnostics = result["diagnostics"]
+    advisory = result["advisory"]   # already includes ALL priorities
 
     return {
-        'diagnostics':diagnostics,
-        'advisory':advisory,
-        'meta':{
-            'rows':data.shape[0],
-            'columns':data.shape[1]
+        "diagnostics": format_diagnostics_ui(diagnostics),
+        "advisory": format_advisory_ui(advisory),
+        "meta": {
+            "rows": descriptive["meta"]["n_rows"],
+            "columns": descriptive["meta"]["n_cols"]
         }
     }
 
-def format_diagnostics(diagnostics:dict) -> dict:
-    
-    def get_data(section):
-        section_data = diagnostics.get(section, {})
-        if "data" not in section_data:
-            raise ValueError(f"Invalid diagnostics format: {section}")
-        return section_data["data"]
 
-    # Missing
-    missing_data = get_data('missing')
-    missing_cols = len(missing_data)
+# -------------------------------
+# UI FORMATTERS (Adapter Layer)
+# -------------------------------
 
-    missing_percentage = (
-        sum(v['missing_percentage'] for v in missing_data.values()) / missing_cols
-        if missing_cols > 0 else 0
-    )
+def format_diagnostics_ui(diagnostics: list) -> dict:
 
-    # Outliers
-    outlier_data = get_data('outliers')
-    outlier_cols = len(outlier_data)
-    outlier_percentage = (
-        sum(v['outlier_percentage'] for v in outlier_data.values()) / outlier_cols
-        if outlier_cols > 0 else 0
-    )
+    missing_cols = 0
+    missing_total = 0
 
-    # Distribution
-    skew_data = get_data('distribution')
-    max_skew = max(
-        [v['skew'] for v in skew_data.values()],
-        default=0
-    )
+    outlier_cols = 0
+    outlier_total = 0
 
-    # Correlation
-    corr_pairs = get_data('correlation')
-    max_corr = max(
-        [abs(v['correlation']) for v in corr_pairs.values()],
-        default=0
-    )
+    max_skew = 0
+    max_corr = 0
+
+    for d in diagnostics:
+        issue = d.get("type")
+        details = d.get("data", {}).get("details", {})
+
+        if issue == "missing":
+            missing_cols += 1
+            missing_total += details.get("missing_pct", 0)
+
+        elif issue == "outliers":
+            outlier_cols += 1
+            outlier_total += details.get("outlier_pct", 0)
+
+        elif issue == "distribution":
+            skew = abs(details.get("skew", 0))
+            max_skew = max(max_skew, skew)
+
+        elif issue == "correlation":
+            corr = abs(details.get("correlation", 0))
+            max_corr = max(max_corr, corr)
 
     return {
-        'missing':{
-            'percentage': round(missing_percentage, 2),
-            'columns':missing_cols
+        "missing": {
+            "percentage": round(missing_total / missing_cols, 2) if missing_cols else 0,
+            "columns": missing_cols
         },
-        'distribution':{
-            'max_skew':round(max_skew, 4)
+        "distribution": {
+            "max_skew": round(max_skew, 4)
         },
-        'outliers':{
-            'percentage':round(outlier_percentage, 2),
-            'columns':outlier_cols
+        "outliers": {
+            "percentage": round(outlier_total / outlier_cols, 2) if outlier_cols else 0,
+            "columns": outlier_cols
         },
-        'correlation':{
-            'max_corr':round(max_corr, 4)
+        "correlation": {
+            "max_corr": round(max_corr, 4)
         }
     }
 
-def format_advisory(advisory):
 
-    advisory = advisory or []  # handle None safely
+def format_advisory_ui(advisory: list) -> dict:
 
-    def extract(priority_level):
+    def extract(priority):
         return [
             {
-                "column": x.get("column"),
-                "recommendation": x.get("recommendation"),
-                "reason": x.get("reason")
+                "column": a.get("column"),
+                "issue": a.get("issue_type"),
+                "recommendation": a.get("action"),  # mapped
+                "reason": a.get("reason")
             }
-            for x in advisory
-            if isinstance(x, dict) and x.get("priority") == priority_level
+            for a in advisory
+            if a.get("priority") == priority
         ]
 
     return {

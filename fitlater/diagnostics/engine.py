@@ -10,6 +10,8 @@ from the raw dataset whenever required in order to fulfill it's purpose.
 
 import pandas as pd
 
+from fitlater.config import DEFAULT_CONFIG
+
 from fitlater.diagnostics.constant_column import check_constant
 from fitlater.diagnostics.duplicates import check_duplicates
 from fitlater.diagnostics.imbalance import check_imbalance
@@ -19,28 +21,35 @@ from fitlater.diagnostics.distribution import check_distribution
 from fitlater.diagnostics.correlation import check_correlation_all
 from fitlater.diagnostics.type_issues import check_type_issues
 
+
 def build_diagnostics(profile:dict, df:pd.DataFrame) -> list:
 
     diagnostics = []
 
     COLUMN_CHECKS = [
-        check_missing,
-        check_outliers,
-        check_distribution,
-        check_type_issues,
-        check_constant,
-        check_imbalance
+        ("missing", check_missing),
+        ("outliers", check_outliers),
+        ("distribution", check_distribution),
+        ("type_issues", check_type_issues),
+        ("constant", check_constant),
+        ("imbalance", check_imbalance)
     ]
 
     DATASET_CHECKS = [
-        check_correlation_all,
-        check_duplicates
+        ("correlation", check_correlation_all),
+        ("duplicates", check_duplicates)
     ]
+
+    exclude = DEFAULT_CONFIG['diagnostics']['exclude']
 
     # Column checks
     for col in df.columns:
 
-        for func in COLUMN_CHECKS:
+        for check_type, func in COLUMN_CHECKS:
+
+            if check_type in exclude:
+                continue
+
             try:   
                 issue = func(col, profile[col], df[col])
                 if issue:
@@ -49,7 +58,10 @@ def build_diagnostics(profile:dict, df:pd.DataFrame) -> list:
                 continue
 
     # Dataset checks
-    for func in DATASET_CHECKS:
+    for check_type, func in DATASET_CHECKS:
+
+        if check_type in exclude:
+            continue
 
         try:
             result = func(profile, df)

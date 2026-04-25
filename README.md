@@ -240,7 +240,7 @@ FitLater is a structured system for data understanding that helps users:
 
 before moving to modeling.
 
----
+You are free to use, modify, and distribute this software, provided that the original copyright notice and license are included.
 
 ## License
 

@@ -1,12 +1,13 @@
 # FitLater
 
-## Version 0.4.0
+## Version 0.4.1
 
 - Introduced frontend UI (HTML, CSS, JavaScript)
 - Added backend API layer (FastAPI)
 - Integrated UI with FitLater pipeline
-- Improved diagnostics formatting and consistency
-- UI currently under active development
+- Refactored core architecture (Descriptive → Diagnostics → Advisory)
+- Added configurable diagnostics and advisory output (`--full`)
+- Improved diagnostics and advisory consistency
 
 ---
 
@@ -24,9 +25,13 @@ FitLater is a data analysis system designed to help users understand their datas
 
 It follows a structured pipeline:
 
-- Descriptive → Diagnostics → Advisory → Profile
+Descriptive → Diagnostics → Advisory
 
-By enforcing a data-first approach, FitLater identifies issues early and provides actionable recommendations for preprocessing.
+- **Descriptive**: Extracts factual dataset information  
+- **Diagnostics**: Detects data issues  
+- **Advisory**: Recommends preprocessing actions  
+
+This separation ensures clarity, modularity, and scalability.
 
 ---
 
@@ -57,44 +62,20 @@ It does not:
 - Recommend models  
 - Run training or evaluation pipelines  
 
-It focuses strictly on exploratory data analysis (EDA) and data understanding.
+It focuses strictly on data understanding and preprocessing guidance.
 
 ---
 
 ## Features
 
-- Comprehensive data overview
-- Automated issue detection (missing values, outliers, skew, correlation)
-- Actionable preprocessing recommendations
-- Column-level profiling
-- 100+ unit and integration tests
-- CLI-based workflow
-- Web-based UI (in development)
-
----
-
-## Frontend (v0.4.0)
-
-FitLater includes a custom-built UI for interactive data analysis.
-
-- Upload datasets directly from the browser
-- View diagnostics and advisory outputs visually
-- Sidebar-based navigation
-- Modular panel design (Upload, Advisory, Diagnostics)
-
-Note: UI is under active development. Additional pages such as Analytics, Reports, and Settings are planned.
-
----
-
-## API Layer (v0.4.0)
-
-A FastAPI-based backend connects the frontend with the FitLater engine.
-
-- Handles dataset upload and processing
-- Executes diagnostics and advisory pipeline
-- Returns structured JSON responses for UI rendering
-
-Designed for future deployment and scalability.
+- Structured EDA pipeline  
+- Automated issue detection  
+- Priority-based recommendations  
+- Configurable output (`--full`)  
+- Column-level insights  
+- CLI-based workflow  
+- FastAPI backend + custom UI  
+- 360+ unit tests  
 
 ---
 
@@ -102,30 +83,65 @@ Designed for future deployment and scalability.
 
 FitLater follows a layered design:
 
-### Descriptive Layer
-Provides fundamental dataset insights:
-- Shape, data types, distributions
-- Missing values, duplicates
+### Descriptive Layer (Facts)
 
-### Diagnostics Layer
-Identifies potential issues:
-- Missing data severity
-- Outliers
-- Skewed distributions
-- Feature correlations
+Provides structured, factual information about the dataset:
 
-### Advisory Layer
+- Dataset shape and metadata  
+- Column-level summaries  
+- Data types (without modification)  
+
+---
+
+### Diagnostics Layer (Problems)
+
+Identifies potential issues in the dataset:
+
+- Missing values  
+- Outliers  
+- Skewed distributions  
+- Feature correlations  
+- Data type inconsistencies  
+- Duplicates and imbalance  
+
+---
+
+### Advisory Layer (Decisions)
+
 Transforms detected issues into actionable recommendations:
-- Data cleaning strategies
-- Feature transformations
-- Model-impact insights
 
-### Profile Layer
-Builds column-level metadata:
-- Skew, missing percentage, outliers
-- Data type understanding
+- Data cleaning strategies  
+- Feature transformations  
+- Data quality improvements  
 
-This layered approach ensures clarity, consistency, and scalability.
+Severity-based prioritization:
+
+- High → Must fix  
+- Medium → Should consider  
+- Low → Informational (visible with `--full`)  
+
+---
+
+## Frontend (v0.4.1)
+
+FitLater includes a custom-built UI for interactive data analysis.
+
+- Upload datasets directly from the browser  
+- View diagnostics and advisory outputs visually  
+- Sidebar-based navigation  
+- Modular panel design  
+
+Note: UI is under active development.
+
+---
+
+## API Layer (v0.4.1)
+
+A FastAPI-based backend connects the frontend with the FitLater engine.
+
+- Handles dataset upload and processing  
+- Executes full pipeline  
+- Returns structured JSON responses  
 
 ---
 
@@ -133,10 +149,10 @@ This layered approach ensures clarity, consistency, and scalability.
 
 FitLater includes 100+ unit and integration tests covering:
 
-- Edge cases (NaN, boolean, empty datasets)
-- Layer-wise validation
-- Full pipeline consistency
-- Deterministic outputs
+- Edge cases  
+- Layer-wise validation  
+- Full pipeline consistency  
+- Deterministic outputs  
 
 Run tests:
 
@@ -144,69 +160,65 @@ Run tests:
 pytest
 ```
 
----
-
 ## Quick Start
 
-**Requirements:** Python 3.10 or newer
+**Requirements:** Python 3.10+
 
 ### Setup
 
-```bash
 git clone https://github.com/jitesh2511/FitLater
 cd FitLater
 python -m venv .venv
-```
 
 Activate the virtual environment:
 
-- Windows: `.venv\Scripts\activate`  
-- macOS / Linux: `source .venv/bin/activate`
+- Windows: .venv\Scripts\activate  
+- macOS/Linux: source .venv/bin/activate
 
 Install dependencies:
 
-```bash
 pip install -r requirements.txt
-```
 
 ---
 
 ## CLI Usage
 
-Run FitLater from terminal:
+Run FitLater:
 
-```bash
 python -m fitlater
-```
 
-After loading a dataset:
+### Commands
 
-- `overview` → Dataset summary  
-- `correlation` → Correlation analysis  
-- `outlier` → Outlier detection  
-- `missing_diags` → Missing value diagnostics  
-- `corr_diags` → Correlation diagnostics  
-- `outlier_diags` → Outlier diagnostics  
-- `dist_diags` → Distribution diagnostics  
-- `diagnostics` → Full diagnostics report  
-- `advisory_report` → Full advisory report  
-
-Type `help` for commands. Use `exit` to quit.
+load <file>             # load dataset  
+diagnostics             # view detected issues  
+diagnostics --full      # include low priority issues
+advisory                # high + medium priority advice  
+advisory --full         # include low priority advice  
 
 ---
 
-## UI Usage (v0.4.0)
+### Example Workflow
+
+```
+load data/test.csv  
+diagnostics  
+advisory --full
+```
+
+---
+
+## UI Usage (v0.4.1)
 
 ### Start Backend API
-
 ```bash
 uvicorn backend.app:app --reload
 ```
-
 ### Open Frontend
 
-Open `index.html` in your browser  
-(or use Live Server in VS Code)
+Open index.html in your browser  
+> (or use Live Server in VS Code)
+
+---
 
 ### Workflow
 
@@ -214,24 +226,32 @@ Open `index.html` in your browser
 2. Backend processes the dataset  
 3. View diagnostics and advisory results in the dashboard  
 
+**Note:** The UI is currently under active development. While core functionality is supported, some features available in the CLI are not yet integrated. Full feature parity is planned in future updates.
+
 ---
 
 ## Summary
 
-FitLater is a structured system for exploratory data analysis that helps users make informed preprocessing decisions before model development.
+FitLater is a structured system for data understanding that helps users:
 
----
+- detect issues early  
+- prioritize fixes  
+- prepare data effectively  
+
+before moving to modeling.
+
+You are free to use, modify, and distribute this software, provided that the original copyright notice and license are included.
 
 ## License
 
 This project is licensed under the MIT License.
 
-You are free to use, modify, and distribute this software, provided that the original copyright notice and license are included.
+See the LICENSE file for details.
 
-See the [LICENSE](LICENSE) file for details.
+---
 
 ## Attribution
 
-If you use FitLater in your work, consider citing or linking back to this repository:
+If you use FitLater in your work, consider citing or linking back:
 
 https://github.com/jitesh2511/FitLater

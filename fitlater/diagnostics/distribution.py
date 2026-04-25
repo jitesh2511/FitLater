@@ -1,35 +1,42 @@
-from fitlater.diagnostics.base import make_issue
-from fitlater.diagnostics.base import get_max_severity
-from fitlater.config import SKEW_SEVERITY_THRESHOLD
-from fitlater.config import SKEW_THRESHOLD
+'''
+This module check for skew value diagnostics
+per column and returns the issue if detected or 
+returns None on no issue being detected
+'''
+
+
 import pandas as pd
 
-def check_distribution(data:pd.DataFrame) -> dict:
+from fitlater.diagnostics.base import get_severity, make_issue
+from fitlater.config import SKEW_THRESHOLD, SKEW_SEVERITY_THRESHOLD
 
-    numeric_features = data.select_dtypes(include='number').columns.to_list()
+def check_distribution(column:str, profile:dict, data:pd.Series) -> dict | None:
 
-    # Exclude columns with >=60% missing values
-    numeric_features = [col for col in numeric_features if data[col].isna().mean() < 0.6]
+    # No issue if the column is not numeric
+    if not profile.get('type') == 'numeric':
+        return None
 
-    if not numeric_features:
-        return make_issue('distribution', {}, False, 'low')
+    skew = profile.get('skew')
 
-    high_skew = [col for col in numeric_features if abs(data[col].skew()) > SKEW_THRESHOLD]
+    if skew is None:
+        return None
 
+    high_skew = abs(skew) > SKEW_THRESHOLD
+
+    # No issue if skew is not greater than the define threshold
     if not high_skew:
-        return make_issue('distribution', {}, False, 'low')
+        return None
 
-    skew_values = {col : data[col].skew() for col in high_skew}
+    skew_summary = {
+        'issue_type': 'skewed_column',
+        'expected_type': 'low_skew',
+        'current_type': 'high_skew',
+        'confidence': round(abs(skew), 2),
+        'details': {
+            'skew' : round(skew, 4),
+            'kurt' : round(profile.get('kurt'), 4)
+        }
+    }
+    severity = get_severity(abs(skew), SKEW_SEVERITY_THRESHOLD)
 
-    skew_summary = {col : {
-        'skew' : round(skew_values[col], 4),
-        'severity' : 'low' if abs(skew_values[col]) <= SKEW_SEVERITY_THRESHOLD['low'] 
-        else 'medium' if abs(skew_values[col]) <= SKEW_SEVERITY_THRESHOLD['medium']
-        else 'high',
-        'hint' : 'Apply approporiate transformation'
-    } for col in high_skew}
-
-
-    return make_issue('distribution', skew_summary, True, get_max_severity(skew_summary))
-
-    
+    return make_issue('distribution', column, skew_summary, severity, True)

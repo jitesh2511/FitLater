@@ -67,7 +67,7 @@ It focuses strictly on exploratory data analysis (EDA) and data understanding.
 - Automated issue detection (missing values, outliers, skew, correlation)
 - Actionable preprocessing recommendations
 - Column-level profiling
-- 100+ unit and integration tests
+- 360+ unit and integration tests
 - CLI-based workflow
 - Web-based UI (in development)
 
@@ -131,7 +131,7 @@ This layered approach ensures clarity, consistency, and scalability.
 
 ## Testing
 
-FitLater includes 100+ unit and integration tests covering:
+FitLater includes 360+ unit and integration tests covering:
 
 - Edge cases (NaN, boolean, empty datasets)
 - Layer-wise validation

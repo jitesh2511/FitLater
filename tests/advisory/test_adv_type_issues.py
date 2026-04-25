@@ -62,7 +62,7 @@ def test_boolean_as_string():
 # SEVERITY TESTS
 # =========================
 
-def test_low_severity_returns_none():
+def test_low_severity_returns_low_priority():
     diag = {
         "column": "A",
         "data": {"issue_type": "numeric_as_string"},
@@ -71,10 +71,12 @@ def test_low_severity_returns_none():
 
     result = handle_type_issue({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
+    assert result["action"] == "No immediate action required"
 
 
-def test_missing_severity_returns_none():
+def test_missing_severity_returns_low_priority():
     diag = {
         "column": "A",
         "data": {"issue_type": "numeric_as_string"},
@@ -83,7 +85,8 @@ def test_missing_severity_returns_none():
 
     result = handle_type_issue({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
 
 
 # =========================
@@ -174,7 +177,7 @@ def test_deterministic_output():
 # BREAK TESTS (IMPORTANT)
 # =========================
 
-def test_invalid_severity_value():
+def test_invalid_severity_value_returns_low_priority():
     diag = {
         "column": "A",
         "data": {"issue_type": "numeric_as_string"},
@@ -183,7 +186,8 @@ def test_invalid_severity_value():
 
     result = handle_type_issue({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
 
 
 def test_non_string_issue_type():

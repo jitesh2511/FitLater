@@ -147,20 +147,6 @@ def test_missing_has_issue_key():
 # ROBUSTNESS TESTS
 # =========================
 
-def test_handler_returns_none():
-    diagnostics = [
-        {
-            "type": "distribution",
-            "column": "A",
-            "data": {"details": {"skew": 0.2}},
-            "meta": {"has_issue": True, "severity": "low"}
-        }
-    ]
-
-    result = get_advice({}, diagnostics)
-
-    assert result == []
-
 
 def test_handler_returns_invalid_structure():
     """

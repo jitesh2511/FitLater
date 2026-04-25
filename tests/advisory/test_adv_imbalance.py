@@ -37,10 +37,10 @@ def test_medium_severity_imbalance():
 
 
 # =========================
-# LOW / NO ADVICE
+# LOW
 # =========================
 
-def test_low_severity_returns_none():
+def test_low_severity_returns_low_priority():
     diag = {
         "column": "target",
         "data": {"details": {"dominance_ratio": 0.4}},
@@ -49,10 +49,12 @@ def test_low_severity_returns_none():
 
     result = handle_imbalance({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
+    assert result["action"] == "No action required"
 
 
-def test_missing_severity_returns_none():
+def test_missing_severity_returns_low_priority():
     diag = {
         "column": "target",
         "data": {"details": {"dominance_ratio": 0.8}},
@@ -61,7 +63,8 @@ def test_missing_severity_returns_none():
 
     result = handle_imbalance({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
 
 
 # =========================
@@ -201,16 +204,17 @@ def test_deterministic_output():
 # BREAK TESTS (IMPORTANT)
 # =========================
 
-def test_invalid_severity_value():
+def test_invalid_severity_value_returns_low_priority():
     diag = {
         "column": "target",
         "data": {"details": {"dominance_ratio": 0.8}},
-        "meta": {"severity": "critical"}  # invalid
+        "meta": {"severity": "critical"}
     }
 
     result = handle_imbalance({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
 
 
 def test_non_string_column():

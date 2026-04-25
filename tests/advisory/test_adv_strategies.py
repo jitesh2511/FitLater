@@ -71,7 +71,8 @@ def test_low_severity_returns_none():
 
     result = handle_type_issue({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
 
 
 def test_missing_severity_returns_none():
@@ -83,7 +84,8 @@ def test_missing_severity_returns_none():
 
     result = handle_type_issue({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
 
 
 # =========================
@@ -183,7 +185,8 @@ def test_invalid_severity_value():
 
     result = handle_type_issue({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
 
 
 def test_non_string_issue_type():

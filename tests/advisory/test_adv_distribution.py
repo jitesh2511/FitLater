@@ -37,10 +37,10 @@ def test_medium_severity_distribution():
 
 
 # =========================
-# LOW SEVERITY (NO ADVICE)
+# LOW SEVERITY
 # =========================
 
-def test_low_severity_returns_none():
+def test_low_severity_returns_low_priority():
     diag = {
         "column": "A",
         "data": {"details": {"skew": 0.5}},
@@ -49,10 +49,12 @@ def test_low_severity_returns_none():
 
     result = handle_distribution({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
+    assert result["action"] == "No immediate action required"
 
 
-def test_missing_severity_returns_none():
+def test_missing_severity_returns_low_priority():
     diag = {
         "column": "A",
         "data": {"details": {"skew": 2.0}},
@@ -61,7 +63,8 @@ def test_missing_severity_returns_none():
 
     result = handle_distribution({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
 
 
 # =========================
@@ -184,19 +187,17 @@ def test_deterministic_output():
 # BREAK TESTS (VERY IMPORTANT)
 # =========================
 
-def test_invalid_severity_value():
-    """
-    Unknown severity should behave like low → no advice
-    """
+def test_invalid_severity_value_returns_low_priority():
     diag = {
         "column": "A",
         "data": {"details": {"skew": 2.0}},
-        "meta": {"severity": "critical"}  # invalid
+        "meta": {"severity": "critical"}
     }
 
     result = handle_distribution({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
 
 
 def test_non_string_column():

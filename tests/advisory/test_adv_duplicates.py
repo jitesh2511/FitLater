@@ -35,10 +35,10 @@ def test_medium_severity_duplicates():
 
 
 # =========================
-# LOW / NO ADVICE
+# LOW 
 # =========================
 
-def test_low_severity_returns_none():
+def test_low_severity_returns_low_priority():
     diag = {
         "data": {"details": {"duplicate_pct": 5}},
         "meta": {"severity": "low"}
@@ -46,10 +46,12 @@ def test_low_severity_returns_none():
 
     result = handle_duplicates({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
+    assert result["action"] == "No immediate action required"
 
 
-def test_missing_severity_returns_none():
+def test_missing_severity_returns_low_priority():
     diag = {
         "data": {"details": {"duplicate_pct": 20}},
         "meta": {}
@@ -57,7 +59,8 @@ def test_missing_severity_returns_none():
 
     result = handle_duplicates({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
 
 
 # =========================
@@ -172,7 +175,7 @@ def test_deterministic_output():
 # BREAK TESTS (IMPORTANT)
 # =========================
 
-def test_invalid_severity_value():
+def test_invalid_severity_value_returns_low_priority():
     diag = {
         "data": {"details": {"duplicate_pct": 20}},
         "meta": {"severity": "critical"}
@@ -180,7 +183,8 @@ def test_invalid_severity_value():
 
     result = handle_duplicates({}, diag)
 
-    assert result is None
+    assert result is not None
+    assert result["priority"] == 3
 
 
 def test_non_numeric_duplicate_pct():

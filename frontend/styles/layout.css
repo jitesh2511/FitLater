@@ -15,12 +15,16 @@
     --grey-font-color:#525252;
     --border:#454749b4;
     --high:#ff0000;
+    --high-bg:rgba(255, 0, 0, 0.08);
     --medium:#b57502;
+    --medium-bg:rgba(181, 117, 2, 0.08);
     --low:#0f8428;
+    --low-bg:rgba(15, 132, 40, 0.08);
     --overview-panel-color: #1e1e1e;
 
     /* Sizes */
     --sidebar-width: 200px;
+    --navbar-height: 64px;
 
 }
 
@@ -48,16 +52,17 @@ body {
 }
 
 .app{
-    margin-top:60px;
     min-height: 100vh;
+    color:white;
 }
 
 .main{
     margin-left: var(--sidebar-width);
     width: calc(100% - var(--sidebar-width));
     transition: all 0.3s ease;
-    padding: 0 32px 0 48px;
+    padding: var(--navbar-height) 32px 0 48px;
     box-sizing: border-box;
     display:flex;
-    flex:1;
+    flex:1;padding-top: var(--navbar-height);  /* ✅ THIS FIXES IT */
+    box-sizing: border-box;
 }

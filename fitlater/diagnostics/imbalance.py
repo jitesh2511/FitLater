@@ -9,6 +9,7 @@ def check_imbalance(column: str, profile: dict, data:pd.Series) -> dict | None:
         return None
 
     top_freq = profile.get("top_freq", 0)
+    top_value = profile.get("top_value", "")
     total_rows = len(data)
     if total_rows == 0:
         return None
@@ -29,6 +30,7 @@ def check_imbalance(column: str, profile: dict, data:pd.Series) -> dict | None:
             "current_type": "categorical",
             "confidence": round(dominance, 2),
             "details": {
+                "dominating_value": top_value,
                 "dominance_ratio": round(dominance, 2)
             }
         },

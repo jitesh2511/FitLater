@@ -1,0 +1,264 @@
+.heading{
+    margin-bottom: 24px;
+    font-size:40px;
+    font-weight: 600;
+}
+.analytics-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 0 24px;
+    box-sizing: border-box;
+    margin-bottom: 40px;
+}
+
+.analytics-topbar {
+    display: flex;
+    gap: 20px;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.control-group label {
+    letter-spacing: 0.5px;
+    font-size: 18px;
+}
+
+.custom-select {
+    position: relative;
+    width: 220px;
+}
+
+.select-display {
+    color: var(--grey-font-color);
+    background-color: var(--subpanel-color);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.select-display:hover {
+    border-color: white;
+}
+
+.select-dropdown {
+    position: absolute;
+    top: 110%;
+    width: 100%;
+    background-color: var(--panel-color);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px;
+    z-index: 100;
+}
+
+.select-search {
+    width: 100%;
+    padding: 6px 8px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background-color: var(--subpanel-color);
+    color: white;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.options-list {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.option-item {
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.option-item:hover {
+    background-color: var(--sidebar-active);
+}
+
+.hidden {
+    display: none;
+}
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.analytics-card {
+    background-color: var(--subpanel-color);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.card-title{
+    margin-bottom: 8px;
+}
+
+.summary-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chart-container {
+    height: 250px;
+}
+
+.insight-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.chart-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 20px;
+    gap: 40px;
+    box-sizing: border-box;
+    max-height: 100%;
+    overflow: hidden;
+}
+.chart-box {
+    width: 260px;
+    height: 260px;
+    position: relative;
+}
+.chart-left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.chart-right {
+    width: 160px;
+    min-width: 140px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    justify-content: center;
+}
+#secondaryChart {
+    width: 250px !important;
+    height: 250px !important;
+}
+.chart-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    color: #aaa;
+    font-size: 14px;
+    font-weight: 500;
+
+    text-align: center;
+}
+
+/* hide when not needed */
+.hidden {
+    display: none;
+}
+
+.diag-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.diag-item {
+    position: relative;
+
+    padding: 12px 14px 12px 16px;
+    border-radius: 6px;
+
+    font-size: 13px;
+}
+
+.diag-item::before {
+    content: "";
+    position: absolute;
+
+    left: -2px;
+    top: 6px;
+    bottom: 6px;
+
+    width: 4px;
+    border-radius: 2px;
+
+    background: transparent;
+    /* default */
+}
+/* severity colors */
+.diag-high {
+    background: var(--high-bg);
+    border: 1px solid var(--high);
+}
+
+.diag-high::before {
+    background-color: var(--high);
+    box-shadow: 0 0 4px var(--high);
+}
+
+
+.diag-medium {
+    background: var(--medium-bg);
+    border: 1px solid var(--medium);
+}
+
+.diag-medium::before {
+    background-color: var(--medium);
+    box-shadow: 0 0 4px var(--medium);
+}
+
+
+.diag-low {
+    background: var(--low-bg);
+    border: 1px solid var(--low);
+}
+
+.diag-low::before {
+    background-color: var(--low);
+    box-shadow: 0 0 4px var(--low);
+}
+/* header */
+.diag-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.diag-desc {
+    margin-top: 4px;
+    color: #bbb;
+    font-size: 12px;
+}
+
+.no-issues {
+    color: #888;
+    font-size: 13px;
+}

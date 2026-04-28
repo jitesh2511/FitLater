@@ -101,19 +101,19 @@
 .advise.high .head{
     color: var(--high);
     background-color: #d9373755;
-    border: 1px solid var(--high)
+    border: 1px solid var(--high);
 }
 
 .advise.medium .head{
     color: var(--medium);
     background-color: #91693455;
-    border: 1px solid var(--medium)
+    border: 1px solid var(--medium);
 }
 
 .advise.low .head{
     color: var(--low);
     background-color: #43803355;
-    border: 1px solid var(--low)
+    border: 1px solid var(--low);
 }
 
 .advise .sub{
@@ -237,7 +237,7 @@
 }
 
 .advise-card.high{
-    background-color: rgba(255, 0, 0, 0.08);
+    background-color:var(--high-bg);
     border: 1px solid rgba(255, 0, 0, 0.35);
 }
 
@@ -246,7 +246,7 @@
 }
 
 .advise-card.medium{
-    background-color: rgba(181, 117, 2, 0.08);
+    background-color: var(--medium-bg);
     border: 1px solid rgba(181, 117, 2, 0.35);
 }
 
@@ -255,7 +255,7 @@
 }
 
 .advise-card.low{
-    background-color: rgba(15, 132, 40, 0.08);
+    background-color: var(--low-bg);
     border: 1px solid rgba(15, 132, 40, 0.35);
 }
 

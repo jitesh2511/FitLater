@@ -10,7 +10,7 @@
     flex-shrink: 0;
     gap: 20px;
     background-color: var(--navbar-color);
-    height: 64px;
+    height: var(--navbar-height);
     padding: 8px 24px;
 }
 

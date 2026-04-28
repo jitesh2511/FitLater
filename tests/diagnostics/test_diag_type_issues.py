@@ -1,6 +1,7 @@
-import pytest
 import pandas as pd
-from fitlater.diagnostics.type_issues import check_type_issues
+import numpy as np
+
+from fitlater.diagnostics.type_issues import check_type_issues, check_numeric_conversion
 
 
 # =========================
@@ -233,3 +234,125 @@ def test_series_not_used_for_type_decision():
     result = check_type_issues("col", profile, series)
 
     assert result is None
+
+
+# Added new tests for check_numeric_conversion()
+
+
+# -----------------------------
+# POSITIVE CASES (should detect)
+# -----------------------------
+
+def test_detect_boolean_01():
+    s = pd.Series([0, 1, 0, 1, 1])
+    result = check_numeric_conversion("col", s)
+
+    assert result is not None
+    assert result["data"]["issue_type"] == "boolean_as_numeric"
+    assert result["data"]["expected_type"] == "boolean"
+    assert result["data"]["current_type"] == "numeric"
+    assert result["meta"]["severity"] == "medium"
+
+
+def test_detect_boolean_with_nan():
+    s = pd.Series([0, 1, np.nan, 1, 0])
+    result = check_numeric_conversion("col", s)
+
+    assert result is not None
+
+
+def test_detect_boolean_float_values():
+    s = pd.Series([0.0, 1.0, 1.0, 0.0])
+    result = check_numeric_conversion("col", s)
+
+    assert result is not None
+
+
+# -----------------------------
+# NEGATIVE CASES (should NOT detect)
+# -----------------------------
+
+def test_non_boolean_numeric():
+    s = pd.Series([0, 1, 2, 3])
+    result = check_numeric_conversion("col", s)
+
+    assert result is None
+
+
+def test_single_value_only():
+    s = pd.Series([1, 1, 1, 1])
+    result = check_numeric_conversion("col", s)
+
+    # Should not classify single constant column as boolean encoding
+    assert result is None
+
+
+def test_string_values():
+    s = pd.Series(["0", "1", "0"])
+    result = check_numeric_conversion("col", s)
+
+    assert result is None
+
+
+def test_mixed_numeric():
+    s = pd.Series([0, 1, 2, 1])
+    result = check_numeric_conversion("col", s)
+
+    assert result is None
+
+
+# -----------------------------
+# EDGE CASES (important)
+# -----------------------------
+
+def test_empty_series():
+    s = pd.Series([])
+    result = check_numeric_conversion("col", s)
+
+    assert result is None
+
+
+def test_all_nan_series():
+    s = pd.Series([np.nan, np.nan])
+    result = check_numeric_conversion("col", s)
+
+    assert result is None
+
+
+def test_boolean_dtype_series():
+    s = pd.Series([True, False, True])
+    result = check_numeric_conversion("col", s)
+
+    # Already boolean → should not flag
+    assert result is None
+
+
+def test_negative_values():
+    s = pd.Series([-1, 0, 1])
+    result = check_numeric_conversion("col", s)
+
+    assert result is None
+
+
+def test_large_series_boolean_pattern():
+    s = pd.Series([0, 1] * 5000)
+    result = check_numeric_conversion("col", s)
+
+    assert result is not None
+
+
+# -----------------------------
+# CONTRACT TESTS (important)
+# -----------------------------
+
+def test_output_structure():
+    s = pd.Series([0, 1])
+    result = check_numeric_conversion("col", s)
+
+    assert "type" in result
+    assert "column" in result
+    assert "data" in result
+    assert "meta" in result
+
+    assert result["meta"]["has_issue"] is True
+    assert result["meta"]["severity"] == "medium"

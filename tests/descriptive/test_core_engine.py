@@ -138,7 +138,7 @@ def test_empty_column_profile():
     # Only missing stats should exist
     assert "missing_count" in profile
     assert "missing_pct" in profile
-    assert len(profile) == 3
+    assert len(profile) == 4
 
 
 # =========================

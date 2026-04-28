@@ -1,4 +1,5 @@
 from fitlater.pipeline import run_pipeline
+from backend.util import clean_types
 import pandas as pd
 
 
@@ -6,11 +7,27 @@ def get_result(df: pd.DataFrame) -> dict:
 
     if df.empty:
         return {
+            "descriptive": {
+                'meta': {
+                'n_rows': 0,
+                'n_cols': 0,
+                'memory': ""
+                },
+                'profile': {
+
+                },
+                'column_types':{
+                    
+                }
+            },
             "diagnostics": {
                 "missing": {"percentage": 0, "columns": 0},
                 "distribution": {"max_skew": 0},
                 "outliers": {"percentage": 0, "columns": 0},
-                "correlation": {"max_corr": 0}
+                "duplicates": {"percentage": 0, "columns": 0}
+            },
+            "col_diagnostics":{
+
             },
             "advisory": {
                 "high": [],
@@ -19,7 +36,8 @@ def get_result(df: pd.DataFrame) -> dict:
             },
             "meta": {
                 "rows": 0,
-                "columns": 0
+                "columns": 0,
+                "column_list": []
             }
         }
 
@@ -27,16 +45,21 @@ def get_result(df: pd.DataFrame) -> dict:
 
     descriptive = result["descriptive"]
     diagnostics = result["diagnostics"]
-    advisory = result["advisory"]   # already includes ALL priorities
+    advisory = result["advisory"]  
 
-    return {
+    response = {
+        'descriptive': descriptive,
         "diagnostics": format_diagnostics_ui(diagnostics),
+        "col_diagnostics": diagnostics,
         "advisory": format_advisory_ui(advisory),
         "meta": {
             "rows": descriptive["meta"]["n_rows"],
-            "columns": descriptive["meta"]["n_cols"]
+            "columns": descriptive["meta"]["n_cols"],
+            "columns_list": list(df.columns)
         }
     }
+
+    return clean_types(response)
 
 
 # -------------------------------
@@ -52,7 +75,7 @@ def format_diagnostics_ui(diagnostics: list) -> dict:
     outlier_total = 0
 
     max_skew = 0
-    max_corr = 0
+    duplicate_pct = 0
 
     for d in diagnostics:
         issue = d.get("type")
@@ -70,9 +93,8 @@ def format_diagnostics_ui(diagnostics: list) -> dict:
             skew = abs(details.get("skew", 0))
             max_skew = max(max_skew, skew)
 
-        elif issue == "correlation":
-            corr = abs(details.get("correlation", 0))
-            max_corr = max(max_corr, corr)
+        elif issue == "duplicates":
+            duplicate_pct = abs(details.get("duplicate_pct", 0))
 
     return {
         "missing": {
@@ -86,8 +108,8 @@ def format_diagnostics_ui(diagnostics: list) -> dict:
             "percentage": round(outlier_total / outlier_cols, 2) if outlier_cols else 0,
             "columns": outlier_cols
         },
-        "correlation": {
-            "max_corr": round(max_corr, 4)
+        "duplicates": {
+            "percentage": round(duplicate_pct, 2)
         }
     }
 

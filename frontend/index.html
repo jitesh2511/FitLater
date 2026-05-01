@@ -10,9 +10,17 @@
     <script src="js/sidebar.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/navbar.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-    <script src="js/chart.js" defer></script>
+    <script src="js/analytics.js" defer></script>
+
+    <!-- Chart.js FIRST -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    
+    <!-- Plugins AFTER Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot@3.10.0/build/index.umd.min.js"></script>
+    
+    <!-- Your chart logic LAST -->
+    <script src="js/chart.js"></script>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/layout.css">
@@ -374,21 +382,21 @@
                                 </div>
                             </div>
                 
-                            <!-- 📈 PRIMARY GRAPH -->
-                            <div class="analytics-card chart-card">
-                                <h3 class="card-title">Distribution</h3>
-                
-                                <div class="chart-container">
-                                    <canvas id="primaryChart"></canvas>
-                                </div>
-                            </div>
-                
                             <!-- DIAGNOSTICS -->
                             <div class="analytics-card diag-card">
                                 <h3 class="card-title">Diagnostics</h3>
                 
                                 <div id="diagList" class="diag-list">
                                     
+                                </div>
+                            </div>
+
+                            <!-- 📈 PRIMARY GRAPH -->
+                            <div class="analytics-card chart-card">
+                                <h3 class="card-title">Distribution</h3>
+                
+                                <div class="chart-container">
+                                    <canvas id="primaryChart"></canvas>
                                 </div>
                             </div>
                 

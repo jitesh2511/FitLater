@@ -94,6 +94,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+    align-items: stretch;
 }
 
 .analytics-card {
@@ -101,6 +102,11 @@
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 16px;
+}
+
+.chart-card {
+    display: flex;
+    flex-direction: column;
 }
 
 .card-title{
@@ -119,7 +125,12 @@
 }
 
 .chart-container {
-    height: 250px;
+    min-height: 320px;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .insight-list {
@@ -131,25 +142,49 @@
 .chart-wrapper {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
     width: 100%;
-    padding: 20px;
-    gap: 40px;
+    height: 100%;
+    padding: 20px 12px;
+    gap: 24px;
     box-sizing: border-box;
-    max-height: 100%;
-    overflow: hidden;
+}
+
+.chart-wrapper.secondary-single-layout {
+    min-height: 100%;
+}
+
+.chart-wrapper.secondary-single-layout .chart-left {
+    flex: 0 1 auto;
+    width: 100%;
+    min-height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-wrapper.secondary-single-layout .chart-box {
+    margin: auto 0;
+}
+
+.chart-wrapper.secondary-single-layout .chart-right {
+    display: none !important;
+}
+
+.chart-wrapper.secondary-pie-layout .chart-right {
+    display: flex !important;
 }
 .chart-box {
-    width: 260px;
-    height: 260px;
+    width: min(100%, 460px);
+    height: min(100%, 460px);
+    min-height: 340px;
     position: relative;
 }
 .chart-left {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .chart-right {
@@ -163,8 +198,13 @@
     justify-content: center;
 }
 #secondaryChart {
-    width: 250px !important;
-    height: 250px !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#primaryChart {
+    width: 100% !important;
+    height: 100% !important;
 }
 .chart-message {
     position: absolute;
@@ -188,6 +228,16 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    max-height: 360px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.diag-list::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
 }
 
 .diag-item {
@@ -261,4 +311,10 @@
 .no-issues {
     color: #888;
     font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
 }

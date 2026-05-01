@@ -1,9 +1,10 @@
-from fitlater.pipeline import run_pipeline
 from backend.util import clean_types
-import pandas as pd
 
 
-def get_result(df: pd.DataFrame) -> dict:
+def get_result(df) -> dict:
+    # Defer heavy pipeline imports so API startup doesn't fail
+    # when BLAS/native libs are constrained at process boot.
+    from fitlater.pipeline import run_pipeline
 
     if df.empty:
         return {

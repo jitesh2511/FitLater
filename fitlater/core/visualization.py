@@ -106,19 +106,35 @@ def getBooleanChartData(series):
     }
 
 def getTimeSeriesData(series):
-    series = series.dropna()
+    import pandas as pd
+
+    series = pd.to_datetime(series, errors='coerce').dropna()
 
     if series.empty:
         return None
 
-    series = pd.to_datetime(series, errors='coerce').dropna()
+    n_unique = series.nunique()
 
-    counts = series.dt.date.value_counts().sort_index()
+    # 🔥 Adaptive aggregation
+    if n_unique > 300:
+        # group by MONTH
+        grouped = series.dt.to_period("M").value_counts().sort_index()
+        labels = [str(p) for p in grouped.index]
+
+    elif n_unique > 50:
+        # group by DAY
+        grouped = series.dt.date.value_counts().sort_index()
+        labels = [str(d) for d in grouped.index]
+
+    else:
+        # small data → no aggregation
+        grouped = series.value_counts().sort_index()
+        labels = [str(d) for d in grouped.index]
 
     return {
         "type": "line",
-        "labels": [str(d) for d in counts.index],
-        "values": counts.tolist()
+        "labels": labels,
+        "values": grouped.tolist()
     }
 
 def getBooleanPieChartData(series):

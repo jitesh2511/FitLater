@@ -1,6 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-import pandas as pd
 import io
 from backend.engine import get_result
 
@@ -21,6 +20,7 @@ def root():
 
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
+    import pandas as pd
 
     if not file.filename.endswith(".csv"):
         return {"error": "Only CSV files are supported"}

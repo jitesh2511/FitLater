@@ -108,7 +108,7 @@ def getBooleanChartData(series):
 def getTimeSeriesData(series):
     import pandas as pd
 
-    series = pd.to_datetime(series, errors='coerce').dropna()
+    series = pd.to_datetime(series, errors='coerce', format='mixed').dropna()
 
     if series.empty:
         return None
@@ -153,7 +153,7 @@ def getBooleanPieChartData(series):
 def getDatetimeWeekdayDistribution(series):
     import pandas as pd
 
-    series = pd.to_datetime(series, errors='coerce').dropna()
+    series = pd.to_datetime(series, errors='coerce', format='mixed').dropna()
 
     if series.empty:
         return None

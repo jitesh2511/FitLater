@@ -43,7 +43,7 @@ def infer_single_column(series):
     non_null = series.dropna()
 
     # Check for datetime like string
-    parsed = pd.to_datetime(non_null, errors='coerce')
+    parsed = pd.to_datetime(non_null, errors='coerce', format='mixed')
     datetime_ratio = parsed.notna().sum() / len(non_null)
 
     if datetime_ratio > DATETIME_LIKE_RATIO_THRESHOLD:

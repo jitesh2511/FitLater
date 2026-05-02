@@ -1,4 +1,3 @@
-import pytest
 import pandas as pd
 from fitlater.diagnostics.constant_column import check_constant
 
@@ -39,16 +38,15 @@ def test_non_constant_column_returns_none():
 # =========================
 
 def test_missing_n_unique_in_profile():
-    """
-    If n_unique is missing, defaults to 0 → should NOT trigger constant
-    """
-    series = pd.Series([5, 5, 5])
-    profile = {"type": "numeric"}
+        """
+        If n_unique is missing in profile, it should not be used for logic.
+        """
+        series = pd.Series([5, 5, 5])
+        profile = {"type": "numeric"}
 
-    result = check_constant("col", profile, series)
+        result = check_constant("col", profile, series)
 
-    assert result is None
-
+        assert result is not None
 
 def test_empty_series():
     """
@@ -82,6 +80,16 @@ def test_constant_string_column():
 
     assert result is not None
     assert result["data"]["current_type"] == "categorical"
+
+def test_constant_column_with_missing():
+    """
+    Constant detection should work even with missing values
+    """
+    s = pd.Series([5, 5, 5, None, 5])
+
+    issue = check_constant("constant_col", {"type": "numeric"}, s)
+
+    assert issue is not None
 
 
 # =========================
@@ -136,14 +144,14 @@ def test_profile_extra_keys_do_not_affect():
     assert result is not None
 
 
-def test_series_not_used_for_logic():
+def test_nunique_not_used_for_logic():
     """
-    Even if series is inconsistent, decision depends ONLY on profile
+    Even if n_unique is inconsistent, decision depends ONLY on data.
     """
     series = pd.Series([1, 2, 3])  # not constant
     profile = {"n_unique": 1, "type": "numeric"}  # says constant
 
     result = check_constant("col", profile, series)
 
-    # Function trusts profile → should still flag
-    assert result is not None
+    # Function trusts data → should not flag as constant
+    assert result is None

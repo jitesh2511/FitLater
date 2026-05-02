@@ -11,6 +11,7 @@
     <script src="js/main.js" defer></script>
     <script src="js/navbar.js" defer></script>
     <script src="js/analytics.js" defer></script>
+    <script src="js/report.js" defer></script>
 
     <!-- Chart.js FIRST -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
@@ -32,6 +33,7 @@
     <link rel="stylesheet" href="styles/overview.css">
     <link rel="stylesheet" href="styles/about.css">
     <link rel="stylesheet" href="styles/analytics.css">
+    <link rel="stylesheet" href="styles/report.css">
 
 </head>
 
@@ -427,7 +429,157 @@
                 </div>
                 
                 <div class="dash-page dash-report hidden">
-                    <h2>Report</h2>
+                
+                    <div class="heading">
+                        <h2 class="main">Report</h2>
+                        <h5 class="sub">Structured insights and actionable recommendations</h5>
+                    </div>
+                
+                    <div class="report-container">
+                
+                        <!-- SUMMARY SECTION -->
+                        <div class="report-section summary-section">
+                
+                            <h3 class="section-title">Summary</h3>
+                
+                            <div class="summary-grid">
+                
+                                <div class="card report-card rows">
+                                    <div class="state state-empty">No data</div>
+                                    <div class="state state-loading hidden"></div>
+                                    <div class="state state-result hidden">
+                                        <p class="card-title">Rows</p>
+                                        <p class="card-value"></p>
+                                    </div>
+                                </div>
+                
+                                <div class="card report-card columns">
+                                    <div class="state state-empty">No data</div>
+                                    <div class="state state-loading hidden"></div>
+                                    <div class="state state-result hidden">
+                                        <p class="card-title">Columns</p>
+                                        <p class="card-value"></p>
+                                    </div>
+                                </div>
+                
+                                <div class="card report-card missing">
+                                    <div class="state state-empty">No data</div>
+                                    <div class="state state-loading hidden"></div>
+                                    <div class="state state-result hidden">
+                                        <p class="card-title">Missing</p>
+                                        <p class="card-value"></p>
+                                    </div>
+                                </div>
+                
+                                <div class="card report-card duplicates">
+                                    <div class="state state-empty">No data</div>
+                                    <div class="state state-loading hidden"></div>
+                                    <div class="state state-result hidden">
+                                        <p class="card-title">Duplicates</p>
+                                        <p class="card-value"></p>
+                                    </div>
+                                </div>
+                
+                                <div class="card report-card outliers">
+                                    <div class="state state-empty">No data</div>
+                                    <div class="state state-loading hidden"></div>
+                                    <div class="state state-result hidden">
+                                        <p class="card-title">Outliers</p>
+                                        <p class="card-value"></p>
+                                    </div>
+                                </div>
+                
+                            </div>
+                        </div>
+                
+                        <!-- DIAGNOSTICS SECTION -->
+                        <div class="report-section diagnostics-section">
+                
+                            <h3 class="section-title">Diagnostics</h3>
+                
+                            <div class="diag-container">
+                
+                                <!-- EMPTY -->
+                                <div class="state state-empty">
+                                    No diagnostics available
+                                </div>
+                
+                                <!-- LOADING -->
+                                <div class="state state-loading hidden"></div>
+                
+                                <!-- RESULT -->
+                                <div class="state state-result hidden">
+                
+                                    <!-- Missing -->
+                                    <div class="diag-block">
+                                        <h4 class="diag-title">Missing Values</h4>
+                                        <div class="diag-list" id="report-missing-list"></div>
+                                    </div>
+                
+                                    <!-- Duplicates -->
+                                    <div class="diag-block">
+                                        <h4 class="diag-title">Duplicates</h4>
+                                        <div class="diag-list" id="report-duplicates-list"></div>
+                                    </div>
+                
+                                    <!-- Outliers -->
+                                    <div class="diag-block">
+                                        <h4 class="diag-title">Outliers</h4>
+                                        <div class="diag-list" id="report-outliers-list"></div>
+                                    </div>
+                
+                                    <!-- Type Issues -->
+                                    <div class="diag-block">
+                                        <h4 class="diag-title">Type Issues</h4>
+                                        <div class="diag-list" id="report-types-list"></div>
+                                    </div>
+                
+                                </div>
+                            </div>
+                        </div>
+                
+                        <!-- ADVISORY SECTION -->
+                        <div class="report-section advisory-section">
+                
+                            <h3 class="section-title">Advisory</h3>
+                
+                            <div class="advise-box">
+                
+                                <!-- EMPTY -->
+                                <div class="state state-empty">
+                                    No recommendations available
+                                </div>
+                
+                                <!-- LOADING -->
+                                <div class="state state-loading hidden"></div>
+                
+                                <!-- RESULT -->
+                                <div class="state state-result hidden">
+                
+                                    <div class="advise-container">
+                
+                                        <div class="advise high">
+                                            <p class="head">High Priority</p>
+                                            <div class="list" id="report-adv-high"></div>
+                                        </div>
+                
+                                        <div class="advise medium">
+                                            <p class="head">Medium Priority</p>
+                                            <div class="list" id="report-adv-medium"></div>
+                                        </div>
+                
+                                        <div class="advise low">
+                                            <p class="head">Low Priority</p>
+                                            <div class="list" id="report-adv-low"></div>
+                                        </div>
+                
+                                    </div>
+                
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
                 </div>
                 
                 <div class="dash-page dash-settings hidden">

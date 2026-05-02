@@ -118,7 +118,6 @@ async function handleFileUpload(file) {
         if (!data || !data.diagnostics || !data.advisory || !data.descriptive || !data.col_diagnostics || !data.meta) {
             throw new Error("Invalid API response");
         }
-        console.log(data);
 
         // Enforce max file limit
         if (filesStore.length >= 4) {
@@ -296,6 +295,10 @@ function updateUI(data) {
 
     // Advisory
     updateAdvisory(data);
+    // Report Page
+    if (typeof renderReport === "function") {
+        renderReport(data);
+    }
 }
 
 // ==============================

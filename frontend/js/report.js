@@ -19,8 +19,8 @@ function buildSummary(res) {
     return {
         rows: res.meta?.rows || 0,
         columns: res.meta?.columns || 0,
-        missing: res.diagnostics?.missing?.columns || 0,
-        outliers: res.diagnostics?.outliers?.columns || 0,
+        missing: res.diagnostics?.missing?.percentage || 0,
+        outliers: res.diagnostics?.outliers?.percentage || 0,
         duplicates: res.diagnostics?.duplicates?.percentage || 0
     };
 }
@@ -54,7 +54,10 @@ function groupDiagnostics(issues) {
         outliers: [],
         type_issues: [],
         distribution: [],
-        duplicates: []
+        duplicates: [],
+        constant: [],
+        imbalance: [],
+        correlation: []
     };
 
     issues.forEach(issue => {
@@ -75,6 +78,15 @@ function groupDiagnostics(issues) {
                 break;
             case "duplicates":
                 grouped.duplicates.push(issue);
+                break;
+            case "constant":
+                grouped.constant.push(issue);
+                break;
+            case "imbalance":
+                grouped.imbalance.push(issue);
+                break;
+            case "correlation":
+                grouped.correlation.push(issue);
                 break;
         }
     });
@@ -97,6 +109,11 @@ function renderDiagnostics(colDiagnostics) {
     renderDiagList("report-missing-list", grouped.missing);
     renderDiagList("report-outliers-list", grouped.outliers);
     renderDiagList("report-types-list", grouped.type_issues);
+    renderDiagList("report-distribution-list", grouped.distribution);
+    renderDiagList("report-duplicates-list", grouped.duplicates);
+    renderDiagList("report-constant-list", grouped.constant);
+    renderDiagList("report-imbalance-list", grouped.imbalance);
+    renderDiagList("report-correlation-list", grouped.correlation);
 }
 
 function renderDiagList(id, items) {
@@ -106,19 +123,30 @@ function renderDiagList(id, items) {
     container.innerHTML = "";
 
     if (!Array.isArray(items) || items.length === 0) {
-        container.appendChild(createDiagItem("No issues found"));
+        container.appendChild(createDiagItem("No issues found", null));
         return;
     }
 
+    const priorityMap = { "high": 1, "medium": 2, "low": 3 };
+    items.sort((a, b) => {
+        const pA = priorityMap[a.meta?.severity] || 4;
+        const pB = priorityMap[b.meta?.severity] || 4;
+        return pA - pB;
+    });
+
     items.forEach(item => {
         const text = formatDiagItem(item);
-        container.appendChild(createDiagItem(text));
+        const severity = item.meta?.severity;
+        container.appendChild(createDiagItem(text, severity));
     });
 }
 
-function createDiagItem(text) {
+function createDiagItem(text, severity) {
     const el = document.createElement("div");
     el.className = "diag-item";
+    if (severity) {
+        el.classList.add(severity);
+    }
     el.textContent = text;
     return el;
 }
@@ -133,17 +161,33 @@ function formatDiagItem(issue) {
     }
 
     if (type === "outliers") {
-        return `${col} → ${details.outlier_count || 0} outliers`;
+        return `${col} → ${details.outlier_pct || 0}% outliers`;
     }
 
     if (type === "type_issue") {
-        return `${col} → Type mismatch (${issue.data.current_type})`;
+        return `${col} → Type mismatch (Current Type : ${issue.data.current_type}, Expected Type : ${issue.data.expected_type})`;
     }
 
     if (type === "distribution") {
         return `${col} → Skew detected (${details.skew || "N/A"})`;
     }
 
+    if (type === "duplicates") {
+        return `${col} → ${details.duplicate_pct || 0}% duplicates`;
+    }
+
+    if (type === "constant") {
+        return `${col} → Constant column`;
+    }
+
+    if (type === "imbalance") {
+        return `${col} → Imbalanced column`;
+    }
+
+    if (type === "correlation") {
+        return `${col} → Correlated column with ${details.correlated_columns.join(", ")}`;
+    }
+    
     return `${col} → Issue detected`;
 }
 
@@ -174,27 +218,37 @@ function renderAdviceList(id, list) {
     container.innerHTML = "";
 
     if (!list || list.length === 0) {
-        container.appendChild(createAdviceItem("No recommendations"));
+        container.appendChild(createAdviceItem({ recommendation: "No recommendations" }));
         return;
     }
 
     list.forEach(item => {
-        container.appendChild(createAdviceItem(formatAdvice(item)));
+        container.appendChild(createAdviceItem(item));
     });
 }
 
-function createAdviceItem(text) {
+function createAdviceItem(item) {
     const el = document.createElement("div");
     el.className = "advice-item";
-    el.textContent = text;
+    
+    const recText = `${item.column ? item.column + ' : ' : ''}${item.recommendation || ""}`;
+    
+    const recEl = document.createElement("div");
+    recEl.className = "rec";
+    recEl.textContent = recText;
+    el.appendChild(recEl);
+    
+    if (item.reason) {
+        const reasonEl = document.createElement("div");
+        reasonEl.className = "reason";
+        reasonEl.textContent = item.reason;
+        el.appendChild(reasonEl);
+    }
+    
     return el;
 }
 
-function formatAdvice(item) {
-    if (!item) return "";
 
-    return `${item.column || "General"} → ${item.recommendation || ""}`;
-}
 
 
 /* =========================

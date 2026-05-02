@@ -5,7 +5,7 @@
 
 .page .heading{
     color:white;
-    margin-top: 32px;
+    margin-top: 45px;
     margin-left:0px;
     padding: 0 24px;
 }
@@ -14,14 +14,14 @@
     margin:0;
     padding: 0;
     font-weight: 600;
-    font-size:32px;
+    font-size:40px;
 }
 
 .page .heading .sub{
     margin-top: 8px;
-    font-weight: 300;
-    opacity: 0.5;
-    font-size:16px;
+    font-weight: 400;
+    opacity: 0.6;
+    font-size: 20px;
 }
 
 .page .main-panel{

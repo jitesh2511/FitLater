@@ -638,46 +638,17 @@
                 </div>
                 <div class="section wif">
                     <h2 class="head">What is FitLater?</h2>
-                    <p class="subhead">FitLater is an EDA tool which helps the user understand their data and make better decisions for their ML Model preprocessing.</p>
+                    <p class="subhead">FitLater is a structured EDA system that helps you understand your data, identify issues, and take informed
+                    preprocessing decisions before building machine learning models.</p>
                     <ul class="points">
                         <li>Follows a structured EDA pipeline instead of scattered analysis</li>
                         <li>Goes beyond statistics to identify problems in your dataset</li>
                         <li>Provides clear, reasoned advice on what to fix and why</li>
                         <li>Built to bridge the gap between data understanding and preprocessing</li>
+                        <li>Provides a unified Report view combining diagnostics and recommendations</li>
                     </ul>
                 </div>
-                <div class="section wfin">
-                    <h2 class="head">What FitLater is NOT</h2>
-                    <div class="not-grid">
-                        <div class="not-card">
-                            <div class="not-item">
-                                <span class="icon">❌</span>
-                                <p>Not limited to generating charts and summary statistics</p>
-                            </div>
-                        </div>
-                    
-                        <div class="not-card">
-                            <div class="not-item">
-                                <span class="icon">❌</span>
-                                <p>Not a no-code dashboarding or BI solution</p>
-                            </div>
-                        </div>
-                    
-                        <div class="not-card">
-                            <div class="not-item">
-                                <span class="icon">❌</span>
-                                <p>Not focused on model training or predictions</p>
-                            </div>
-                        </div>
-                    
-                        <div class="not-card">
-                            <div class="not-item">
-                                <span class="icon">❌</span>
-                                <p>Not designed to replace human intuition, but to support it</p>
-                            </div>
-                        </div>
-                      </div>
-                </div>
+                
                 <div class="section architecture">
                     <h2 class="head">Architecture</h2>
 
@@ -712,66 +683,155 @@
                     <h2 class="head">Features</h2>
 
                     <div class="features-grid">
+                    
                         <div class="feature-card">
-                          <h4>Missing Value Detection</h4>
-                          <p>Identifies and summarizes missing data across columns</p>
+                            <h4>Dataset Overview</h4>
+                            <p>Quick summary of missing values, outliers, skew, and duplicates</p>
                         </div>
                     
                         <div class="feature-card">
-                          <h4>Outlier Detection</h4>
-                          <p>Detects extreme values using statistical methods</p>
+                            <h4>Column-level Analytics</h4>
+                            <p>Detailed statistics and diagnostics for individual columns</p>
                         </div>
                     
                         <div class="feature-card">
-                          <h4>Correlation Analysis</h4>
-                          <p>Finds relationships between numerical features</p>
+                            <h4>Structured Diagnostics</h4>
+                            <p>Detects issues like missing values, type mismatches, skew, and correlations</p>
                         </div>
                     
                         <div class="feature-card">
-                          <h4>Distribution Analysis</h4>
-                          <p>Understands data spread and feature behavior</p>
+                            <h4>Correlation Detection</h4>
+                            <p>Identifies highly correlated column pairs affecting model performance</p>
                         </div>
                     
                         <div class="feature-card">
-                          <h4>Priority-based Advisory</h4>
-                          <p>Categorizes issues into high, medium, and low priority</p>
+                            <h4>Priority-based Advisory</h4>
+                            <p>Actionable recommendations categorized into high, medium, and low priority</p>
                         </div>
                     
                         <div class="feature-card">
-                          <h4>CLI + Frontend Support</h4>
-                          <p>Accessible via command line and interactive UI</p>
+                            <h4>Unified Report Page</h4>
+                            <p>Combines summary, diagnostics, and advisory into a single structured view</p>
                         </div>
-                      </div>
+                    
+                    </div>
 
+                </div>
+
+                <div class="section analytics-highlight">
+                    <h2 class="head">Analytics Page</h2>
+                
+                    <p class="subhead">
+                        The Analytics page provides a detailed, column-level view of your dataset.
+                        It allows you to explore individual features, understand their behavior, and identify issues in depth.
+                    </p>
+                
+                    <div class="features-grid">
+                
+                        <div class="feature-card">
+                            <h4>Column Selection</h4>
+                            <p>Choose any dataset and explore individual columns interactively</p>
+                        </div>
+                
+                        <div class="feature-card">
+                            <h4>Statistical Summary</h4>
+                            <p>View key metrics like mean, median, standard deviation, and missing values</p>
+                        </div>
+                
+                        <div class="feature-card">
+                            <h4>Issue Breakdown</h4>
+                            <p>See all detected issues for a column, sorted by severity</p>
+                        </div>
+                
+                        <div class="feature-card">
+                            <h4>Distribution Insights</h4>
+                            <p>Understand skewness and data spread for numerical features</p>
+                        </div>
+                
+                        <div class="feature-card">
+                            <h4>Categorical Insights</h4>
+                            <p>Analyze unique values, dominant categories, and frequency</p>
+                        </div>
+                
+                        <div class="feature-card">
+                            <h4>Visual Analysis</h4>
+                            <p>Graphs help you quickly interpret patterns and anomalies</p>
+                        </div>
+                
+                    </div>
+                </div>
+
+                <div class="section report-highlight">
+                    <h2 class="head">Report Page</h2>
+                    <p class="subhead">
+                        The Report page brings together dataset summary, diagnostics, and advisory into a single, structured view.
+                        It helps you quickly understand what’s wrong with your data and what actions to take.
+                    </p>
                 </div>
 
                 <div class="section hiw">
                     <h2 class="head">How It Works</h2>
-                  
+                
                     <div class="steps">
                         <div class="step">
                             <div class="circle">1</div>
                             <h4>Upload Dataset</h4>
-                            <p>Provide your CSV file to begin analysis</p>
+                            <p>Upload your CSV file to start the analysis</p>
                         </div>
-                  
+                
                         <div class="step">
                             <div class="circle">2</div>
-                            <h4>Run Analysis</h4>
-                            <p>FitLater processes the dataset through its pipeline</p>
+                            <h4>Process Data</h4>
+                            <p>FitLater runs the dataset through its descriptive, diagnostics, and advisory pipeline</p>
                         </div>
-                  
+                
                         <div class="step">
                             <div class="circle">3</div>
-                            <h4>View Diagnostics</h4>
-                            <p>Identify issues like missing values, outliers, and correlations</p>
+                            <h4>Explore Analytics</h4>
+                            <p>Dive into column-level insights to understand distributions and issues</p>
                         </div>
-                  
+                
                         <div class="step">
                             <div class="circle">4</div>
-                            <h4>Get Recommendations</h4>
-                            <p>Receive prioritized advice for preprocessing decisions</p>
+                            <h4>Review Report</h4>
+                            <p>Get a structured summary of issues and actionable recommendations</p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="section wfin">
+                    <h2 class="head">What FitLater is NOT</h2>
+                
+                    <div class="not-grid">
+                
+                        <div class="not-card">
+                            <div class="not-item">
+                                <span class="icon">❌</span>
+                                <p>Not just charts and summary statistics</p>
+                            </div>
+                        </div>
+                
+                        <div class="not-card">
+                            <div class="not-item">
+                                <span class="icon">❌</span>
+                                <p>Not a no-code BI or dashboarding tool</p>
+                            </div>
+                        </div>
+                
+                        <div class="not-card">
+                            <div class="not-item">
+                                <span class="icon">❌</span>
+                                <p>Not focused on model training or predictions</p>
+                            </div>
+                        </div>
+                
+                        <div class="not-card">
+                            <div class="not-item">
+                                <span class="icon">❌</span>
+                                <p>Not a replacement for human intuition—only a support system</p>
+                            </div>
+                        </div>
+                
                     </div>
                 </div>
 

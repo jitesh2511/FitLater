@@ -1,7 +1,8 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, HTTPException, File
 from fastapi.middleware.cors import CORSMiddleware
 import io
 from backend.engine import get_result
+from backend.util import is_valid_file, is_file_size_valid, save_temp_file, cleanup_file, load_csv_safe, validate_dataset
 
 app = FastAPI()
 
@@ -20,16 +21,26 @@ def root():
 
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
-    import pandas as pd
 
-    if not file.filename.endswith(".csv"):
-        return {"error": "Only CSV files are supported"}
+    if not is_valid_file(file.filename):
+        raise HTTPException(status_code=400, detail="Only CSV files allowed")
 
-    content = await file.read()
+    if not is_file_size_valid(file):
+        raise HTTPException(status_code=400, detail="File too large")
+
+    file_path = save_temp_file(file)
 
     try:
-        df = pd.read_csv(io.BytesIO(content))
-    except Exception:
-        return {"error": "Invalid CSV file"}
+        df = load_csv_safe(file_path)
 
-    return get_result(df)
+        validate_dataset(df)
+
+        result = get_result(df)
+
+        return result
+
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    finally:
+        cleanup_file(file_path)

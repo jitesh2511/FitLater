@@ -2,66 +2,67 @@ from backend.util import clean_types
 
 
 def get_result(df) -> dict:
-    # Defer heavy pipeline imports so API startup doesn't fail
-    # when BLAS/native libs are constrained at process boot.
     from fitlater.pipeline import run_pipeline
 
-    if df.empty:
-        return {
-            "descriptive": {
-                'meta': {
-                'n_rows': 0,
-                'n_cols': 0,
-                'memory': ""
+    try:
+        if df.empty:
+            return {
+                "descriptive": {
+                    'meta': {
+                    'n_rows': 0,
+                    'n_cols': 0,
+                    'memory': ""
+                    },
+                    'profile': {
+
+                    },
+                    'column_types':{
+                        
+                    }
                 },
-                'profile': {
+                "diagnostics": {
+                    "missing": {"percentage": 0, "columns": 0},
+                    "distribution": {"max_skew": 0},
+                    "outliers": {"percentage": 0, "columns": 0},
+                    "duplicates": {"percentage": 0, "columns": 0}
+                },
+                "col_diagnostics":{
 
                 },
-                'column_types':{
-                    
+                "advisory": {
+                    "high": [],
+                    "medium": [],
+                    "low": []
+                },
+                "meta": {
+                    "rows": 0,
+                    "columns": 0,
+                    "column_list": []
                 }
-            },
-            "diagnostics": {
-                "missing": {"percentage": 0, "columns": 0},
-                "distribution": {"max_skew": 0},
-                "outliers": {"percentage": 0, "columns": 0},
-                "duplicates": {"percentage": 0, "columns": 0}
-            },
-            "col_diagnostics":{
+            }
 
-            },
-            "advisory": {
-                "high": [],
-                "medium": [],
-                "low": []
-            },
+        result = run_pipeline(df)
+
+        descriptive = result["descriptive"]
+        diagnostics = result["diagnostics"]
+        advisory = result["advisory"]  
+
+        response = {
+            'descriptive': descriptive,
+            "diagnostics": format_diagnostics_ui(diagnostics),
+            "col_diagnostics": diagnostics,
+            "advisory": format_advisory_ui(advisory),
             "meta": {
-                "rows": 0,
-                "columns": 0,
-                "column_list": []
+                "rows": descriptive["meta"]["n_rows"],
+                "columns": descriptive["meta"]["n_cols"],
+                "columns_list": list(df.columns)
             }
         }
 
-    result = run_pipeline(df)
+        return clean_types(response)
 
-    descriptive = result["descriptive"]
-    diagnostics = result["diagnostics"]
-    advisory = result["advisory"]  
-
-    response = {
-        'descriptive': descriptive,
-        "diagnostics": format_diagnostics_ui(diagnostics),
-        "col_diagnostics": diagnostics,
-        "advisory": format_advisory_ui(advisory),
-        "meta": {
-            "rows": descriptive["meta"]["n_rows"],
-            "columns": descriptive["meta"]["n_cols"],
-            "columns_list": list(df.columns)
-        }
-    }
-
-    return clean_types(response)
-
+    except Exception as e:
+        raise ValueError("Failed to process dataset")
 
 # -------------------------------
 # UI FORMATTERS (Adapter Layer)

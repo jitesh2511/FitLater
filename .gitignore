@@ -26,3 +26,6 @@ data/
 
 # Design photos
 frontend/assets/design/
+
+# Secrets
+.env

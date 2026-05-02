@@ -1,3 +1,14 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+MAX_FILE_SIZE_MB = int(os.getenv("MAX_FILE_SIZE_MB", 5))
+MAX_ROWS = int(os.getenv("MAX_ROWS", 50000))
+MAX_COLS = int(os.getenv("MAX_COLS", 100))
+ALLOWED_EXTENSIONS = os.getenv("ALLOWED_EXTENSIONS", "csv").split(",")
+API_BASE_URL = os.getenv("API_BASE_URL")
+
 # Metadata
 NAME = 'FitLater'
 VERSION = '0.4.0'

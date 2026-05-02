@@ -8,11 +8,17 @@ const sidebar = document.getElementById("sidebar");
 // On page load, check localStorage and set sidebar state
 window.addEventListener("DOMContentLoaded", () => {
     const collapsed = localStorage.getItem("sidebar-collapsed");
-    if (collapsed === "true") {
-        sidebar.classList.add("collapsed");
-    } else {
-        sidebar.classList.remove("collapsed");
+
+    // If user has a preference → use it
+    if (collapsed !== null) {
+        if (collapsed === "false") {
+            sidebar.classList.remove("collapsed");
+        } else {
+            sidebar.classList.add("collapsed");
+        }
     }
+
+    // If no preference → DO NOTHING (stay collapsed by default)
 });
 
 if (toggleBtn){

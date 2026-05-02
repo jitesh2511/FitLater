@@ -412,3 +412,17 @@ document.addEventListener("click", (e) => {
         updateUI(filesStore[activeFileIndex].data);
     }
 });
+
+// ==============================
+// Settings Handlers
+// ==============================
+
+document.getElementById("resetDataBtn")?.addEventListener("click", () => {
+    filesStore.length = 0;
+    activeFileIndex = null;
+
+    setState(uploadBox, "empty");
+    initializeDashboard();
+
+    alert("All data reset");
+});

@@ -614,7 +614,6 @@ function isDiscreteNumeric(viz) {
 }
 
 function renderPrimaryChart(colData) {
-    console.log(colData.visualizations);
 
     const ctx = document.getElementById("primaryChart").getContext("2d");
 

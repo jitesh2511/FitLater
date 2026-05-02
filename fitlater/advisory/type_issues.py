@@ -57,5 +57,14 @@ def handle_type_issue(profile:dict, diag:dict) -> dict | None:
             "Column contains boolean-like values",
             priority
         )
+    
+    elif issue_type == "boolean_as_numeric":
+        return build_advice(
+            column,
+            "type_issue",
+            "Convert to boolean",
+            "Column contains boolean-like values",
+            priority
+        )
 
     return None

@@ -6,7 +6,7 @@ function renderReport(response) {
     if (!response) return;
 
     renderSummary(buildSummary(response));
-    renderDiagnostics(response.col_diagnostics);
+    renderReportDiagnostics(response.col_diagnostics);
     renderAdvisory(response.advisory);
 }
 
@@ -64,7 +64,7 @@ function groupDiagnostics(issues) {
         if (!issue.meta?.has_issue) return;
 
         switch (issue.type) {
-            case "missing_values":
+            case "missing":
                 grouped.missing.push(issue);
                 break;
             case "outliers":
@@ -85,7 +85,7 @@ function groupDiagnostics(issues) {
             case "imbalance":
                 grouped.imbalance.push(issue);
                 break;
-            case "correlation":
+            case "corr":
                 grouped.correlation.push(issue);
                 break;
         }
@@ -94,7 +94,7 @@ function groupDiagnostics(issues) {
     return grouped;
 }
 
-function renderDiagnostics(colDiagnostics) {
+function renderReportDiagnostics(colDiagnostics) {
     const wrapper = document.querySelector(".diagnostics-section");
 
     if (!Array.isArray(colDiagnostics) || colDiagnostics.length === 0) {
@@ -156,7 +156,7 @@ function formatDiagItem(issue) {
     const details = issue.data?.details || {};
     const type = issue.type;
 
-    if (type === "missing_values") {
+    if (type === "missing") {
         return `${col} → ${details.missing_count} missing (${details.missing_pct}%)`;
     }
 
@@ -184,8 +184,12 @@ function formatDiagItem(issue) {
         return `${col} → Imbalanced column`;
     }
 
-    if (type === "correlation") {
-        return `${col} → Correlated column with ${details.correlated_columns.join(", ")}`;
+    if (type === "corr") {
+        const col1 = issue.column?.column_1;
+        const col2 = issue.column?.column_2;
+        const corr = details.correlation;
+    
+        return `${col1} ↔ ${col2} : High correlation (${corr})`;
     }
     
     return `${col} → Issue detected`;

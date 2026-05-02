@@ -1,0 +1,81 @@
+/* =========================
+   SETTINGS PAGE BASE
+========================= */
+
+.dash-settings .settings-container {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin-top: 16px;
+    margin-left: 28px;
+    margin-right: 28px;
+}
+
+.dash-settings .settings-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dash-settings .section-title {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--font-color);
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+}
+
+.dash-settings .settings-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px;
+    border-radius: 12px;
+    background: var(--panel-color);
+    border: 1px solid var(--border);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dash-settings .settings-card:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: var(--subpanel-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.dash-settings .setting-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.dash-settings .setting-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--font-color);
+    margin: 0;
+}
+
+.dash-settings .setting-desc {
+    font-size: 14px;
+    color: var(--grey-font-color);
+    margin: 0;
+}
+
+.dash-settings .btn.danger {
+    background-color: transparent;
+    color: var(--high);
+    border: 1px solid var(--high);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dash-settings .btn.danger:hover {
+    background-color: rgba(255, 77, 79, 0.1);
+    box-shadow: 0 0 12px rgba(255, 77, 79, 0.2);
+}

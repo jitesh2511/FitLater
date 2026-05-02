@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="styles/about.css">
     <link rel="stylesheet" href="styles/analytics.css">
     <link rel="stylesheet" href="styles/report.css">
+    <link rel="stylesheet" href="styles/settings.css">
 
 </head>
 
@@ -601,9 +602,31 @@
                 </div>
                 
                 <div class="dash-page dash-settings hidden">
-                    <h2>Settings</h2>
+
+                    <div class="heading">
+                        <h2 class="main">Settings</h2>
+                    </div>
+                
+                    <div class="settings-container">
+                
+                        <div class="settings-section">
+                            <h3 class="section-title">General</h3>
+                
+                            <div class="settings-card">
+                                <div class="setting-info">
+                                    <h4 class="setting-title">Reset Workspace</h4>
+                                    <p class="setting-desc">
+                                        Clear all uploaded datasets and reset the dashboard.
+                                    </p>
+                                </div>
+                                <button class="btn danger" id="resetDataBtn">
+                                    Reset All Data
+                                </button>
+                            </div>
+                        </div>
+                
+                    </div>
                 </div>
- 
 
             </div>
 

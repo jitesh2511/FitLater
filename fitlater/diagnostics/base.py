@@ -19,7 +19,7 @@ severity_order = {
         'high': 2
     }
 
-def get_severity(value:int or float, thresholds:dict) -> str:
+def get_severity(value, thresholds:dict) -> str:
 
     if value <= thresholds['low']:
         return 'low'

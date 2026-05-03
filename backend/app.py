@@ -21,9 +21,13 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # restrict later
+    allow_origins=[
+        "http://127.0.0.1:5500",   # local frontend (Live Server)
+        "http://localhost:5500",
+        "https://fit-later.vercel.app" # deployed live domain
+    ],
     allow_credentials=False,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 
@@ -66,11 +70,12 @@ async def upload_file(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Invalid dataset")
 
     finally:
-        cleanup_file(file_path)
-        logger.info(f"Cleaned up file: {file_path}")
+        if file_path:
+            cleanup_file(file_path)
+            logger.info(f"Cleaned up file: {file_path}")
         
 
 @app.post("/log-error")
 async def log_error(payload: dict):
-    logger.error(f"Frontend Error: {payload}")
+    logger.error("Frontend Error", extra={"payload": payload})
     return {"status": "logged"}

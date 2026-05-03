@@ -2,6 +2,10 @@
 
 > Understand your data first. Fit models later.
 
+🌐 **Live Demo:** [https://fit-later.vercel.app/](https://fit-later.vercel.app/)
+
+> Upload your dataset and explore diagnostics, insights, and recommendations in real-time.
+
 FitLater is a structured data analysis system designed to help you **analyze, diagnose, and prepare datasets** before building machine learning models.
 
 ---

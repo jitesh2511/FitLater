@@ -606,7 +606,10 @@ function renderChartByType(ctx, viz, target) {
         if (target === "primary") {
             showChartMessage("Unsupported chart type");
         } else {
-            showSecondaryMessage("Unsupported chart type");
+            logError("Unsupported Chart Type", viz);
+            sendErrorToServer("Unsupported Chart Type", viz);
+
+            showChartMessage("Unsupported chart type");
         }
         return;
     }
@@ -641,6 +644,8 @@ function renderPrimaryChart(colData) {
     const viz = colData.visualizations?.primary;
 
     if (!viz) {
+        logError("Missing Visualization Data", colData);
+        sendErrorToServer("Missing Visualization Data", colData);
         showChartMessage("No data available");
         return;
     }

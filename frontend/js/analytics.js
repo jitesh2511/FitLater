@@ -128,7 +128,15 @@ function updateAnalyticsUI(data, column) {
 
     const colData = data.descriptive?.profile?.[column];
 
-    if (!colData) return;
+    if (!colData) {
+        logError("Missing Column Data", {
+            column,
+            availableColumns: Object.keys(data.descriptive?.profile || {})
+        });
+
+        sendErrorToServer("Missing Column Data", { column });
+        return;
+    }
 
     // Summary
     document.getElementById("colName").textContent = column;
@@ -180,6 +188,12 @@ function formatNumber(value) {
 
 function getColumnDiagnostics(data, column) {
     const allIssues = data.col_diagnostics || [];
+
+    if (!Array.isArray(allIssues)) {
+        logError("Invalid col_diagnostics format", data.col_diagnostics);
+        sendErrorToServer("Invalid col_diagnostics format", data.col_diagnostics);
+        return [];
+    }
 
     return allIssues.filter(issue => issue.column === column);
 }

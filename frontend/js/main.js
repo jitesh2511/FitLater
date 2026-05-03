@@ -21,6 +21,7 @@ let activeFileIndex = null;
 let isUploading = false;
 
 // API
+// const API_BASE = "https://fitlater.onrender.com";
 const API_BASE = "http://127.0.0.1:8000";
 
 
@@ -122,16 +123,28 @@ async function handleFileUpload(file) {
         // Check if response is successful
         if (!response.ok) {
             const errorData = await response.json();
-            console.error("Server returned error:", errorData);
+            
+            logError("API Response Error", errorData);
+            sendErrorToServer("API Response Error", errorData);
             showError(errorData.detail || "Upload failed");
+            return;
         }
 
         const data = await response.json();
 
         // Validate response structure
         if (!data || !data.diagnostics || !data.advisory || !data.descriptive || !data.col_diagnostics || !data.meta) {
-            console.error("Invalid response structure:", data);
+
+            const error = {
+                message: "Invalid API response structure",
+                receivedKeys: data ? Object.keys(data) : null,
+                raw: data
+            };
+
+            logError("Invalid Response Structure", error)
+            sendErrorToServer("Invalid Response Structure", error)
             showError("Invalid API response");
+            return;
         }
 
         
@@ -162,8 +175,8 @@ async function handleFileUpload(file) {
         
 
     } catch (error) {
-        console.error("Upload Error:", error);
-
+        logError("Upload Error", error);
+        sendErrorToServer("Upload Error", error);
         showError(error.message || "Upload failed");
     } finally {
         // Always reset the uploading flag
@@ -283,6 +296,70 @@ function showError(message) {
 
     // 🔥 IMPORTANT: switch to error state
     setState(uploadBox, "error");
+}
+
+function normalizeError(error) {
+    if (!error) {
+        return {
+            message: "Unknown error",
+            stack: null
+        };
+    }
+
+    if (error instanceof Error) {
+        return {
+            message: error.message,
+            stack: error.stack || null
+        };
+    }
+
+    if (typeof error === "string") {
+        return {
+            message: error,
+            stack: null
+        };
+    }
+
+    if (typeof error === "object") {
+        return {
+            message: error.detail || error.message || JSON.stringify(error),
+            stack: null
+        };
+    }
+
+    return {
+        message: "Unhandled error type",
+        stack: null
+    };
+}
+
+function logError(context, error) {
+    const err = normalizeError(error);
+
+    console.error(`[${context}]`, {
+        message: err.message,
+        stack: err.stack,
+        time: new Date().toISOString()
+    });
+}
+
+function sendErrorToServer(context, error) {
+    const err = normalizeError(error);
+
+    fetch(`${API_BASE}/log-error`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            context: context,
+            message: err.message,
+            stack: err.stack,
+            time: new Date().toISOString()
+        })
+    }).catch(() => {
+        console.warn("Failed to send error to server");
+    });
 }
 
 // ==============================

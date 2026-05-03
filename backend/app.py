@@ -68,3 +68,9 @@ async def upload_file(file: UploadFile = File(...)):
     finally:
         cleanup_file(file_path)
         logger.info(f"Cleaned up file: {file_path}")
+        
+
+@app.post("/log-error")
+async def log_error(payload: dict):
+    logger.error(f"Frontend Error: {payload}")
+    return {"status": "logged"}

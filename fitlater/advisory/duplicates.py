@@ -1,3 +1,12 @@
+"""
+Advisory helpers for dataset duplicate detection.
+
+Contains logic to produce recommendations when duplicate rows are
+identified in a dataset. It evaluates the duplicate percentage and
+returns suggested actions (e.g., remove duplicates) with reasons and
+priority levels to be consumed by the advisory engine.
+"""
+
 from fitlater.advisory.util import build_advice
 
 def handle_duplicates(profile:dict, diag:dict) -> dict | None:

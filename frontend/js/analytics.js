@@ -1,3 +1,17 @@
+/**
+ *
+ * Frontend logic for rendering Analytics Page
+ * from the FitLater backend API.
+ *
+ * - Dynamically generates UI elements for displaying diagnostics and advisories
+ * - Provides helper functions for formatting issue types and descriptions
+ * - Includes utilities for custom UI components (e.g., searchable selects)
+ * - Modular organization to enable plug-in of additional analytics displays
+ *
+ * This file helps provide interactive and readable insights to users
+ * about the state of their uploaded datasets.
+ */
+
 
 function initCustomSelect(selectId, options, onSelect) {
     const container = document.getElementById(selectId);

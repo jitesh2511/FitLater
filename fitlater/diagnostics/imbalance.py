@@ -1,7 +1,15 @@
+"""
+Class imbalance diagnostics for categorical columns.
+
+Flags columns where a single category dominates and may hurt model
+training. Returns a diagnostic with dominance metrics and severity.
+"""
+
 import pandas as pd
 
 from fitlater.diagnostics.base import get_severity, make_issue
 from fitlater.config import IMBALANCE_THRESHOLDS
+
 
 def check_imbalance(column: str, profile: dict, data:pd.Series) -> dict | None:
 

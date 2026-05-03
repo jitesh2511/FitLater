@@ -1,4 +1,14 @@
+"""
+High-level dataset overview utilities.
+
+Provides `analyze()` which builds a concise overview of a DataFrame:
+shape and memory usage, simple column classification, missing-value
+summaries, numerical aggregates, categorical summaries, and duplicate
+statistics. Designed for quick dataset inspection.
+"""
+
 import pandas as pd
+
 
 def analyze(data: pd.DataFrame) -> dict:
     

@@ -1,3 +1,11 @@
+"""
+Configuration and constants.
+
+Centralizes all configuration parameters, thresholds, and constants used
+by the descriptive, diagnostic, and advisory engines. Values are sourced
+from environment variables where available.
+"""
+
 import os
 from dotenv import load_dotenv
 
@@ -11,7 +19,7 @@ API_BASE_URL = os.getenv("API_BASE_URL")
 
 # Metadata
 NAME = 'FitLater'
-VERSION = '0.4.0'
+VERSION = '1.0.0'
 
 # Configurations
 DEFAULT_CONFIG = {

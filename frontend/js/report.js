@@ -1,3 +1,18 @@
+
+/**
+ * 
+ * This file contains frontend logic for rendering the main Report page
+ * in the FitLater dashboard. It provides utility functions to:
+ *   - Orchestrate rendering of summary statistics, column diagnostics, and advisory sections
+ *   - Build summary information from API responses
+ *   - Render report cards with core metrics (rows, columns, missing values, outliers, duplicates)
+ *   - Serve as the controller layer for tying together different report components
+ * 
+ * Used by: main dashboard/report interface to update UI based on backend report data.
+ * 
+ */
+
+
 /* =========================
    REPORT CONTROLLER
 ========================= */

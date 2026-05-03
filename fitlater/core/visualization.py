@@ -1,8 +1,11 @@
-'''
-This module is used by the frontend to visualize columns.
-The data is aggregated here and prepared for visualizations in 
-the frontend
-'''
+"""
+Lightweight visualization data helpers.
+
+Prepares aggregated data structures (histogram, boxplot, bar, pie,
+time series) suitable for rendering in a frontend. Functions return
+small JSON-like dicts describing chart type and values, or `None` for
+empty inputs.
+"""
 import pandas as pd
 import numpy as np
 

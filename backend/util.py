@@ -1,4 +1,22 @@
+
+"""
+Utility functions for the FitLater backend.
+
+This module provides helpers for:
+- File validation (type, size)
+- Secure CSV loading and dataset validation
+- Temporary file save/cleanup for uploaded files
+- Data cleaning for serialization (handling numpy types, NaN, inf, etc.)
+
+These utilities are shared by the API and processing pipeline to ensure
+consistent validation, temporary file handling, and data type cleaning 
+across the backend.
+
+"""
+
+
 from fitlater.config import ALLOWED_EXTENSIONS, MAX_FILE_SIZE_MB, MAX_COLS, MAX_ROWS
+from fitlater.logger.logger_instance import logger
 
 import uuid
 import os
@@ -63,9 +81,11 @@ def load_csv_safe(path):
     try:
         df = pd.read_csv(path)
         if df.empty:
+            logger.error("Empty dataset")
             raise ValueError("Empty dataset")
         return df
     except Exception:
+        logger.exception("Invalid or corrupted CSV file")
         raise ValueError("Invalid or corrupted CSV file")
 
 def cleanup_file(path):
@@ -74,19 +94,25 @@ def cleanup_file(path):
     
 def validate_dataset(df):
     if df is None:
+        logger.exception("Dataset could not be loaded")
         raise ValueError("Dataset could not be loaded")
 
     if df.empty:
+        logger.exception("Dataset is empty")
         raise ValueError("Dataset is empty")
 
     if df.shape[0] < 2:
+        logger.exception("Dataset must have at least 2 rows")
         raise ValueError("Dataset must have at least 2 rows")
 
     if df.shape[1] < 1:
+        logger.exception("Dataset must have at least 1 column")
         raise ValueError("Dataset must have at least 1 column")
     
     if df.shape[0] > MAX_ROWS:
+        logger.exception(f"Dataset too large (max {MAX_ROWS} rows allowed)")
         raise ValueError(f"Dataset too large (max {MAX_ROWS} rows allowed)")
     
     if df.shape[1] > MAX_COLS:
+        logger.exception(f"Dataset too large (max {MAX_COLS} columns allowed)")
         raise ValueError(f"Dataset too large (max {MAX_COLS} columns allowed)")

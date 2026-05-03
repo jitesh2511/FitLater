@@ -1,8 +1,11 @@
-'''
-This module is the orchestrator for Descriptive Layer.
-It takes the dataset, passes it to required functions,
-and builds a descriptive contract.
-'''
+"""
+Descriptive layer orchestrator.
+
+Coordinates type inference, per-column stat computation, and lightweight
+visual aggregation to construct the descriptive contract returned by the
+pipeline. Exposes `build_description(df)` which returns the unified
+description payload consumed by higher-level logic.
+"""
 
 import pandas as pd
 

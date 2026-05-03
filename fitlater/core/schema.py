@@ -1,6 +1,11 @@
-'''
-This module is used to check the dtype of all the columns in the dataset
-'''
+"""
+Column type inference utilities.
+
+Implements heuristics used to infer a lightweight semantic dtype for each
+column (numeric, boolean, datetime, identifier, categorical, mixed, empty)
+based on content ratios and pandas dtype checks. Configurable thresholds
+in `fitlater.config` control sensitivity.
+"""
 
 import pandas as pd
 from pandas.api.types import is_numeric_dtype, is_bool_dtype, is_datetime64_any_dtype

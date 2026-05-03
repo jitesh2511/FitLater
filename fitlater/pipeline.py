@@ -1,3 +1,10 @@
+"""
+Data analysis pipeline orchestration.
+
+Exports `run_pipeline(df)` which chains the descriptive, diagnostics,
+and advisory engines to produce a complete analysis report for a dataset.
+"""
+
 from fitlater.core.engine import build_description
 from fitlater.diagnostics.engine import build_diagnostics
 from fitlater.advisory.engine import get_advice

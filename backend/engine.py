@@ -1,8 +1,24 @@
+
+"""
+
+This module contains the main entry point for running the FitLater EDA processing pipeline.
+It exposes functions (such as `get_result`) that receive a pandas DataFrame, process it through
+the diagnostics and advisory steps, and return a structured dictionary suitable for API/class usage.
+
+- Core orchestration for FitLater's backend processing workflow
+- Used by API endpoints to analyze datasets and return summaries, diagnostics, advisories, etc.
+
+"""
+
+
 from backend.util import clean_types
+from fitlater.logger.logger_instance import logger
 
 
 def get_result(df) -> dict:
     from fitlater.pipeline import run_pipeline
+
+    logger.info("Starting processing pipeline")
 
     try:
         if df.empty:
@@ -47,6 +63,8 @@ def get_result(df) -> dict:
         diagnostics = result["diagnostics"]
         advisory = result["advisory"]  
 
+        logger.info("Pipeline completed")
+
         response = {
             'descriptive': descriptive,
             "diagnostics": format_diagnostics_ui(diagnostics),
@@ -62,6 +80,7 @@ def get_result(df) -> dict:
         return clean_types(response)
 
     except Exception as e:
+        logger.exception('Pipeline failed')
         raise ValueError("Failed to process dataset")
 
 # -------------------------------

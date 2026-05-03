@@ -1,12 +1,16 @@
-'''
-This module check for missing value diagnostics
-per column and returns the issue if detected or 
-returns None on no issue being detected
-'''
+"""
+Missing value diagnostics for columns.
+
+Evaluates missing counts and percentages from the column profile and
+returns a diagnostic when missing values exceed configured severity
+thresholds.
+"""
+
 import pandas as pd
 
 from fitlater.diagnostics.base import make_issue, get_severity
 from fitlater.config import MISSING_SEVERITY_THRESHOLD
+
 
 def check_missing(column:str, profile:dict, data:pd.Series) -> dict | None:
 

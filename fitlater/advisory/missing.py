@@ -1,3 +1,12 @@
+"""
+Advisory helpers for missing value analysis and imputation.
+
+Determines appropriate actions for columns with missing data. For severe
+cases it may recommend dropping a column; for moderate cases it selects an
+imputation strategy via `get_imputation_strategy()` and returns actionable
+advice with a priority level.
+"""
+
 from fitlater.advisory.util import build_advice
 from fitlater.advisory.strategies import get_imputation_strategy
 

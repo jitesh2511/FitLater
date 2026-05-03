@@ -134,7 +134,7 @@ async function handleFileUpload(file) {
             showError("Invalid API response");
         }
 
-
+        
         // Enforce max file limit
         if (filesStore.length >= 4) {
             showError("Maximum 4 files allowed");

@@ -1,6 +1,14 @@
 /**
- * This file contains code and logic for Side Bar
+ * 
+ * Provides logic for the collapsible sidebar UI in the FitLater dashboard.
+ * - Handles sidebar expand/collapse functionality and persists its state via localStorage
+ * - Manages sidebar navigation and page switching for dashboard sub-pages
+ * - Controls active state styling for sidebar navigation items
+ * 
+ * This script ensures consistent sidebar interactions, remembering user preferences
+ * across sessions and enabling dynamic UI updates based on selected navigation items.
  */
+
 
 const toggleBtn = document.getElementById("toggleSidebar");
 const sidebar = document.getElementById("sidebar");

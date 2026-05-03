@@ -1,3 +1,11 @@
+"""
+Advisory rules for data type issues.
+
+Detects common type-related problems (e.g., numeric stored as strings,
+datetime strings, mixed types) and recommends conversions or cleaning
+operations with a priority based on severity.
+"""
+
 from fitlater.advisory.util import build_advice
 
 def handle_type_issue(profile:dict, diag:dict) -> dict | None:

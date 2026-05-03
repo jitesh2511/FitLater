@@ -1,13 +1,15 @@
-'''
-This module check for outlier value diagnostics
-per column and returns the issue if detected or 
-returns None on no issue being detected
-'''
+"""
+Outlier detection diagnostics.
+
+Implements a simple IQR-based outlier detector and returns diagnostics
+when the outlier percentage exceeds configured severity thresholds.
+"""
 
 import pandas as pd
 
 from fitlater.diagnostics.base import get_severity, make_issue
 from fitlater.config import OUTLIER_SEVERITY_THRESHOLD
+
 
 def check_outliers(column:str, profile:dict, data:pd.Series) -> dict | None:
 

@@ -1,3 +1,12 @@
+"""
+Utility strategies used by advisory rules.
+
+Provides helper strategy functions such as `get_imputation_strategy()` and
+`get_transformation_strategy()` used by advisory modules to select sensible
+default actions (e.g., whether to use mean/median/mode or apply transformations)
+based on column metadata like type and skew.
+"""
+
 def get_imputation_strategy(data) -> str:
 
     if not data.get('type') == 'numeric':

@@ -1,3 +1,12 @@
+"""
+Advisory engine orchestration.
+
+This module wires together individual advisory handlers and exposes
+`get_advice()` which accepts a profile and a list of diagnostics and
+returns consolidated, prioritized advice items. Handlers for different
+diagnostic types are registered in the `HANDLERS` mapping.
+"""
+
 from fitlater.advisory.constant_column import handle_constant
 from fitlater.advisory.correlation import handle_corr
 from fitlater.advisory.distribution import handle_distribution

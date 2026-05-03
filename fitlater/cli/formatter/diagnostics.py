@@ -1,3 +1,11 @@
+"""
+Formatters for diagnostics output.
+
+Contains helpers to render diagnostic items into a readable text block,
+grouped by severity. Used by the CLI `diagnostics` command to present
+findings to the user.
+"""
+
 from fitlater.cli.formatter.base import _heading, _section
 
 

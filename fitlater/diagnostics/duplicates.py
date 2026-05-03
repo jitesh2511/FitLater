@@ -1,7 +1,16 @@
+"""
+Dataset duplicate diagnostics.
+
+Detects duplicated rows in a DataFrame and returns a diagnostic
+containing counts, percentage, and a computed severity based on
+configured thresholds.
+"""
+
 import pandas as pd
 
 from fitlater.diagnostics.base import make_issue, get_severity
 from fitlater.config import DUPLICATE_THRESHOLD
+
 
 def check_duplicates(profile:dict, df:pd.DataFrame) -> dict | None:
 

@@ -1,3 +1,18 @@
+
+/**
+ * 
+ * Chart rendering utilities for FitLater frontend dashboards.
+ * 
+ * - Sets up shared color themes and chart defaults
+ * - Provides helper functions for generating
+ *   chart.js-compatible config for EDA/analytics visualizations
+ * - Used to render summary, diagnostics, and comparison plots
+ *   in core analytics and other dashboard pages
+ * - Modular: all main chart construction flows through this file
+ *
+ */
+
+
 let primaryChartInstance = null;
 let secondaryChartInstance = null;
 Chart.register(ChartDataLabels);

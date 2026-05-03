@@ -1,8 +1,18 @@
+"""
+Type issue detection utilities.
+
+Detects columns where values suggest a different semantic type
+(e.g., numeric values stored as strings, datetime strings, booleans
+encoded as strings or numeric) and returns diagnostic payloads with
+confidence scores.
+"""
+
 import pandas as pd
 from pandas.api.types import is_bool_dtype
 
 from fitlater.diagnostics.base import make_issue
 from fitlater.config import NUMERIC_RATIO_THRESHOLD, DATETIME_RATIO_THRESHOLD, MIXED_NUMERIC_THRESHOLD, BOOLEAN_SETS
+
 
 def check_type_issues(column:str, profile:dict, data:pd.Series) -> dict | None:
 
@@ -17,6 +27,7 @@ def check_type_issues(column:str, profile:dict, data:pd.Series) -> dict | None:
         return check_numeric_conversion(column, series)
 
     return None
+
 
 def check_categorical_conversion(column: str, data:pd.Series):
 
@@ -101,6 +112,7 @@ def check_categorical_conversion(column: str, data:pd.Series):
         )
 
     return None
+
 
 def check_numeric_conversion(column: str, data:pd.Series):
 

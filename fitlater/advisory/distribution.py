@@ -1,3 +1,12 @@
+"""
+Advisory helpers for analyzing column distributions.
+
+Provides logic to generate actionable advice when a column's distribution
+is skewed or otherwise non-ideal for modeling. The functions here evaluate
+distribution metrics (e.g., skew) and return recommended transformations
+or alternative actions with a priority level for automated diagnostics.
+"""
+
 from fitlater.advisory.util import build_advice
 
 def handle_distribution(profile:dict, diag:dict) -> dict | None:

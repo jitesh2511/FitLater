@@ -18,8 +18,11 @@
 ========================= */
 
 function renderReport(response) {
-    if (!response) return;
-
+    if (!response) {
+        logError("Report Render: Missing Response");
+        sendErrorToServer("Report Render: Missing Response");
+        return;
+    }
     renderSummary(buildSummary(response));
     renderReportDiagnostics(response.col_diagnostics);
     renderAdvisory(response.advisory);

@@ -1,7 +1,9 @@
-'''
-This module defines functions to get statistics
-of dtypes other than numeric or categorical
-'''
+"""
+Helpers for non-standard column types.
+
+Contains small utilities for datetime, boolean, and mixed-type
+columns to extract simple summaries used by the descriptive pipeline.
+"""
 
 import pandas as pd
 

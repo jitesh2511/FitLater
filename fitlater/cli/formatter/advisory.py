@@ -1,3 +1,11 @@
+"""
+Formatters for advisory reports.
+
+Renders structured advisory items into a human-readable report grouped
+by priority. Used by the `advisory` CLI command to show recommended
+actions and reasons to the user.
+"""
+
 from fitlater.cli.formatter.base import _heading, _section
 from fitlater.config import ISSUE_LABELS
 

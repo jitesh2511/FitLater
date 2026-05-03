@@ -1,3 +1,12 @@
+"""
+CLI command implementations.
+
+Defines the command functions used by the interactive CLI: loading a CSV
+into the session, and printing descriptive summaries, diagnostics, and
+advisory reports. Each function accepts a `session` object and an `args`
+list and performs I/O to the console.
+"""
+
 import pandas as pd
 from fitlater.cli.formatter.descriptive import format_descriptive
 from fitlater.pipeline import run_pipeline

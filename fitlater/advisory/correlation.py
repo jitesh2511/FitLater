@@ -1,3 +1,12 @@
+"""
+This module provides advisory logic for handling highly correlated columns in a dataset.
+When two features are strongly correlated, they may offer redundant information, impacting
+model interpretability and potentially causing multicollinearity issues. This module's
+core function inspects column correlations and generates appropriate advice, including
+recommendations to drop or further investigate correlated features based on correlation
+strength, for use in automated data diagnostics.
+"""
+
 from fitlater.advisory.util import build_advice
 
 def handle_corr(profile:dict, diag:dict) -> dict | None:

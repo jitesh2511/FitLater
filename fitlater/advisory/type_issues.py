@@ -1,3 +1,11 @@
+"""
+Advisory rules for data type issues.
+
+Detects common type-related problems (e.g., numeric stored as strings,
+datetime strings, mixed types) and recommends conversions or cleaning
+operations with a priority based on severity.
+"""
+
 from fitlater.advisory.util import build_advice
 
 def handle_type_issue(profile:dict, diag:dict) -> dict | None:
@@ -50,6 +58,15 @@ def handle_type_issue(profile:dict, diag:dict) -> dict | None:
         )
 
     elif issue_type == "boolean_as_string":
+        return build_advice(
+            column,
+            "type_issue",
+            "Convert to boolean",
+            "Column contains boolean-like values",
+            priority
+        )
+    
+    elif issue_type == "boolean_as_numeric":
         return build_advice(
             column,
             "type_issue",

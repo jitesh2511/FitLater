@@ -1,4 +1,14 @@
+"""
+REPL runner for the FitLater CLI.
+
+Implements `run_cli(session)` which starts a simple read-eval-print loop,
+reads user input, and dispatches commands using the `COMMANDS` registry.
+Handles `help` and `exit` and prints minimal error messages for unexpected
+exceptions.
+"""
+
 from fitlater.cli.parser import COMMANDS
+
 
 def run_cli(session):
     

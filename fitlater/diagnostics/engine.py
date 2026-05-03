@@ -1,12 +1,11 @@
-'''
+"""
+Diagnostics layer orchestrator.
 
-This is the engine module for Diagnostics Layer. It acts as the main orchestrator for
-the layer and calls required functions to generate a list of diagnostics on the given set.
-
-The engine uses computated values from descriptive layer as well as computes required values
-from the raw dataset whenever required in order to fulfill it's purpose.
-
-'''
+`build_diagnostics(profile, df)` runs a set of column-level and dataset-level
+checks using the diagnostics modules and returns a list of standardized
+diagnostic payloads. The engine respects configuration excludes and
+gracefully continues on individual check errors.
+"""
 
 import pandas as pd
 

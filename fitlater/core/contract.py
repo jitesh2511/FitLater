@@ -1,6 +1,11 @@
-'''
-This module contains the descriptive contract
-'''
+"""
+Descriptive contract builder.
+
+Defines `build_contract()` which standardizes the structure returned by
+the descriptive layer: dataset `meta`, per-column `profile`, and the
+`column_types` mapping. Supports returning an empty contract for
+empty datasets.
+"""
 
 from copy import deepcopy
 

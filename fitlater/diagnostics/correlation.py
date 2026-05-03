@@ -1,8 +1,10 @@
-'''
-This module check for correlation value diagnostics
-for all columns and returns the list of columns with
-problems if detected any else returns an empty list
-'''
+"""
+Correlation diagnostics.
+
+Scans numeric column pairs and returns diagnostics for pairs where the
+absolute Pearson correlation exceeds configured thresholds. Uses
+severity thresholds to classify the issue importance.
+"""
 
 import numpy as np
 import pandas as pd

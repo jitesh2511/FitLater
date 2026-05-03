@@ -1,11 +1,16 @@
-'''
-This module is used to check the dtype of all the columns in the dataset
-'''
+"""
+Column type inference utilities.
+
+Implements heuristics used to infer a lightweight semantic dtype for each
+column (numeric, boolean, datetime, identifier, categorical, mixed, empty)
+based on content ratios and pandas dtype checks. Configurable thresholds
+in `fitlater.config` control sensitivity.
+"""
 
 import pandas as pd
 from pandas.api.types import is_numeric_dtype, is_bool_dtype, is_datetime64_any_dtype
 
-from fitlater.config import IDENTIFIER_THRESHOLD, NUMERIC_LIKE_RATIO_THRESHOLD
+from fitlater.config import IDENTIFIER_THRESHOLD, NUMERIC_LIKE_RATIO_THRESHOLD, DATETIME_LIKE_RATIO_THRESHOLD
 
 def infer_column_types(df:pd.DataFrame) -> dict:
 
@@ -38,8 +43,17 @@ def infer_single_column(series):
     
     if is_datetime64_any_dtype(series):
         return 'datetime'
-
+    
+    
     non_null = series.dropna()
+
+    # Check for datetime like string
+    parsed = pd.to_datetime(non_null, errors='coerce', format='mixed')
+    datetime_ratio = parsed.notna().sum() / len(non_null)
+
+    if datetime_ratio > DATETIME_LIKE_RATIO_THRESHOLD:
+        return 'datetime'
+
     is_mixed = non_null.map(type).nunique() > 1
     if is_mixed:
         return 'mixed'

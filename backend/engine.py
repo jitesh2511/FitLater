@@ -1,43 +1,87 @@
-from fitlater.pipeline import run_pipeline
-import pandas as pd
+
+"""
+
+This module contains the main entry point for running the FitLater EDA processing pipeline.
+It exposes functions (such as `get_result`) that receive a pandas DataFrame, process it through
+the diagnostics and advisory steps, and return a structured dictionary suitable for API/class usage.
+
+- Core orchestration for FitLater's backend processing workflow
+- Used by API endpoints to analyze datasets and return summaries, diagnostics, advisories, etc.
+
+"""
 
 
-def get_result(df: pd.DataFrame) -> dict:
+from backend.util import clean_types
+from fitlater.logger.logger_instance import logger
 
-    if df.empty:
-        return {
-            "diagnostics": {
-                "missing": {"percentage": 0, "columns": 0},
-                "distribution": {"max_skew": 0},
-                "outliers": {"percentage": 0, "columns": 0},
-                "correlation": {"max_corr": 0}
-            },
-            "advisory": {
-                "high": [],
-                "medium": [],
-                "low": []
-            },
+
+def get_result(df) -> dict:
+    from fitlater.pipeline import run_pipeline
+
+    logger.info("Starting processing pipeline")
+
+    try:
+        if df.empty:
+            return {
+                "descriptive": {
+                    'meta': {
+                    'n_rows': 0,
+                    'n_cols': 0,
+                    'memory': ""
+                    },
+                    'profile': {
+
+                    },
+                    'column_types':{
+                        
+                    }
+                },
+                "diagnostics": {
+                    "missing": {"percentage": 0, "columns": 0},
+                    "distribution": {"max_skew": 0},
+                    "outliers": {"percentage": 0, "columns": 0},
+                    "duplicates": {"percentage": 0, "columns": 0}
+                },
+                "col_diagnostics":{
+
+                },
+                "advisory": {
+                    "high": [],
+                    "medium": [],
+                    "low": []
+                },
+                "meta": {
+                    "rows": 0,
+                    "columns": 0,
+                    "column_list": []
+                }
+            }
+
+        result = run_pipeline(df)
+
+        descriptive = result["descriptive"]
+        diagnostics = result["diagnostics"]
+        advisory = result["advisory"]  
+
+        logger.info("Pipeline completed")
+
+        response = {
+            'descriptive': descriptive,
+            "diagnostics": format_diagnostics_ui(diagnostics),
+            "col_diagnostics": diagnostics,
+            "advisory": format_advisory_ui(advisory),
             "meta": {
-                "rows": 0,
-                "columns": 0
+                "rows": descriptive["meta"]["n_rows"],
+                "columns": descriptive["meta"]["n_cols"],
+                "columns_list": list(df.columns)
             }
         }
 
-    result = run_pipeline(df)
+        return clean_types(response)
 
-    descriptive = result["descriptive"]
-    diagnostics = result["diagnostics"]
-    advisory = result["advisory"]   # already includes ALL priorities
-
-    return {
-        "diagnostics": format_diagnostics_ui(diagnostics),
-        "advisory": format_advisory_ui(advisory),
-        "meta": {
-            "rows": descriptive["meta"]["n_rows"],
-            "columns": descriptive["meta"]["n_cols"]
-        }
-    }
-
+    except Exception as e:
+        logger.exception('Pipeline failed')
+        raise ValueError("Failed to process dataset")
 
 # -------------------------------
 # UI FORMATTERS (Adapter Layer)
@@ -52,7 +96,7 @@ def format_diagnostics_ui(diagnostics: list) -> dict:
     outlier_total = 0
 
     max_skew = 0
-    max_corr = 0
+    duplicate_pct = 0
 
     for d in diagnostics:
         issue = d.get("type")
@@ -70,9 +114,8 @@ def format_diagnostics_ui(diagnostics: list) -> dict:
             skew = abs(details.get("skew", 0))
             max_skew = max(max_skew, skew)
 
-        elif issue == "correlation":
-            corr = abs(details.get("correlation", 0))
-            max_corr = max(max_corr, corr)
+        elif issue == "duplicates":
+            duplicate_pct = abs(details.get("duplicate_pct", 0))
 
     return {
         "missing": {
@@ -86,8 +129,8 @@ def format_diagnostics_ui(diagnostics: list) -> dict:
             "percentage": round(outlier_total / outlier_cols, 2) if outlier_cols else 0,
             "columns": outlier_cols
         },
-        "correlation": {
-            "max_corr": round(max_corr, 4)
+        "duplicates": {
+            "percentage": round(duplicate_pct, 2)
         }
     }
 

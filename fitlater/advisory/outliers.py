@@ -1,3 +1,11 @@
+"""
+Advisory helpers for outlier detection and handling.
+
+Evaluates the proportion and severity of outliers in a column and
+recommends actions such as investigation, capping, or transformation.
+Each recommendation is returned with a reason and numeric priority.
+"""
+
 from fitlater.advisory.util import build_advice
 
 def handle_outliers(profile:dict, diag:dict) -> dict | None:

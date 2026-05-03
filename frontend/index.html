@@ -10,6 +10,18 @@
     <script src="js/sidebar.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/navbar.js" defer></script>
+    <script src="js/analytics.js" defer></script>
+    <script src="js/report.js" defer></script>
+
+    <!-- Chart.js FIRST -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
+    
+    <!-- Plugins AFTER Chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@sgratzl/chartjs-chart-boxplot@3.10.0/build/index.umd.min.js"></script>
+    
+    <!-- Your chart logic LAST -->
+    <script src="js/chart.js"></script>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/layout.css">
@@ -20,6 +32,9 @@
     <link rel="stylesheet" href="styles/contact.css">
     <link rel="stylesheet" href="styles/overview.css">
     <link rel="stylesheet" href="styles/about.css">
+    <link rel="stylesheet" href="styles/analytics.css">
+    <link rel="stylesheet" href="styles/report.css">
+    <link rel="stylesheet" href="styles/settings.css">
 
 </head>
 
@@ -47,7 +62,7 @@
             </div>
         </div>
 
-        <div class="sidebar" id="sidebar">
+        <div class="sidebar collapsed" id="sidebar">
 
             <!-- Navigation -->
             <div class="sidebar-links">
@@ -58,209 +73,564 @@
                         </svg>
                     </span>
                 </button>
-                <div class="sidebar-item active">
+                <div class="sidebar-item active" data-page="dashboard">
                     <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></div>
                     <span class="text">Dashboard</span>
                 </div>
-                <div class="sidebar-item">
+                <div class="sidebar-item" data-page="analytics">
                     <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg></div>
                     <span class="text">Analytics</span>
                 </div>
-                <div class="sidebar-item">
+                <div class="sidebar-item" data-page="report">
                     <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-plus-icon lucide-clipboard-plus"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 14h6"/><path d="M12 17v-6"/></svg></div>
-                    <span class="text">Reports</span>
+                    <span class="text">Report</span>
                 </div>
-                <div class="sidebar-item">
+                <div class="sidebar-item" data-page="settings">
                     <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings-icon lucide-settings"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg></div>
                     <span class="text">Settings</span>
                 </div>
             </div>
         </div>
+        <div class="sidebar-content">
+
+            
+          
+          </div>
         <div class="main">
             
             
             <div class="page" id="dashboard-page">
-                <div class="heading">
-                    <h2 class="main">Dashboard</h2>
-                    <h5 class="sub">Upload a data file to analyze and generate insights</h5>
+                <div class="dash-page dash-dashboard active">
+                    <div class="heading">
+                        <h2 class="main">Dashboard</h2>
+                        <h5 class="sub">Upload a data file to analyze and generate insights</h5>
+                    </div>
+
+                    <div class="panel">
+
+                        <div class="main-panel">
+                            
+                            <div class="panel-card upload">
+                                <h3 class="panel-head">Upload Data File</h3>
+                                <p class="panel-sub">Drag and drop a CSV file to begin analysis</p>
+                                <div class="upload-box">
+
+                                    <!-- EMPTY STATE -->
+                                    <div class="state state-empty">
+
+                                        <!-- Hidden Input -->
+                                        <input type="file" id="fileInput" accept=".csv" style="display:none;" />
+
+                                        <!-- Button -->
+                                        <button class="upload-btn" type="button" id="uploadTrigger">
+                                            <img src="assets/plus.png" height="16px" width="16px" alt="Add file">
+                                        </button>
+                                        
+                                        <p class="upload-box-head">Drag & drop your CSV file</p>
+                                        <p class="upload-box-sub">or click to browse</p>
+                                    </div>
+                                    
+                                    <!-- LOADING STATE -->
+                                    <div class="state state-loading hidden">
+                                        <div class="loader"></div>
+                                        <p>Processing your dataset...</p>
+                                    </div>
+
+                                    <div class="state state-error hidden">
+                                        <p class="error-msg"></p>
+                                    </div>
+
+                                    <!-- RESULT STATE -->
+                                    <div class="state state-result hidden">
+                                        <div class="file-list">
+
+                                            <div class="file-card">
+                                                <div class="file-info">
+                                                    <span class="file-icon">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-chart-column-increasing-icon lucide-file-chart-column-increasing"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M8 18v-2"/><path d="M12 18v-4"/><path d="M16 18v-6"/></svg>
+                                                    </span>
+                                                    <div class="file-meta">
+                                                        <span class="file-name"></span>
+                                                        <span class="file-size"></span>
+                                                    </div>
+                                                </div>
+                                                <button class="remove-file">✖</button>
+                                            </div>
+                                        </div>
+                                        <button class="upload-more-btn" type="button" id="uploadMoreBtn">
+                                            + Add another file
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="panel-card advisory">
+                                <h3 class="panel-head">Advisory Panel</h3>
+                                <p class="panel-sub">Data-driven recommendations and alerts</p>
+                                <div class="advise-box">
+
+                                    <!-- EMPTY STATE -->
+                                    <div class="state state-empty">
+                                        No dataset uploaded
+                                    </div>
+
+                                    <!-- LOADING STATE -->
+                                    <div class="state state-loading hidden">
+
+                                    </div>
+
+                                    <!-- RESULT STATE -->
+                                    <div class="state state-result hidden">
+
+                                        <div class="advise-container">
+                                            <div class="advise high">
+                                                <p class="head">High Priority</p>
+                                                <div class="list"></div>
+                                            </div>
+                                            <div class="advise medium">
+                                                <p class="head">Medium Priority</p>
+                                                <div class="list"></div>
+                                            </div>
+                                            <div class="advise low">
+                                                <p class="head">Low Priority</p>
+                                                <div class="list"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="subpanel">
+
+                            <div class="card missing">
+
+                                <!-- EMPTY -->
+                                <div class="state state-empty">
+                                    <h3 class="card-title">Missing Values</h3>
+                                    <p class="card-sub">No data</p>
+                                </div>
+                                
+                                <!-- LOADING -->
+                                <div class="state state-loading hidden">
+                                    
+                                </div>
+
+                                <!-- RESULT -->
+                                <div class="state state-result hidden">
+                                    <h3 class="card-title">Missing Values</h3>
+                                    <p class="card-value"></p>
+                                    <p class="card-sub"></p>
+                                </div>
+
+                            </div>
+                            <div class="card distribution">
+
+                                <!-- EMPTY -->
+                                <div class="state state-empty">
+                                    <h3 class="card-title">Skew</h3>
+                                    <p class="card-sub">No data</p>
+                                </div>
+                                
+                                <!-- LOADING -->
+                                <div class="state state-loading hidden">
+                                    
+                                </div>
+
+                                <!-- RESULT -->
+                                <div class="state state-result hidden">
+                                    <h3 class="card-title">Skew</h3>
+                                    <p class="card-value"></p>
+                                    <p class="card-sub">Max Skew</p>
+                                </div>
+                            </div>
+                            <div class="card outliers">
+
+                                <!-- EMPTY -->
+                                <div class="state state-empty">
+                                    <h3 class="card-title">Outliers</h3>
+                                    <p class="card-sub">No data</p>
+                                </div>
+                                
+                                <!-- LOADING -->
+                                <div class="state state-loading hidden">
+                                    
+                                </div>
+
+                                <!-- RESULT -->
+                                <div class="state state-result hidden">    
+                                    <h3 class="card-title">Outliers</h3>
+                                    <p class="card-value"></p>
+                                    <p class="card-sub"></p>
+                                </div>
+                            </div>
+                            <div class="card duplicates">
+                                <!-- EMPTY -->
+                                <div class="state state-empty">
+                                    <h3 class="card-title">Duplicates</h3>
+                                    <p class="card-sub">No data</p>
+                                </div>
+                                
+                                <!-- LOADING -->
+                                <div class="state state-loading hidden">
+                                    
+                                </div>
+
+                                <!-- RESULT -->
+                                <div class="state state-result hidden">
+                                    <h3 class="card-title">Duplicates</h3>
+                                    <p class="card-value"></p>
+                                    <p class="card-sub"></p>
+                                </div>
+                            </div>
+        
+                        </div>
+
+                    </div>
                 </div>
 
-                <div class="panel">
-
-                    <div class="main-panel">
-                        
-                        <div class="panel-card upload">
-                            <h3 class="panel-head">Upload Data File</h3>
-                            <p class="panel-sub">Drag and drop a CSV file to begin analysis</p>
-                            <div class="upload-box">
-
-                                <!-- EMPTY STATE -->
-                                <div class="state state-empty">
-
-                                    <!-- Hidden Input -->
-                                    <input type="file" id="fileInput" accept=".csv" hidden />
-
-                                    <!-- Button -->
-                                    <button class="upload-btn" id="uploadTrigger">
-                                        <img src="assets/plus.png" height="16px" width="16px" alt="Add file">
-                                    </button>
-                                    
-                                    <p class="upload-box-head">Drag & drop your CSV file</p>
-                                    <p class="upload-box-sub">or click to browse</p>
-                                </div>
-                                
-                                <!-- LOADING STATE -->
-                                <div class="state state-loading hidden">
-                                    Uploading file...
-                                </div>
-
-                                <!-- RESULT STATE -->
-                                <div class="state state-result hidden">
-                                    <div class="file-list">
-
-                                        <div class="file-card">
-                                            <div class="file-info">
-                                                <span class="file-icon">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-chart-column-increasing-icon lucide-file-chart-column-increasing"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M8 18v-2"/><path d="M12 18v-4"/><path d="M16 18v-6"/></svg>
-                                                </span>
-                                                <div class="file-meta">
-                                                    <span class="file-name"></span>
-                                                    <span class="file-size"></span>
-                                                </div>
-                                            </div>
-                                            <button class="remove-file">✖</button>
-                                        </div>
+                <div class="dash-page dash-analytics hidden">
+                    <h1 class="heading">Analytics</h1>
+                    <div class="analytics-container">
+                
+                        <!-- 🔷 TOP BAR -->
+                        <div class="analytics-topbar">
+                
+                            <div class="control-group">
+                                <label>Dataset</label>
+                            
+                                <div class="custom-select" id="datasetSelect">
+                            
+                                    <div class="select-display">Select dataset</div>
+                            
+                                    <div class="select-dropdown hidden">
+                                        <input type="text" class="select-search" placeholder="Search dataset...">
+                                        <div class="options-list"></div>
                                     </div>
-                                    <button class="upload-more-btn" id="uploadMoreBtn">
-                                        + Add another file
-                                    </button>
+                            
+                                </div>
+                            </div>
+                
+                            <div class="control-group">
+                                <label>Column</label>
+                            
+                                <div class="custom-select" id="columnSelect">
+                            
+                                    <div class="select-display">Select column</div>
+                            
+                                    <div class="select-dropdown hidden">
+                                        <input type="text" class="select-search" placeholder="Search column...">
+                                        <div class="options-list"></div>
+                                    </div>
+                            
+                                </div>
+                            </div>
+                
+                        </div>
+                
+                        <div class="analytics-grid">
+                
+                            <!-- COLUMN SUMMARY -->
+                            <div class="analytics-card summary-card">
+                                <h3 class="card-title">Column Summary</h3>
+                
+                                <div class="summary-content">
+                
+                                    <div class="summary-item">
+                                        <span class="label">Column</span>
+                                        <span id="colName" class="value">-</span>
+                                    </div>
+                
+                                    <div class="summary-item">
+                                        <span class="label">Type</span>
+                                        <span id="colType" class="value">-</span>
+                                    </div>
+                
+                                    <div class="summary-item">
+                                        <span class="label">Missing</span>
+                                        <span id="colMissing" class="value">-</span>
+                                    </div>
+                
+                                    <div class="summary-item">
+                                        <span class="label">Mean</span>
+                                        <span id="colMean" class="value">-</span>
+                                    </div>
+                
+                                    <div class="summary-item">
+                                        <span class="label">Median</span>
+                                        <span id="colMedian" class="value">-</span>
+                                    </div>
+                
+                                    <div class="summary-item">
+                                        <span class="label">Std Dev</span>
+                                        <span id="colStd" class="value">-</span>
+                                    </div>
+                
+                                    <div class="summary-item">
+                                        <span class="label">Skew</span>
+                                        <span id="colSkew" class="value">-</span>
+                                    </div>
+
+                                    <div class="summary-item">
+                                        <span class="label">Unique</span>
+                                        <span id="colUnique" class="value">-</span>
+                                    </div>
+
+                                    <div class="summary-item">
+                                        <span class="label">Top Value</span>
+                                        <span id="topValue" class="value">-</span>
+                                    </div>
+
+                                    <div class="summary-item">
+                                        <span class="label">Top Value Frequency</span>
+                                        <span id="topValueFreq" class="value">-</span>
+                                    </div>
+                
+                                </div>
+                            </div>
+                
+                            <!-- DIAGNOSTICS -->
+                            <div class="analytics-card diag-card">
+                                <h3 class="card-title">Diagnostics</h3>
+                
+                                <div id="diagList" class="diag-list">
+                                    
+                                </div>
+                            </div>
+
+                            <!-- 📈 PRIMARY GRAPH -->
+                            <div class="analytics-card chart-card">
+                                <h3 class="card-title">Distribution</h3>
+                
+                                <div class="chart-container">
+                                    <canvas id="primaryChart"></canvas>
+                                </div>
+                            </div>
+                
+                            <!-- 📊 SECONDARY GRAPH -->
+                            <div class="analytics-card chart-card">
+                                <h3 class="card-title">Additional View</h3>
+                
+                                <div class="chart-container">
+                                    <div class="chart-wrapper">
+                                    
+                                        <div class="chart-left">
+                                            <div class="chart-box">
+                                                <canvas id="secondaryChart"></canvas>
+                                                <div id="secondaryMessage" class="chart-message hidden"></div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="chart-right" id="customLegend"></div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                
+                        </div>
+                
+                    </div>
+                
+                </div>
+                
+                <div class="dash-page dash-report hidden">
+                
+                    <div class="heading">
+                        <h2 class="main">Report</h2>
+                        <h5 class="sub">Structured insights and actionable recommendations</h5>
+                    </div>
+                
+                    <div class="report-container">
+                
+                        <!-- SUMMARY SECTION -->
+                        <div class="report-section summary-section">
+                
+                            <h3 class="section-title">Summary</h3>
+                
+                            <div class="summary-grid">
+                
+                                <div class="card report-card rows">
+                                    <div class="state state-empty">No data</div>
+                                    <div class="state state-loading hidden"></div>
+                                    <div class="state state-result hidden">
+                                        <p class="card-title">Rows</p>
+                                        <p class="card-value"></p>
+                                    </div>
+                                </div>
+                
+                                <div class="card report-card columns">
+                                    <div class="state state-empty">No data</div>
+                                    <div class="state state-loading hidden"></div>
+                                    <div class="state state-result hidden">
+                                        <p class="card-title">Columns</p>
+                                        <p class="card-value"></p>
+                                    </div>
+                                </div>
+                
+                                <div class="card report-card missing">
+                                    <div class="state state-empty">No data</div>
+                                    <div class="state state-loading hidden"></div>
+                                    <div class="state state-result hidden">
+                                        <p class="card-title">Missing %</p>
+                                        <p class="card-value"></p>
+                                    </div>
+                                </div>
+                
+                                <div class="card report-card duplicates">
+                                    <div class="state state-empty">No data</div>
+                                    <div class="state state-loading hidden"></div>
+                                    <div class="state state-result hidden">
+                                        <p class="card-title">Duplicates %</p>
+                                        <p class="card-value"></p>
+                                    </div>
+                                </div>
+                
+                                <div class="card report-card outliers">
+                                    <div class="state state-empty">No data</div>
+                                    <div class="state state-loading hidden"></div>
+                                    <div class="state state-result hidden">
+                                        <p class="card-title">Outliers %</p>
+                                        <p class="card-value"></p>
+                                    </div>
+                                </div>
+                
+                            </div>
+                        </div>
+                
+                        <!-- DIAGNOSTICS SECTION -->
+                        <div class="report-section diagnostics-section">
+                
+                            <h3 class="section-title">Diagnostics</h3>
+                
+                            <div class="diag-container">
+                
+                                <!-- EMPTY -->
+                                <div class="state state-empty">
+                                    No diagnostics available
+                                </div>
+                
+                                <!-- LOADING -->
+                                <div class="state state-loading hidden"></div>
+                
+                                <!-- RESULT -->
+                                <div class="state state-result hidden">
+                
+                                    <!-- Missing -->
+                                    <div class="diag-block">
+                                        <h4 class="diag-title">Missing Values</h4>
+                                        <div class="diag-list" id="report-missing-list"></div>
+                                    </div>
+                
+                                    <!-- Duplicates -->
+                                    <div class="diag-block">
+                                        <h4 class="diag-title">Duplicates</h4>
+                                        <div class="diag-list" id="report-duplicates-list"></div>
+                                    </div>
+                
+                                    <!-- Outliers -->
+                                    <div class="diag-block">
+                                        <h4 class="diag-title">Outliers</h4>
+                                        <div class="diag-list" id="report-outliers-list"></div>
+                                    </div>
+                
+                                    <!-- Type Issues -->
+                                    <div class="diag-block">
+                                        <h4 class="diag-title">Type Issues</h4>
+                                        <div class="diag-list" id="report-types-list"></div>
+                                    </div>
+
+                                    <!-- Constant -->
+                                    <div class="diag-block">
+                                        <h4 class="diag-title">Constant</h4>
+                                        <div class="diag-list" id="report-constant-list"></div>
+                                    </div>
+
+                                    <!-- Correlation -->
+                                    <div class="diag-block">
+                                        <h4 class="diag-title">Correlation</h4>
+                                        <div class="diag-list" id="report-correlation-list"></div>
+                                    </div>
+
+                                    <!-- Distribution -->
+                                    <div class="diag-block">
+                                        <h4 class="diag-title">Distribution</h4>
+                                        <div class="diag-list" id="report-distribution-list"></div>
+                                    </div>
+                
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="panel-card advisory">
-                            <h3 class="panel-head">Advisory Panel</h3>
-                            <p class="panel-sub">Data-driven recommendations and alerts</p>
+                
+                        <!-- ADVISORY SECTION -->
+                        <div class="report-section advisory-section">
+                
+                            <h3 class="section-title">Advisory</h3>
+                
                             <div class="advise-box">
-
-                                <!-- EMPTY STATE -->
+                
+                                <!-- EMPTY -->
                                 <div class="state state-empty">
-                                    No dataset uploaded
+                                    No recommendations available
                                 </div>
-
-                                <!-- LOADING STATE -->
-                                <div class="state state-loading hidden">
-
-                                </div>
-
-                                <!-- RESULT STATE -->
+                
+                                <!-- LOADING -->
+                                <div class="state state-loading hidden"></div>
+                
+                                <!-- RESULT -->
                                 <div class="state state-result hidden">
-
+                
                                     <div class="advise-container">
+                
                                         <div class="advise high">
                                             <p class="head">High Priority</p>
-                                            <div class="list"></div>
+                                            <div class="list" id="report-adv-high"></div>
                                         </div>
+                
                                         <div class="advise medium">
                                             <p class="head">Medium Priority</p>
-                                            <div class="list"></div>
+                                            <div class="list" id="report-adv-medium"></div>
                                         </div>
+                
                                         <div class="advise low">
                                             <p class="head">Low Priority</p>
-                                            <div class="list"></div>
+                                            <div class="list" id="report-adv-low"></div>
                                         </div>
+                
                                     </div>
+                
                                 </div>
                             </div>
                         </div>
-
+                
                     </div>
+                </div>
+                
+                <div class="dash-page dash-settings hidden">
 
-                    <div class="subpanel">
-
-                        <div class="card missing">
-
-                            <!-- EMPTY -->
-                            <div class="state state-empty">
-                                <h3 class="card-title">Missing Values</h3>
-                                <p class="card-sub">No data</p>
-                            </div>
-                            
-                            <!-- LOADING -->
-                             <div class="state state-loading hidden">
-                                
-                             </div>
-
-                            <!-- RESULT -->
-                            <div class="state state-result hidden">
-                                <h3 class="card-title">Missing Values</h3>
-                                <p class="card-value"></p>
-                                <p class="card-sub"></p>
-                            </div>
-
-                        </div>
-                        <div class="card distribution">
-
-                            <!-- EMPTY -->
-                            <div class="state state-empty">
-                                <h3 class="card-title">Skew</h3>
-                                <p class="card-sub">No data</p>
-                            </div>
-                            
-                            <!-- LOADING -->
-                            <div class="state state-loading hidden">
-                                
-                            </div>
-
-                            <!-- RESULT -->
-                            <div class="state state-result hidden">
-                                <h3 class="card-title">Skew</h3>
-                                <p class="card-value"></p>
-                                <p class="card-sub">Max Skew</p>
-                            </div>
-                        </div>
-                        <div class="card outliers">
-
-                            <!-- EMPTY -->
-                            <div class="state state-empty">
-                                <h3 class="card-title">Outliers</h3>
-                                <p class="card-sub">No data</p>
-                            </div>
-                            
-                            <!-- LOADING -->
-                            <div class="state state-loading hidden">
-                                
-                            </div>
-
-                            <!-- RESULT -->
-                            <div class="state state-result hidden">    
-                                <h3 class="card-title">Outliers</h3>
-                                <p class="card-value"></p>
-                                <p class="card-sub"></p>
-                            </div>
-                        </div>
-                        <div class="card corr">
-                            <!-- EMPTY -->
-                            <div class="state state-empty">
-                                <h3 class="card-title">Correlation</h3>
-                                <p class="card-sub">No data</p>
-                            </div>
-                            
-                            <!-- LOADING -->
-                            <div class="state state-loading hidden">
-                                
-                            </div>
-
-                            <!-- RESULT -->
-                            <div class="state state-result hidden">
-                                <h3 class="card-title">Correlation</h3>
-                                <p class="card-value"></p>
-                                <p class="card-sub">Max Correlation</p>
-                            </div>
-                        </div>
-    
+                    <div class="heading">
+                        <h2 class="main">Settings</h2>
                     </div>
-
+                
+                    <div class="settings-container">
+                
+                        <div class="settings-section">
+                            <h3 class="section-title">General</h3>
+                
+                            <div class="settings-card">
+                                <div class="setting-info">
+                                    <h4 class="setting-title">Reset Workspace</h4>
+                                    <p class="setting-desc">
+                                        Clear all uploaded datasets and reset the dashboard.
+                                    </p>
+                                </div>
+                                <button class="btn danger" id="resetDataBtn">
+                                    Reset All Data
+                                </button>
+                            </div>
+                        </div>
+                
+                    </div>
                 </div>
 
             </div>
@@ -273,46 +643,17 @@
                 </div>
                 <div class="section wif">
                     <h2 class="head">What is FitLater?</h2>
-                    <p class="subhead">FitLater is an EDA tool which helps the user understand their data and make better decisions for their ML Model preprocessing.</p>
+                    <p class="subhead">FitLater is a structured EDA system that helps you understand your data, identify issues, and take informed
+                    preprocessing decisions before building machine learning models.</p>
                     <ul class="points">
                         <li>Follows a structured EDA pipeline instead of scattered analysis</li>
                         <li>Goes beyond statistics to identify problems in your dataset</li>
                         <li>Provides clear, reasoned advice on what to fix and why</li>
                         <li>Built to bridge the gap between data understanding and preprocessing</li>
+                        <li>Provides a unified Report view combining diagnostics and recommendations</li>
                     </ul>
                 </div>
-                <div class="section wfin">
-                    <h2 class="head">What FitLater is NOT</h2>
-                    <div class="not-grid">
-                        <div class="not-card">
-                            <div class="not-item">
-                                <span class="icon">❌</span>
-                                <p>Not limited to generating charts and summary statistics</p>
-                            </div>
-                        </div>
-                    
-                        <div class="not-card">
-                            <div class="not-item">
-                                <span class="icon">❌</span>
-                                <p>Not a no-code dashboarding or BI solution</p>
-                            </div>
-                        </div>
-                    
-                        <div class="not-card">
-                            <div class="not-item">
-                                <span class="icon">❌</span>
-                                <p>Not focused on model training or predictions</p>
-                            </div>
-                        </div>
-                    
-                        <div class="not-card">
-                            <div class="not-item">
-                                <span class="icon">❌</span>
-                                <p>Not designed to replace human intuition, but to support it</p>
-                            </div>
-                        </div>
-                      </div>
-                </div>
+                
                 <div class="section architecture">
                     <h2 class="head">Architecture</h2>
 
@@ -347,66 +688,155 @@
                     <h2 class="head">Features</h2>
 
                     <div class="features-grid">
+                    
                         <div class="feature-card">
-                          <h4>Missing Value Detection</h4>
-                          <p>Identifies and summarizes missing data across columns</p>
+                            <h4>Dataset Overview</h4>
+                            <p>Quick summary of missing values, outliers, skew, and duplicates</p>
                         </div>
                     
                         <div class="feature-card">
-                          <h4>Outlier Detection</h4>
-                          <p>Detects extreme values using statistical methods</p>
+                            <h4>Column-level Analytics</h4>
+                            <p>Detailed statistics and diagnostics for individual columns</p>
                         </div>
                     
                         <div class="feature-card">
-                          <h4>Correlation Analysis</h4>
-                          <p>Finds relationships between numerical features</p>
+                            <h4>Structured Diagnostics</h4>
+                            <p>Detects issues like missing values, type mismatches, skew, and correlations</p>
                         </div>
                     
                         <div class="feature-card">
-                          <h4>Distribution Analysis</h4>
-                          <p>Understands data spread and feature behavior</p>
+                            <h4>Correlation Detection</h4>
+                            <p>Identifies highly correlated column pairs affecting model performance</p>
                         </div>
                     
                         <div class="feature-card">
-                          <h4>Priority-based Advisory</h4>
-                          <p>Categorizes issues into high, medium, and low priority</p>
+                            <h4>Priority-based Advisory</h4>
+                            <p>Actionable recommendations categorized into high, medium, and low priority</p>
                         </div>
                     
                         <div class="feature-card">
-                          <h4>CLI + Frontend Support</h4>
-                          <p>Accessible via command line and interactive UI</p>
+                            <h4>Unified Report Page</h4>
+                            <p>Combines summary, diagnostics, and advisory into a single structured view</p>
                         </div>
-                      </div>
+                    
+                    </div>
 
+                </div>
+
+                <div class="section analytics-highlight">
+                    <h2 class="head">Analytics Page</h2>
+                
+                    <p class="subhead">
+                        The Analytics page provides a detailed, column-level view of your dataset.
+                        It allows you to explore individual features, understand their behavior, and identify issues in depth.
+                    </p>
+                
+                    <div class="features-grid">
+                
+                        <div class="feature-card">
+                            <h4>Column Selection</h4>
+                            <p>Choose any dataset and explore individual columns interactively</p>
+                        </div>
+                
+                        <div class="feature-card">
+                            <h4>Statistical Summary</h4>
+                            <p>View key metrics like mean, median, standard deviation, and missing values</p>
+                        </div>
+                
+                        <div class="feature-card">
+                            <h4>Issue Breakdown</h4>
+                            <p>See all detected issues for a column, sorted by severity</p>
+                        </div>
+                
+                        <div class="feature-card">
+                            <h4>Distribution Insights</h4>
+                            <p>Understand skewness and data spread for numerical features</p>
+                        </div>
+                
+                        <div class="feature-card">
+                            <h4>Categorical Insights</h4>
+                            <p>Analyze unique values, dominant categories, and frequency</p>
+                        </div>
+                
+                        <div class="feature-card">
+                            <h4>Visual Analysis</h4>
+                            <p>Graphs help you quickly interpret patterns and anomalies</p>
+                        </div>
+                
+                    </div>
+                </div>
+
+                <div class="section report-highlight">
+                    <h2 class="head">Report Page</h2>
+                    <p class="subhead">
+                        The Report page brings together dataset summary, diagnostics, and advisory into a single, structured view.
+                        It helps you quickly understand what’s wrong with your data and what actions to take.
+                    </p>
                 </div>
 
                 <div class="section hiw">
                     <h2 class="head">How It Works</h2>
-                  
+                
                     <div class="steps">
                         <div class="step">
                             <div class="circle">1</div>
                             <h4>Upload Dataset</h4>
-                            <p>Provide your CSV file to begin analysis</p>
+                            <p>Upload your CSV file to start the analysis</p>
                         </div>
-                  
+                
                         <div class="step">
                             <div class="circle">2</div>
-                            <h4>Run Analysis</h4>
-                            <p>FitLater processes the dataset through its pipeline</p>
+                            <h4>Process Data</h4>
+                            <p>FitLater runs the dataset through its descriptive, diagnostics, and advisory pipeline</p>
                         </div>
-                  
+                
                         <div class="step">
                             <div class="circle">3</div>
-                            <h4>View Diagnostics</h4>
-                            <p>Identify issues like missing values, outliers, and correlations</p>
+                            <h4>Explore Analytics</h4>
+                            <p>Dive into column-level insights to understand distributions and issues</p>
                         </div>
-                  
+                
                         <div class="step">
                             <div class="circle">4</div>
-                            <h4>Get Recommendations</h4>
-                            <p>Receive prioritized advice for preprocessing decisions</p>
+                            <h4>Review Report</h4>
+                            <p>Get a structured summary of issues and actionable recommendations</p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="section wfin">
+                    <h2 class="head">What FitLater is NOT</h2>
+                
+                    <div class="not-grid">
+                
+                        <div class="not-card">
+                            <div class="not-item">
+                                <span class="icon">❌</span>
+                                <p>Not just charts and summary statistics</p>
+                            </div>
+                        </div>
+                
+                        <div class="not-card">
+                            <div class="not-item">
+                                <span class="icon">❌</span>
+                                <p>Not a no-code BI or dashboarding tool</p>
+                            </div>
+                        </div>
+                
+                        <div class="not-card">
+                            <div class="not-item">
+                                <span class="icon">❌</span>
+                                <p>Not focused on model training or predictions</p>
+                            </div>
+                        </div>
+                
+                        <div class="not-card">
+                            <div class="not-item">
+                                <span class="icon">❌</span>
+                                <p>Not a replacement for human intuition—only a support system</p>
+                            </div>
+                        </div>
+                
                     </div>
                 </div>
 

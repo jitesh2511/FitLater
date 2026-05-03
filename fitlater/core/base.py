@@ -1,6 +1,10 @@
-'''
-This module contains helper functions
-'''
+"""
+Helpers for basic dataset and series metadata.
+
+Contains utility functions used across the descriptive pipeline to
+extract dataset-level metadata (row/column counts and memory usage)
+and simple per-column missing-value summaries.
+"""
 
 import pandas as pd
 

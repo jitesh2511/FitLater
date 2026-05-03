@@ -1,3 +1,11 @@
+"""
+Base formatting utilities for the CLI.
+
+Provides low-level helpers used by the various formatter modules to
+render headings, sections, and application info with terminal-friendly
+width handling.
+"""
+
 import os
 from fitlater.config import NAME, VERSION
 

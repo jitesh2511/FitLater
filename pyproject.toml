@@ -1,31 +1,34 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=65", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "fitlater"
-version = "0.4.1"
-description = "EDA system with CLI, API, and UI for data understanding before model building"
+version = "1.0.0"
+description = "Structured EDA system with CLI, API, and UI for data understanding before model building"
 readme = "README.md"
-license = { file = "LICENSE" }
 requires-python = ">=3.10"
+license = { file = "LICENSE" }
+
+authors = [
+  { name = "Jitesh Krishna", email = "jiteshkrishna6@gmail.com" }
+]
 
 dependencies = [
-    "pandas>=2.0",
-    "numpy>=1.24",
+    "numpy>=1.26",
+    "pandas>=2.2",
     "colorama>=0.4.6",
     "fastapi>=0.110",
     "uvicorn>=0.27",
-    "python-multipart>=0.0.9"
-]
-
-authors = [
-  { name="Jitesh Krishna", email="jiteshkrishna6@gmail.com" }
+    "python-multipart>=0.0.9",
+    "pydantic>=2.0",
+    "typing-extensions>=4.0",
+    "python-dotenv>=1.0"
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=7.0",
+    "pytest>=7.0"
 ]
 
 [project.scripts]

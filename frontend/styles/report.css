@@ -1,0 +1,326 @@
+/* =========================
+   REPORT PAGE BASE
+========================= */
+
+.dash-report .report-container {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin-top: 16px;
+    margin-left: 28px;
+    margin-right: 28px;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.dash-report .report-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.dash-report .section-title {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--font-color);
+}
+
+/* =========================
+   SUMMARY
+========================= */
+
+.dash-report .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 24px;
+    align-items: start;
+}
+
+.dash-report .report-card {
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--subpanel-color) 0%, var(--panel-color) 100%);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+}
+
+/* Subtle accent highlight on top edge */
+.dash-report .report-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--font-color), transparent);
+    opacity: 0.05;
+    transition: opacity 0.3s ease;
+}
+
+.dash-report .report-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+    border-color: var(--grey-font-color);
+    cursor: default;
+}
+
+.dash-report .report-card:hover::before {
+    opacity: 0.15;
+}
+
+.dash-report .report-card .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--font-color);
+}
+
+.dash-report .report-card .card-value {
+    font-size: 30px;
+    font-weight: 800;
+    margin-top: 6px;
+    color: var(--font-color);
+    line-height: 1.1;
+}
+
+/* =========================
+   DIAGNOSTICS
+========================= */
+
+.dash-report .diag-container {
+    padding: 24px;
+    border-radius: 16px;
+    background: var(--subpanel-color);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.dash-report .diag-block {
+    margin-bottom: 24px;
+}
+
+.dash-report .diag-block:last-child {
+    margin-bottom: 0;
+}
+
+.dash-report .diag-title {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+    color: var(--font-color);
+}
+
+.dash-report .diag-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dash-report .diag-item {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--font-color);
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: var(--panel-color);
+    border: 1px solid var(--border);
+    width:95%;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dash-report .diag-item:hover {
+    transform: translateX(4px);
+    border-color: var(--font-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background: var(--subpanel-color);
+    color: var(--font-color);
+    cursor: default;
+}
+
+/* Priority borders for diagnostics */
+.dash-report .diag-item.high {
+    border-color: var(--high);
+}
+.dash-report .diag-item.high:hover {
+    border-color: var(--high);
+}
+
+.dash-report .diag-item.medium {
+    border-color: var(--medium);
+}
+.dash-report .diag-item.medium:hover {
+    border-color: var(--medium);
+}
+
+.dash-report .diag-item.low {
+    border-color: var(--low);
+}
+.dash-report .diag-item.low:hover {
+    border-color: var(--low);
+}
+
+/* =========================
+   ADVISORY
+========================= */
+
+.dash-report .advisory-section .advise-box {
+    padding: 16px;
+    margin-left:0px;
+    border-radius: 16px;
+    background: var(--subpanel-color);
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    height: auto;
+    border: 1px solid var(--border);
+}
+
+.dash-report .advise-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* IMPORTANT: scoped advise */
+.dash-report .advise {
+    display: flex;
+    flex-direction: column;
+}
+
+.dash-report .advise .head {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--font-color);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-radius: 16px;
+}
+
+.dash-report .advise .list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dash-report .advice-item {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--font-color);
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: var(--panel-color);
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dash-report .advice-item .rec {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.dash-report .advice-item .reason {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-top: 6px;
+    font-weight: 400;
+}
+
+/* Priority colors from dashboard */
+
+/* HIGH */
+.dash-report .advise.high .head {
+    color: var(--high);
+    background-color: #d9373755;
+    border: 1px solid var(--high);
+    width: fit-content;
+    padding: 6px 14px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.dash-report .advise.high .advice-item {
+    background-color: var(--high-bg);
+    border: 1px solid rgba(255, 0, 0, 0.35);
+    color: var(--high);
+}
+
+/* MEDIUM */
+.dash-report .advise.medium .head {
+    color: var(--medium);
+    background-color: #91693455;
+    border: 1px solid var(--medium);
+    width: fit-content;
+    padding: 6px 14px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.dash-report .advise.medium .advice-item {
+    background-color: var(--medium-bg);
+    border: 1px solid rgba(181, 117, 2, 0.35);
+    color: var(--medium);
+}
+
+/* LOW */
+.dash-report .advise.low .head {
+    color: var(--low);
+    background-color: #43803355;
+    border: 1px solid var(--low);
+    width: fit-content;
+    padding: 6px 14px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.dash-report .advise.low .advice-item {
+    background-color: var(--low-bg);
+    border: 1px solid rgba(15, 132, 40, 0.35);
+    color: var(--low);
+}
+
+.dash-report .advice-item:hover {
+    transform: translateY(-4px);
+    cursor: default;
+}
+
+/* =========================
+   STATES
+========================= */
+
+.dash-report .state {
+    font-size: 13px;
+    color: var(--grey-font-color);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+    .dash-report .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dash-report .advise-container {
+        grid-template-columns: 1fr;
+    }
+}

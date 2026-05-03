@@ -1,3 +1,10 @@
+"""
+Application main entry point.
+
+Initializes the FitLater CLI session, prints application info, and
+starts the interactive REPL.
+"""
+
 from fitlater.cli.runner import run_cli
 from fitlater.state.session import Session
 from fitlater.cli.formatter.base import info

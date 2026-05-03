@@ -1,9 +1,9 @@
-'''
-This module check for skew value diagnostics
-per column and returns the issue if detected or 
-returns None on no issue being detected
-'''
+"""
+Distribution diagnostics for numeric columns.
 
+Flags columns with high skewness and returns a diagnostic payload
+including skew and kurtosis details along with a severity ranking.
+"""
 
 import pandas as pd
 

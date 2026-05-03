@@ -1,4 +1,3 @@
-import pytest
 import pandas as pd
 from fitlater.diagnostics.imbalance import check_imbalance
 
@@ -156,6 +155,7 @@ def test_data_payload_structure():
     }
 
     assert set(data["details"].keys()) == {
+        "dominating_value",
         "dominance_ratio"
     }
 

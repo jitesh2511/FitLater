@@ -1,3 +1,11 @@
+"""
+Advisory logic for class imbalance detection.
+
+Evaluates categorical target imbalance and produces guidance such as
+resampling recommendations or usage of class weights. Advice includes
+an action, reasoning, and a priority to help downstream decision-making.
+"""
+
 from fitlater.advisory.util import build_advice
 
 def handle_imbalance(profile:dict, diag:dict) -> dict | None:

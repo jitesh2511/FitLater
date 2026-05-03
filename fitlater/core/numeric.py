@@ -1,7 +1,10 @@
-'''
-This module contains functions to calculate the 
-numerical statistics of a numerical column
-'''
+"""
+Numeric column statistics.
+
+Provides `get_numeric_stats()` which computes common numerical
+aggregates (mean, median, std, quartiles, skew, kurtosis) used to
+populate numeric column profiles in the descriptive output.
+"""
 
 import pandas as pd
 

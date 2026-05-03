@@ -1,7 +1,10 @@
-'''
-This module contains functions to get statistics
-for a categorical column in the dataset
-'''
+"""
+Categorical column statistics.
+
+Provides helpers to summarize categorical columns (unique counts,
+top values and their frequencies) used when building a column profile
+in the descriptive pipeline.
+"""
 
 import pandas as pd
 

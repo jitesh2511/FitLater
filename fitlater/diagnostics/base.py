@@ -1,6 +1,10 @@
-'''
-This module provides helper functions for diagnostics layer
-'''
+"""
+Diagnostics layer helpers.
+
+Small shared utilities used by the diagnostics modules to build
+standardized issue payloads (`make_issue`) and determine severity
+levels from numeric values.
+"""
 
 def make_issue(type:str, column:str, data:dict, severity:str, has_issue:bool) -> dict:
     return {
@@ -19,7 +23,7 @@ severity_order = {
         'high': 2
     }
 
-def get_severity(value:int or float, thresholds:dict) -> str:
+def get_severity(value, thresholds:dict) -> str:
 
     if value <= thresholds['low']:
         return 'low'

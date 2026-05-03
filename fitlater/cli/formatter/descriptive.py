@@ -1,3 +1,11 @@
+"""
+Formatter for descriptive dataset summaries.
+
+Produces a brief, human-readable overview including dataset size,
+column type counts, and a small sample of column previews used by the
+`descriptive` CLI command.
+"""
+
 from fitlater.cli.formatter.base import _heading, _section
 
 

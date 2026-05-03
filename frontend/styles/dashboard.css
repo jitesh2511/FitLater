@@ -5,7 +5,7 @@
 
 .page .heading{
     color:white;
-    margin-top: 32px;
+    margin-top: 45px;
     margin-left:0px;
     padding: 0 24px;
 }
@@ -14,14 +14,14 @@
     margin:0;
     padding: 0;
     font-weight: 600;
-    font-size:32px;
+    font-size:40px;
 }
 
 .page .heading .sub{
     margin-top: 8px;
-    font-weight: 300;
-    opacity: 0.5;
-    font-size:16px;
+    font-weight: 400;
+    opacity: 0.6;
+    font-size: 20px;
 }
 
 .page .main-panel{
@@ -101,19 +101,19 @@
 .advise.high .head{
     color: var(--high);
     background-color: #d9373755;
-    border: 1px solid var(--high)
+    border: 1px solid var(--high);
 }
 
 .advise.medium .head{
     color: var(--medium);
     background-color: #91693455;
-    border: 1px solid var(--medium)
+    border: 1px solid var(--medium);
 }
 
 .advise.low .head{
     color: var(--low);
     background-color: #43803355;
-    border: 1px solid var(--low)
+    border: 1px solid var(--low);
 }
 
 .advise .sub{
@@ -173,6 +173,12 @@
 
 .upload-box .state-empty {
     transform: translateY(-10px);
+}
+
+.upload-box .state-error {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .upload-box-head{
@@ -237,7 +243,7 @@
 }
 
 .advise-card.high{
-    background-color: rgba(255, 0, 0, 0.08);
+    background-color:var(--high-bg);
     border: 1px solid rgba(255, 0, 0, 0.35);
 }
 
@@ -246,7 +252,7 @@
 }
 
 .advise-card.medium{
-    background-color: rgba(181, 117, 2, 0.08);
+    background-color: var(--medium-bg);
     border: 1px solid rgba(181, 117, 2, 0.35);
 }
 
@@ -255,7 +261,7 @@
 }
 
 .advise-card.low{
-    background-color: rgba(15, 132, 40, 0.08);
+    background-color: var(--low-bg);
     border: 1px solid rgba(15, 132, 40, 0.35);
 }
 
@@ -385,4 +391,20 @@
 .upload-more-btn:hover{
     border-color: white;
     color: white;
+}
+
+.loader {
+    border: 3px solid #eee;
+    border-top: 3px solid #4C9AFF;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    animation: spin 1s linear infinite;
+    margin: 10px auto;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
